@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 .PHONY: help init init-env deploy stop status add-memory ingest-data run-task clean codex-bin codex-config
 
 PROJECT_DIR := $(shell pwd)
