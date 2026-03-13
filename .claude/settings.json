@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "evermemos": {
+      "command": "python",
+      "args": ["/home/jameslimer/Spiro/evermemos_competition/mcp_server/server.py"],
+      "env": {
+        "EVERMEMOS_BASE_URL": "http://localhost:1995"
+      }
+    }
+  }
+}
