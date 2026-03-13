@@ -1,8 +1,8 @@
 from .base import BaseTask
-from .relationships import RelationshipsTask
 from .profiling import ProfilingTask
-from .timeline import TimelineTask
+from .relationships import RelationshipsTask
 from .suggestions import SuggestionsTask
+from .timeline import TimelineTask
 
 __all__ = [
     "BaseTask",

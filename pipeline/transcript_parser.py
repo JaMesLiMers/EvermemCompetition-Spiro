@@ -1,5 +1,5 @@
 import re
-from datetime import datetime, timezone
+from datetime import datetime
 from zoneinfo import ZoneInfo
 
 # Format B (primary, after normalization): [speaker]: text
@@ -49,12 +49,14 @@ def parse_speaker_turns(
             if not content:
                 continue
             offset_seconds = minutes * 60 + seconds
-            turns.append({
-                "speaker_label": speaker_label,
-                "content": content,
-                "offset_seconds": offset_seconds,
-                "absolute_epoch": fragment_base_epoch + offset_seconds,
-            })
+            turns.append(
+                {
+                    "speaker_label": speaker_label,
+                    "content": content,
+                    "offset_seconds": offset_seconds,
+                    "absolute_epoch": fragment_base_epoch + offset_seconds,
+                }
+            )
             continue
 
         # Format B (primary): [speaker]: text
@@ -68,12 +70,14 @@ def parse_speaker_turns(
             content = ANNOTATION_KEYWORDS.sub("", raw_content).strip()
             if not content:
                 continue
-            turns.append({
-                "speaker_label": speaker_label,
-                "content": content,
-                "offset_seconds": 0,
-                "absolute_epoch": fragment_base_epoch,
-            })
+            turns.append(
+                {
+                    "speaker_label": speaker_label,
+                    "content": content,
+                    "offset_seconds": 0,
+                    "absolute_epoch": fragment_base_epoch,
+                }
+            )
             format_b_indices.append(len(turns) - 1)
 
     # Interpolate Format B timestamps evenly across fragment duration
@@ -145,9 +149,7 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
         if fm:
             if current_fragment_lines:
                 duration = max(0, current_fragment_end - current_fragment_base)
-                all_turns.extend(parse_speaker_turns(
-                    current_fragment_lines, current_fragment_base, duration
-                ))
+                all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base, duration))
                 current_fragment_lines = []
             current_fragment_base = parse_fragment_time(fm.group(1), event_start_epoch)
             current_fragment_end = parse_fragment_time(fm.group(2), current_fragment_base)
@@ -171,9 +173,7 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
 
     if current_fragment_lines:
         duration = max(0, current_fragment_end - current_fragment_base)
-        all_turns.extend(parse_speaker_turns(
-            current_fragment_lines, current_fragment_base, duration
-        ))
+        all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base, duration))
 
     speakers = list({t["speaker_label"] for t in all_turns})
 

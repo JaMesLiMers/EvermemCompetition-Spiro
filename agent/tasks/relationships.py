@@ -1,4 +1,5 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+
 from .base import BaseTask
 
 SYSTEM_PROMPT = """你是一个记忆分析助手，专门分析人际关系。
@@ -30,7 +31,9 @@ SYSTEM_PROMPT = """你是一个记忆分析助手，专门分析人际关系。
 class RelationshipsTask(BaseTask):
     focus_person: str | None = None
 
-    def __init__(self, user_id: str, focus_person: str | None = None, group_id: str | None = None, prefetched_context: str = ""):
+    def __init__(
+        self, user_id: str, focus_person: str | None = None, group_id: str | None = None, prefetched_context: str = ""
+    ):
         self.focus_person = focus_person
         template = "请分析以下群组对话中所有参与者的人际关系网络，特别关注「{user_id}」。"
         if focus_person:

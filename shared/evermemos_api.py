@@ -1,6 +1,7 @@
-import httpx
 import uuid
 from datetime import datetime, timezone
+
+import httpx
 
 
 class EverMemosClient:
@@ -157,9 +158,7 @@ class EverMemosClient:
         params = {}
         if group_id:
             params["group_id"] = group_id
-        resp = await self._client.get(
-            f"{self.api_prefix}/conversation-meta", params=params
-        )
+        resp = await self._client.get(f"{self.api_prefix}/conversation-meta", params=params)
         resp.raise_for_status()
         return resp.json()
 

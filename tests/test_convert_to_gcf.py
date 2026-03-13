@@ -1,7 +1,10 @@
 # tests/test_convert_to_gcf.py
 from pipeline.convert_to_gcf import (
-    parse_fragments, normalize_speaker, should_skip_speaker,
-    build_gcf_groups, convert_event,
+    build_gcf_groups,
+    convert_event,
+    normalize_speaker,
+    parse_fragments,
+    should_skip_speaker,
 )
 
 # --- parse_fragments tests ---
@@ -177,7 +180,13 @@ def test_build_gcf_single_group_no_split():
 def test_build_gcf_splits_many_fragments():
     """Event with >threshold fragments -> split by fragment."""
     fragments = [
-        {"title": f"Topic {i}", "types": ["social"], "base_epoch": 1000000 + i * 300, "end_epoch": 1000000 + (i+1) * 300, "turns": _make_turns(3, base_epoch=1000000 + i * 300)}
+        {
+            "title": f"Topic {i}",
+            "types": ["social"],
+            "base_epoch": 1000000 + i * 300,
+            "end_epoch": 1000000 + (i + 1) * 300,
+            "turns": _make_turns(3, base_epoch=1000000 + i * 300),
+        }
         for i in range(10)
     ]
     groups = build_gcf_groups(
@@ -198,7 +207,13 @@ def test_build_gcf_splits_many_turns():
     """Event with >threshold total turns -> split by fragment."""
     fragments = [
         {"title": "Big1", "types": ["career"], "base_epoch": 1000000, "end_epoch": 1000300, "turns": _make_turns(60)},
-        {"title": "Big2", "types": ["career"], "base_epoch": 1000300, "end_epoch": 1000600, "turns": _make_turns(60, base_epoch=1000300)},
+        {
+            "title": "Big2",
+            "types": ["career"],
+            "base_epoch": 1000300,
+            "end_epoch": 1000600,
+            "turns": _make_turns(60, base_epoch=1000300),
+        },
     ]
     groups = build_gcf_groups(
         event_id="evt-003",
@@ -213,7 +228,13 @@ def test_build_gcf_splits_many_turns():
 def test_build_gcf_single_fragment_large_turns_windowed():
     """Single fragment with >200 turns -> split by 100-turn windows."""
     fragments = [
-        {"title": "Long Chat", "types": ["social"], "base_epoch": 1000000, "end_epoch": 1000600, "turns": _make_turns(250)},
+        {
+            "title": "Long Chat",
+            "types": ["social"],
+            "base_epoch": 1000000,
+            "end_epoch": 1000600,
+            "turns": _make_turns(250),
+        },
     ]
     groups = build_gcf_groups(
         event_id="evt-004",
@@ -337,11 +358,13 @@ def test_convert_event_passive_only():
     """Events with only passive media fragments return empty list."""
     event = {
         "meta": {"user_id": "x", "basic_event_id": "passive-001", "basic_start_time": 0, "basic_end_time": 0},
-        "object": {"basic_transcript": """[Fragment 1: 1000000 - 1000300]
+        "object": {
+            "basic_transcript": """[Fragment 1: 1000000 - 1000300]
 标题: 收听播客
 类型: interest
 
-(被动媒体，转录内容已略过)"""},
+(被动媒体，转录内容已略过)"""
+        },
     }
     groups = convert_event(event)
     assert groups == []

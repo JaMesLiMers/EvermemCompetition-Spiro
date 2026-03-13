@@ -22,7 +22,7 @@ def test_parse_skips_non_turn_lines():
         "标题: APP设计方案",
         "类型: career",
         "",
-        "[00:00][Speaker]: Hello"
+        "[00:00][Speaker]: Hello",
     ]
     turns = parse_speaker_turns(lines, fragment_base_epoch=1000000)
     assert len(turns) == 1
@@ -55,6 +55,7 @@ def test_parse_transcript_multi_fragment():
 
 
 # --- Format B tests ---
+
 
 def test_parse_format_b_single_turn():
     """Format B: [speaker]: content (no timestamp)."""
@@ -128,6 +129,7 @@ def test_format_b_skips_fragment_headers():
 
 
 # --- Annotation whitelist tests ---
+
 
 def test_annotation_whitelist_preserves_non_annotation_brackets():
     """Content with non-annotation brackets should be preserved."""

@@ -1,9 +1,9 @@
 # tests/test_cli.py
 from agent.cli import TASK_REGISTRY
-from agent.tasks.relationships import RelationshipsTask
 from agent.tasks.profiling import ProfilingTask
-from agent.tasks.timeline import TimelineTask
+from agent.tasks.relationships import RelationshipsTask
 from agent.tasks.suggestions import SuggestionsTask
+from agent.tasks.timeline import TimelineTask
 
 
 def test_task_registry_contains_all_tasks():

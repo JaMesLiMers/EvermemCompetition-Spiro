@@ -27,6 +27,9 @@ _SKIP_SPEAKER_KEYWORDS = ("背景", "环境", "路人", "无关人员", "Media_G
 # Main user aliases → normalized ID
 _MAIN_USER_ALIASES = {"user", "用户", "User"}
 
+# Speaker labels starting with these are also treated as main user
+_MAIN_USER_PREFIX = "被动媒体"
+
 PASSIVE_MEDIA_MARKER = "被动媒体，转录内容已略过"
 
 _TURN_WINDOW_SIZE = 100  # For windowed splitting of single large fragments
@@ -125,13 +128,15 @@ def parse_fragments(transcript: str, event_start_epoch: int) -> list[dict]:
         turns = parse_speaker_turns(frag["lines"], frag["base_epoch"], duration)
         if not turns:
             continue
-        result.append({
-            "title": frag["title"],
-            "types": frag["types"],
-            "base_epoch": frag["base_epoch"],
-            "end_epoch": frag["end_epoch"],
-            "turns": turns,
-        })
+        result.append(
+            {
+                "title": frag["title"],
+                "types": frag["types"],
+                "base_epoch": frag["base_epoch"],
+                "end_epoch": frag["end_epoch"],
+                "turns": turns,
+            }
+        )
 
     return result
 
@@ -160,16 +165,18 @@ def _build_conversation_list(turns: list[dict], group_id: str) -> list[dict]:
             continue
         normalized = normalize_speaker(speaker)
         msg_id = f"{group_id}_{msg_idx}"
-        messages.append({
-            "message_id": msg_id,
-            "create_time": _epoch_to_iso(turn["absolute_epoch"]),
-            "sender": normalized,
-            "sender_name": speaker,
-            "role": "user",
-            "type": "text",
-            "content": turn["content"],
-            "refer_list": [],
-        })
+        messages.append(
+            {
+                "message_id": msg_id,
+                "create_time": _epoch_to_iso(turn["absolute_epoch"]),
+                "sender": normalized,
+                "sender_name": speaker,
+                "role": "user",
+                "type": "text",
+                "content": turn["content"],
+                "refer_list": [],
+            }
+        )
         msg_idx += 1
     return messages
 
@@ -283,8 +290,12 @@ def main():
     parser = argparse.ArgumentParser(description="Convert dataset to GroupChatFormat JSON files")
     parser.add_argument("--input", required=True, help="Path to dataset JSON file")
     parser.add_argument("--output", required=True, help="Output directory for GCF files")
-    parser.add_argument("--split-threshold-fragments", type=int, default=8, help="Split events with more fragments than this")
-    parser.add_argument("--split-threshold-turns", type=int, default=100, help="Split events with more total turns than this")
+    parser.add_argument(
+        "--split-threshold-fragments", type=int, default=8, help="Split events with more fragments than this"
+    )
+    parser.add_argument(
+        "--split-threshold-turns", type=int, default=100, help="Split events with more total turns than this"
+    )
     parser.add_argument("--limit", type=int, default=0, help="Process only N events (0 = all)")
     args = parser.parse_args()
 
@@ -296,7 +307,7 @@ def main():
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    with open(input_path, "r", encoding="utf-8") as f:
+    with open(input_path, encoding="utf-8") as f:
         events = json.load(f)
 
     events.sort(key=lambda e: e["meta"]["basic_start_time"])
@@ -328,9 +339,9 @@ def main():
             total_messages += len(gcf["conversation_list"])
 
         if (i + 1) % 50 == 0:
-            print(f"  [{i+1}/{total}] processed...")
+            print(f"  [{i + 1}/{total}] processed...")
 
-    print(f"\nConversion complete:")
+    print("\nConversion complete:")
     print(f"  Events processed: {total}")
     print(f"  Events skipped:   {skipped}")
     print(f"  Events split:     {split_count}")

@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: help init init-env deploy stop status add-memory convert-gcf ingest-gcf run-task clean codex-bin codex-config
+.PHONY: help init init-env deploy stop status add-memory convert-gcf ingest-gcf run-task lint test clean
 
 # Auto-load .env if it exists
 ifneq (,$(wildcard .env))
@@ -8,34 +8,42 @@ export
 endif
 
 PROJECT_DIR := $(shell pwd)
-CODEX_BIN_DIR ?= $(PROJECT_DIR)/.codex-bin
-CODEX_BIN ?= $(CODEX_BIN_DIR)/codex
-CODEX_HOME ?= $(PROJECT_DIR)/.codex-local
-CONFIG_FILE := $(CODEX_HOME)/config.toml
 EVERMEMOS_PID := $(PROJECT_DIR)/.evermemos.pid
 WORKER_PID := $(PROJECT_DIR)/.worker.pid
 EVERMEMOS_URL ?= http://localhost:1995
+REQUIRED_PYTHON_MINOR := 10
 
 help: ## 显示所有可用命令
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-init: ## 一键初始化：子模块 + 依赖 + Codex + env 模板
+init: ## 一键初始化：子模块 + 依赖 + env 模板
+	@echo "==> 检查 Python 版本..."
+	@python3 -c "import sys; v=sys.version_info; exit(0 if v >= (3,$(REQUIRED_PYTHON_MINOR)) else 1)" 2>/dev/null \
+		&& echo "  ✓ Python $$(python3 --version)" \
+		|| { echo "  ✗ 需要 Python >= 3.$(REQUIRED_PYTHON_MINOR)，当前: $$(python3 --version 2>&1)"; exit 1; }
 	@echo "==> 拉取 git 子模块..."
 	@git submodule update --init --recursive
 	@echo "==> 安装 Python 依赖..."
-	@pip install -e . 2>/dev/null || true
-	@pip install -e codex/sdk/python/ 2>/dev/null || true
-	@$(MAKE) codex-bin
-	@$(MAKE) codex-config
+	@if command -v uv &>/dev/null; then \
+		uv pip install -e ".[dev]"; \
+	else \
+		echo "  WARN uv 未安装，使用 pip 作为后备"; \
+		pip install -e ".[dev]" 2>/dev/null || true; \
+	fi
 	@$(MAKE) init-env
+	@echo "==> 检查 opencode..."
+	@if command -v opencode &>/dev/null; then \
+		echo "  ✓ opencode 已安装 ($$(opencode --version))"; \
+	else \
+		echo "  ✗ opencode 未安装，请先安装: https://opencode.ai"; \
+	fi
 	@echo ""
-	@echo "✓ 初始化完成！请编辑以下 .env 文件填入你的 API Key："
-	@echo "  - .env                  (Codex Agent)"
+	@echo "✓ 初始化完成！请编辑以下 .env 文件："
+	@echo "  - .env                  (Agent 配置)"
 	@echo "  - EverMemOS/.env        (EverMemOS 服务)"
-	@echo "  - pipeline/.env         (数据提取)"
 
 init-env: ## 生成 .env 模板文件（已存在则跳过）
-	@for target in .env EverMemOS/.env pipeline/.env; do \
+	@for target in .env EverMemOS/.env; do \
 		if [ -f "$$target" ]; then \
 			echo "  SKIP $$target (已存在)"; \
 		else \
@@ -50,33 +58,9 @@ init-env: ## 生成 .env 模板文件（已存在则跳过）
 		fi; \
 	done
 
-codex-bin: $(CODEX_BIN) ## 下载 Codex binary
-
-$(CODEX_BIN):
-	@echo "==> 下载 Codex binary..."
-	@mkdir -p $(CODEX_BIN_DIR)
-	@npm pack @openai/codex --pack-destination $(CODEX_BIN_DIR) 2>/dev/null
-	@cd $(CODEX_BIN_DIR) && tar xzf openai-codex-*.tgz --strip-components=1 && rm -f openai-codex-*.tgz
-	@if [ -f "$(CODEX_BIN_DIR)/bin/codex" ]; then \
-		ln -sf $(CODEX_BIN_DIR)/bin/codex $(CODEX_BIN); \
-	elif [ -f "$(CODEX_BIN_DIR)/bin/codex.js" ]; then \
-		echo '#!/bin/sh' > $(CODEX_BIN) && echo 'exec node "$(CODEX_BIN_DIR)/bin/codex.js" "$$@"' >> $(CODEX_BIN) && chmod +x $(CODEX_BIN); \
-	else \
-		echo '#!/bin/sh' > $(CODEX_BIN) && echo 'exec npx -y @openai/codex "$$@"' >> $(CODEX_BIN) && chmod +x $(CODEX_BIN); \
-	fi
-	@echo "  Codex binary: $(CODEX_BIN)"
-
-codex-config: $(CONFIG_FILE) ## 生成 Codex MCP 配置
-
-$(CONFIG_FILE):
-	@echo "==> 生成 Codex 配置..."
-	@mkdir -p $(CODEX_HOME)
-	@printf '[mcp_servers.evermemos]\ncommand = "python"\nargs = ["-m", "mcp_server.server"]\n' > $(CONFIG_FILE)
-	@echo "  Config: $(CONFIG_FILE)"
-
 deploy: ## 一键部署：启动基础设施 + EverMemOS 服务
-	@echo "==> 启动基础设施 (docker-compose)..."
-	@docker-compose -f EverMemOS/docker-compose.yaml up -d
+	@echo "==> 启动基础设施 (docker compose)..."
+	@docker compose -f EverMemOS/docker-compose.yaml up -d
 	@echo "==> 等待服务就绪..."
 	@timeout=120; elapsed=0; \
 	while [ $$elapsed -lt $$timeout ]; do \
@@ -96,14 +80,14 @@ deploy: ## 一键部署：启动基础设施 + EverMemOS 服务
 		printf "\r  等待中... %ds/%ds" $$elapsed $$timeout; \
 	done; \
 	if [ $$elapsed -ge $$timeout ]; then \
-		echo "\n  ✗ 超时！部分服务未就绪，请检查 docker-compose 日志"; \
+		echo "\n  ✗ 超时！部分服务未就绪，请检查 docker compose 日志"; \
 		exit 1; \
 	fi
 	@echo "==> 启动 EverMemOS 服务..."
 	@mkdir -p logs
 	@cd EverMemOS && nohup uv run python src/run.py > ../logs/evermemos.log 2>&1 & echo $$! > $(EVERMEMOS_PID)
 	@echo "==> 启动 arq Worker（后台记忆处理）..."
-	@cd EverMemOS/src && nohup ../../EverMemOS/.venv/bin/arq task.WorkerSettings > ../../logs/worker.log 2>&1 & echo $$! > $(WORKER_PID)
+	@cd EverMemOS && nohup .venv/bin/arq src.task.WorkerSettings > ../logs/worker.log 2>&1 & echo $$! > $(WORKER_PID)
 	@sleep 5
 	@if curl -sf $(EVERMEMOS_URL)/api/v1/memories/conversation-meta > /dev/null 2>&1; then \
 		echo "  ✓ EverMemOS 已启动 (PID: $$(cat $(EVERMEMOS_PID)))"; \
@@ -119,20 +103,34 @@ deploy: ## 一键部署：启动基础设施 + EverMemOS 服务
 stop: ## 停止所有服务
 	@echo "==> 停止 arq Worker..."
 	@if [ -f $(WORKER_PID) ]; then \
-		kill $$(cat $(WORKER_PID)) 2>/dev/null && echo "  ✓ arq Worker 已停止" || echo "  进程已不存在"; \
+		pid=$$(cat $(WORKER_PID)); \
+		kill -TERM $$pid 2>/dev/null; \
+		for i in $$(seq 1 10); do \
+			kill -0 $$pid 2>/dev/null || break; \
+			sleep 1; \
+		done; \
+		kill -0 $$pid 2>/dev/null && kill -KILL $$pid 2>/dev/null; \
+		echo "  ✓ arq Worker 已停止"; \
 		rm -f $(WORKER_PID); \
 	else \
 		echo "  未找到 PID 文件，跳过"; \
 	fi
 	@echo "==> 停止 EverMemOS..."
 	@if [ -f $(EVERMEMOS_PID) ]; then \
-		kill $$(cat $(EVERMEMOS_PID)) 2>/dev/null && echo "  ✓ EverMemOS 已停止" || echo "  进程已不存在"; \
+		pid=$$(cat $(EVERMEMOS_PID)); \
+		kill -TERM $$pid 2>/dev/null; \
+		for i in $$(seq 1 10); do \
+			kill -0 $$pid 2>/dev/null || break; \
+			sleep 1; \
+		done; \
+		kill -0 $$pid 2>/dev/null && kill -KILL $$pid 2>/dev/null; \
+		echo "  ✓ EverMemOS 已停止"; \
 		rm -f $(EVERMEMOS_PID); \
 	else \
 		echo "  未找到 PID 文件，跳过"; \
 	fi
 	@echo "==> 停止基础设施..."
-	@docker-compose -f EverMemOS/docker-compose.yaml down
+	@docker compose -f EverMemOS/docker-compose.yaml down
 	@echo "  ✓ 所有服务已停止"
 
 status: ## 检查所有服务状态
@@ -211,9 +209,16 @@ run-task: ## 运行分析任务 (TASK=relationships|profiling|timeline|suggestio
 		$(if $(END_DATE),--end-date $(END_DATE)) \
 		$(if $(KEYWORDS),--keywords $(KEYWORDS))
 
+lint: ## 运行代码检查
+	ruff check .
+	ruff format --check .
+
+test: ## 运行测试
+	pytest
+
 clean: ## 清理构建产物和运行时文件
-	rm -rf $(CODEX_BIN_DIR) $(CODEX_HOME)
 	rm -rf data/gcf
 	rm -f $(EVERMEMOS_PID) $(WORKER_PID)
-	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './codex/*' -exec rm -rf {} + 2>/dev/null || true
+	rm -f pipeline/ingestion_progress.json
+	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './opencode/*' -exec rm -rf {} + 2>/dev/null || true
 	@echo "✓ 已清理"

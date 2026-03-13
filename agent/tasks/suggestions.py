@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from .base import BaseTask
 
 SYSTEM_PROMPT = """你是一个记忆分析助手，专门生成主动建议和提醒。

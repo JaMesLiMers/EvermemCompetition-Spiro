@@ -216,6 +216,7 @@ data/*
 
 # EverMemOS runtime
 .evermemos.pid
+.worker.pid
 logs/
 
 # Analysis output

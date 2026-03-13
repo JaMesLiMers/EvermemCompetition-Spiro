@@ -1,28 +1,36 @@
-"""Helper to verify Codex MCP configuration for EverMemOS."""
+"""Helper to verify opencode MCP configuration for EverMemOS."""
+
+import json
 from pathlib import Path
 
-CODEX_CONFIG_PATH = Path.home() / ".codex" / "config.toml"
+OPENCODE_CONFIG_PATH = Path("opencode.json")
 
 REQUIRED_CONFIG = """
-# Add this to ~/.codex/config.toml:
+# Add opencode.json to your project root:
 
-[mcp_servers.evermemos]
-command = "python"
-args = ["-m", "mcp_server.server"]
+{
+  "mcpServers": {
+    "evermemos": {
+      "command": "python",
+      "args": ["-m", "mcp_server.server"]
+    }
+  }
+}
 """.strip()
 
 
 def check_config() -> bool:
-    if not CODEX_CONFIG_PATH.exists():
-        print(f"Codex config not found at {CODEX_CONFIG_PATH}")
+    if not OPENCODE_CONFIG_PATH.exists():
+        print(f"opencode config not found at {OPENCODE_CONFIG_PATH}")
         print(REQUIRED_CONFIG)
         return False
-    content = CODEX_CONFIG_PATH.read_text()
-    if "mcp_servers" not in content or "evermemos" not in content:
-        print("EverMemOS MCP server not configured in Codex config.")
+    content = json.loads(OPENCODE_CONFIG_PATH.read_text())
+    mcp = content.get("mcpServers", {})
+    if "evermemos" not in mcp:
+        print("EverMemOS MCP server not configured in opencode config.")
         print(REQUIRED_CONFIG)
         return False
-    print("EverMemOS MCP server is configured in Codex.")
+    print("EverMemOS MCP server is configured in opencode.")
     return True
 
 

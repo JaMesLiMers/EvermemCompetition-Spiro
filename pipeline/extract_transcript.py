@@ -9,6 +9,7 @@ Outputs structured JSON matching the EverMemOS basic_events dataset format:
 import argparse
 import base64
 import json
+import os
 import re
 import sys
 import time
@@ -18,7 +19,6 @@ from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
-import os
 
 # Load .env from the same directory as this script
 ENV_PATH = Path(__file__).resolve().parent / ".env"
@@ -159,15 +159,9 @@ def build_event_json(transcript: str, user_id: str) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Extract transcript from audio and output structured event JSON"
-    )
-    parser.add_argument(
-        "audio_file", help="Path to the audio file (MP3, WAV, M4A, etc.)"
-    )
-    parser.add_argument(
-        "-o", "--output", help="Output JSON file path (default: print to stdout)"
-    )
+    parser = argparse.ArgumentParser(description="Extract transcript from audio and output structured event JSON")
+    parser.add_argument("audio_file", help="Path to the audio file (MP3, WAV, M4A, etc.)")
+    parser.add_argument("-o", "--output", help="Output JSON file path (default: print to stdout)")
     parser.add_argument(
         "--user-id",
         default="79ef7f17-9d24-4a85-a6fe-de7d060bc090",

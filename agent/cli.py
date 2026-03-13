@@ -3,18 +3,18 @@ import argparse
 import asyncio
 import json
 import os
-import sys
-from datetime import datetime
-
 import subprocess
+import sys
+import time
+from datetime import datetime
 
 from shared.evermemos_api import EverMemosClient
 
 from .config import AgentConfig
-from .tasks.relationships import RelationshipsTask
 from .tasks.profiling import ProfilingTask
-from .tasks.timeline import TimelineTask
+from .tasks.relationships import RelationshipsTask
 from .tasks.suggestions import SuggestionsTask
+from .tasks.timeline import TimelineTask
 
 TASK_REGISTRY = {
     "relationships": RelationshipsTask,
@@ -24,14 +24,17 @@ TASK_REGISTRY = {
 }
 
 
-async def prefetch_memories(base_url: str, group_id: str) -> str:
-    """Pre-fetch all episodic memories for a group and format as context string."""
+async def prefetch_memories(base_url: str, group_id: str) -> tuple[str, int]:
+    """Pre-fetch all episodic memories for a group and format as context string.
+
+    Returns (context_string, memory_count).
+    """
     client = EverMemosClient(base_url)
     try:
         data = await client.get_memories(group_id=group_id, memory_type="episodic_memory", limit=100)
         memories = data.get("result", {}).get("memories", [])
         if not memories:
-            return ""
+            return "", 0
 
         lines = [f"已从 EverMemOS 预加载 {len(memories)} 条情景记忆（group_id={group_id}）：\n"]
         for i, m in enumerate(memories, 1):
@@ -44,13 +47,71 @@ async def prefetch_memories(base_url: str, group_id: str) -> str:
             if m.get("key_events"):
                 lines.append(f"- 关键事件: {json.dumps(m['key_events'], ensure_ascii=False)}")
             lines.append("")
-        return "\n".join(lines)
+        return "\n".join(lines), len(memories)
     finally:
         await client.close()
 
 
+def _build_task(task_name: str, args: argparse.Namespace, group_id: str | None, prefetched: str):
+    """Build a task instance from parsed CLI arguments."""
+    task_class = TASK_REGISTRY[task_name]
+
+    # Collect all optional kwargs that the task class __init__ accepts
+    optional_params = {
+        "focus_person": getattr(args, "focus_person", None),
+        "start_date": getattr(args, "start_date", None),
+        "end_date": getattr(args, "end_date", None),
+        "keywords": getattr(args, "keywords", None),
+    }
+
+    # Only pass params that the task class actually accepts
+    import inspect
+
+    sig = inspect.signature(task_class.__init__)
+    accepted = set(sig.parameters.keys()) - {"self"}
+
+    kwargs = {"user_id": args.user_id, "group_id": group_id, "prefetched_context": prefetched}
+    for key, value in optional_params.items():
+        if key in accepted and value is not None:
+            kwargs[key] = value
+
+    return task_class(**kwargs)
+
+
+def _build_metadata(
+    task_name: str,
+    args: argparse.Namespace,
+    config: AgentConfig,
+    group_id: str | None,
+    memory_count: int,
+    duration_s: float,
+) -> str:
+    """Build YAML frontmatter metadata for output files."""
+    lines = [
+        "---",
+        f"task: {task_name}",
+        f"model: {config.model}",
+        f"user_id: {args.user_id}",
+        f"group_id: {group_id or 'N/A'}",
+        f"timestamp: {datetime.now().isoformat()}",
+        f"duration_seconds: {duration_s:.1f}",
+        f"prefetched_memories: {memory_count}",
+    ]
+    if getattr(args, "focus_person", None):
+        lines.append(f"focus_person: {args.focus_person}")
+    if getattr(args, "start_date", None):
+        lines.append(f"start_date: {args.start_date}")
+    if getattr(args, "end_date", None):
+        lines.append(f"end_date: {args.end_date}")
+    if getattr(args, "keywords", None):
+        lines.append(f"keywords: {args.keywords}")
+    lines.append("---")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def main(argv: list[str] | None = None):
-    parser = argparse.ArgumentParser(description="Codex Agent — EverMemOS memory analysis")
+    parser = argparse.ArgumentParser(description="EverMemOS Agent — memory analysis")
     parser.add_argument("task", choices=TASK_REGISTRY.keys(), help="Analysis task to run")
     parser.add_argument("--user-id", required=True, help="Target user/participant name")
     parser.add_argument("--group-id", help="EverMemOS group_id (auto-detected if not set)")
@@ -64,7 +125,7 @@ def main(argv: list[str] | None = None):
     args = parser.parse_args(argv)
 
     config = AgentConfig.from_env()
-    evermemos_url = os.environ.get("EVERMEMOS_BASE_URL", "http://localhost:1995")
+    evermemos_url = config.evermemos_url
 
     # Auto-detect group_id from dataset if not provided
     group_id = args.group_id
@@ -81,35 +142,35 @@ def main(argv: list[str] | None = None):
 
     # Pre-fetch memories
     prefetched = ""
+    memory_count = 0
     if group_id:
         print("Pre-fetching memories...", file=sys.stderr)
-        prefetched = asyncio.run(prefetch_memories(evermemos_url, group_id))
+        prefetched, memory_count = asyncio.run(prefetch_memories(evermemos_url, group_id))
         if prefetched:
-            print(f"Pre-fetched context ready ({len(prefetched)} chars)", file=sys.stderr)
+            print(f"Pre-fetched context ready ({len(prefetched)} chars, {memory_count} memories)", file=sys.stderr)
 
-    task_class = TASK_REGISTRY[args.task]
-    if args.task == "relationships":
-        task = task_class(user_id=args.user_id, focus_person=args.focus_person, group_id=group_id, prefetched_context=prefetched)
-    elif args.task == "timeline":
-        task = task_class(
-            user_id=args.user_id,
-            start_date=args.start_date,
-            end_date=args.end_date,
-            keywords=args.keywords,
-            group_id=group_id,
-            prefetched_context=prefetched,
-        )
-    else:
-        task = task_class(user_id=args.user_id, group_id=group_id, prefetched_context=prefetched)
+    task = _build_task(args.task, args, group_id, prefetched)
 
     prompt = task.build_prompt()
     system_prompt = task.system_prompt
     full_prompt = f"System: {system_prompt}\n\n{prompt}"
-    codex_result = subprocess.run(
-        [config.codex_bin, "--model", config.model, "--prompt", full_prompt],
-        capture_output=True, text=True, cwd=".",
+
+    start_time = time.monotonic()
+    agent_result = subprocess.run(
+        [config.agent_bin, "run", "--model", config.model, full_prompt],
+        capture_output=True,
+        text=True,
+        cwd=".",
     )
-    result = codex_result.stdout
+    duration_s = time.monotonic() - start_time
+
+    if agent_result.returncode != 0:
+        print(f"ERROR: opencode exited with code {agent_result.returncode}", file=sys.stderr)
+        if agent_result.stderr:
+            print(agent_result.stderr, file=sys.stderr)
+        sys.exit(agent_result.returncode)
+
+    result = agent_result.stdout
     print(result)
 
     if not args.no_save:
@@ -117,9 +178,35 @@ def main(argv: list[str] | None = None):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"{args.task}_{timestamp}.md"
         filepath = os.path.join(args.output_dir, filename)
+
+        metadata = _build_metadata(args.task, args, config, group_id, memory_count, duration_s)
         with open(filepath, "w", encoding="utf-8") as f:
+            f.write(metadata)
             f.write(result)
         print(f"\n✓ 结果已保存至 {filepath}", file=sys.stderr)
+
+        # Append to experiment manifest
+        manifest_path = os.path.join(args.output_dir, "manifest.jsonl")
+        entry = {
+            "task": args.task,
+            "model": config.model,
+            "user_id": args.user_id,
+            "group_id": group_id,
+            "timestamp": datetime.now().isoformat(),
+            "duration_seconds": round(duration_s, 1),
+            "prefetched_memories": memory_count,
+            "output_file": filename,
+        }
+        if getattr(args, "focus_person", None):
+            entry["focus_person"] = args.focus_person
+        if getattr(args, "start_date", None):
+            entry["start_date"] = args.start_date
+        if getattr(args, "end_date", None):
+            entry["end_date"] = args.end_date
+        if getattr(args, "keywords", None):
+            entry["keywords"] = args.keywords
+        with open(manifest_path, "a", encoding="utf-8") as mf:
+            mf.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 if __name__ == "__main__":

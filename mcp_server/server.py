@@ -1,7 +1,8 @@
 """EverMemOS MCP Server — wraps EverMemOS REST API as MCP tools for Claude Code."""
 
-import os
 import json
+import os
+
 from mcp.server.fastmcp import FastMCP
 
 from shared.evermemos_api import EverMemosClient
