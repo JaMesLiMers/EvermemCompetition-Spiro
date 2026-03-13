@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: help init init-env deploy stop status add-memory ingest-data convert-gcf ingest-gcf run-task clean codex-bin codex-config
+.PHONY: help init init-env deploy stop status add-memory convert-gcf ingest-gcf run-task clean codex-bin codex-config
 
 # Auto-load .env if it exists
 ifneq (,$(wildcard .env))
@@ -168,17 +168,6 @@ add-memory: ## 存入单条记忆 (CONTENT="..." SENDER="user1" [GROUP_ID=...])
 		-d "{\"message_id\":\"$$(uuidgen 2>/dev/null || python3 -c 'import uuid;print(uuid.uuid4())')\",\"create_time\":\"$$(date -u +%Y-%m-%dT%H:%M:%S+00:00)\",\"sender\":\"$(SENDER)\",\"sender_name\":\"$(SENDER)\",\"content\":\"$(CONTENT)\",\"role\":\"user\"}" \
 		| python3 -m json.tool 2>/dev/null || echo "  ✗ 请求失败，请确认 EverMemOS 是否正在运行"
 
-ingest-data: ## 批量灌入数据 (INPUT=path/to/data.json [LIMIT=N] [RESUME=1] [API_URL=...])
-	@if [ -z "$(INPUT)" ]; then \
-		echo "用法: make ingest-data INPUT=data/basic_events_79ef7f17.json"; \
-		echo "可选: LIMIT=10  RESUME=1  API_URL=http://localhost:1995"; \
-		exit 1; \
-	fi
-	python -m pipeline.ingest_data --input $(INPUT) \
-		$(if $(API_URL),--api-url $(API_URL)) \
-		$(if $(LIMIT),--limit $(LIMIT)) \
-		$(if $(RESUME),--resume)
-
 convert-gcf: ## 转换数据集为 GroupChatFormat (INPUT=path/to/data.json [LIMIT=N])
 	@if [ -z "$(INPUT)" ]; then \
 		echo "用法: make convert-gcf INPUT=data/basic_events_79ef7f17.json"; \
@@ -226,6 +215,5 @@ clean: ## 清理构建产物和运行时文件
 	rm -rf $(CODEX_BIN_DIR) $(CODEX_HOME)
 	rm -rf data/gcf
 	rm -f $(EVERMEMOS_PID) $(WORKER_PID)
-	rm -f pipeline/ingestion_progress.json
 	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './codex/*' -exec rm -rf {} + 2>/dev/null || true
 	@echo "✓ 已清理"

@@ -221,5 +221,5 @@ logs/
 # Analysis output
 output/
 
-# Ingestion progress
-pipeline/ingestion_progress.json
+# GCF conversion output
+data/gcf/
