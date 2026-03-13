@@ -1,20 +1,21 @@
 import os
+import shutil
 from dataclasses import dataclass
 
 
 @dataclass
 class AgentConfig:
-    codex_bin: str
-    model: str = "gpt-4o"
+    agent_bin: str
+    model: str = "opencode/gpt-5-nano"
     evermemos_url: str = "http://localhost:1995"
 
     @classmethod
     def from_env(cls) -> "AgentConfig":
-        codex_bin = os.environ.get("CODEX_BIN")
-        if not codex_bin:
-            raise ValueError("CODEX_BIN environment variable is required")
+        agent_bin = os.environ.get("AGENT_BIN") or shutil.which("opencode")
+        if not agent_bin:
+            raise ValueError("AGENT_BIN environment variable is required or opencode must be on PATH")
         return cls(
-            codex_bin=codex_bin,
-            model=os.environ.get("CODEX_MODEL", "gpt-4o"),
+            agent_bin=agent_bin,
+            model=os.environ.get("AGENT_MODEL", "opencode/gpt-5-nano"),
             evermemos_url=os.environ.get("EVERMEMOS_BASE_URL", "http://localhost:1995"),
         )
