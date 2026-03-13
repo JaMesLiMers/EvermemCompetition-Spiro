@@ -13,6 +13,7 @@ CODEX_BIN ?= $(CODEX_BIN_DIR)/codex
 CODEX_HOME ?= $(PROJECT_DIR)/.codex-local
 CONFIG_FILE := $(CODEX_HOME)/config.toml
 EVERMEMOS_PID := $(PROJECT_DIR)/.evermemos.pid
+WORKER_PID := $(PROJECT_DIR)/.worker.pid
 EVERMEMOS_URL ?= http://localhost:1995
 
 help: ## 显示所有可用命令
@@ -101,14 +102,28 @@ deploy: ## 一键部署：启动基础设施 + EverMemOS 服务
 	@echo "==> 启动 EverMemOS 服务..."
 	@mkdir -p logs
 	@cd EverMemOS && nohup uv run python src/run.py > ../logs/evermemos.log 2>&1 & echo $$! > $(EVERMEMOS_PID)
-	@sleep 3
+	@echo "==> 启动 arq Worker（后台记忆处理）..."
+	@cd EverMemOS/src && nohup ../../EverMemOS/.venv/bin/arq task.WorkerSettings > ../../logs/worker.log 2>&1 & echo $$! > $(WORKER_PID)
+	@sleep 5
 	@if curl -sf $(EVERMEMOS_URL)/api/v1/memories/conversation-meta > /dev/null 2>&1; then \
 		echo "  ✓ EverMemOS 已启动 (PID: $$(cat $(EVERMEMOS_PID)))"; \
 	else \
 		echo "  ⚠ EverMemOS 进程已启动但 API 尚未响应，请检查 logs/evermemos.log"; \
 	fi
+	@if kill -0 $$(cat $(WORKER_PID)) 2>/dev/null; then \
+		echo "  ✓ arq Worker 已启动 (PID: $$(cat $(WORKER_PID)))"; \
+	else \
+		echo "  ✗ arq Worker 启动失败，请检查 logs/worker.log"; \
+	fi
 
 stop: ## 停止所有服务
+	@echo "==> 停止 arq Worker..."
+	@if [ -f $(WORKER_PID) ]; then \
+		kill $$(cat $(WORKER_PID)) 2>/dev/null && echo "  ✓ arq Worker 已停止" || echo "  进程已不存在"; \
+		rm -f $(WORKER_PID); \
+	else \
+		echo "  未找到 PID 文件，跳过"; \
+	fi
 	@echo "==> 停止 EverMemOS..."
 	@if [ -f $(EVERMEMOS_PID) ]; then \
 		kill $$(cat $(EVERMEMOS_PID)) 2>/dev/null && echo "  ✓ EverMemOS 已停止" || echo "  进程已不存在"; \
@@ -135,6 +150,11 @@ status: ## 检查所有服务状态
 		printf "  \033[32m✓\033[0m %-20s %s (PID: %s)\n" "EverMemOS" "$(EVERMEMOS_URL)" "$$(cat $(EVERMEMOS_PID))"; \
 	else \
 		printf "  \033[31m✗\033[0m %-20s %s\n" "EverMemOS" "$(EVERMEMOS_URL)"; \
+	fi
+	@if [ -f $(WORKER_PID) ] && kill -0 $$(cat $(WORKER_PID)) 2>/dev/null; then \
+		printf "  \033[32m✓\033[0m %-20s PID: %s\n" "arq Worker" "$$(cat $(WORKER_PID))"; \
+	else \
+		printf "  \033[31m✗\033[0m %-20s\n" "arq Worker"; \
 	fi
 
 add-memory: ## 存入单条记忆 (CONTENT="..." SENDER="user1" [GROUP_ID=...])
@@ -174,7 +194,7 @@ run-task: ## 运行分析任务 (TASK=relationships|profiling|timeline|suggestio
 
 clean: ## 清理构建产物和运行时文件
 	rm -rf $(CODEX_BIN_DIR) $(CODEX_HOME)
-	rm -f $(EVERMEMOS_PID)
+	rm -f $(EVERMEMOS_PID) $(WORKER_PID)
 	rm -f scripts/ingestion_progress.json
 	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './codex/*' -exec rm -rf {} + 2>/dev/null || true
 	@echo "✓ 已清理"

@@ -218,5 +218,8 @@ Dataset/*
 .evermemos.pid
 logs/
 
+# Analysis output
+output/
+
 # Ingestion progress
 scripts/ingestion_progress.json

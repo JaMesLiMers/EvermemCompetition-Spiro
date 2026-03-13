@@ -7,9 +7,14 @@ class BaseTask:
     system_prompt: str
     user_prompt_template: str
     user_id: str
+    group_id: str | None = None
+    prefetched_context: str = ""
 
     def build_prompt(self, **kwargs) -> str:
-        return self.user_prompt_template.format(user_id=self.user_id, **kwargs)
+        prompt = self.user_prompt_template.format(user_id=self.user_id, **kwargs)
+        if self.prefetched_context:
+            prompt = f"{prompt}\n\n---\n以下是预加载的记忆数据，请基于这些数据进行分析：\n\n{self.prefetched_context}"
+        return prompt
 
     def parse_output(self, raw: str) -> str:
         return raw
