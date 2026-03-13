@@ -4,11 +4,25 @@ from datetime import datetime, timezone
 
 
 class EverMemosClient:
-    """Async HTTP client for EverMemOS REST API."""
+    """Async HTTP client for EverMemOS REST API.
+
+    Uses a shared httpx.AsyncClient for connection reuse. Use as async context manager
+    or call close() explicitly.
+    """
 
     def __init__(self, base_url: str = "http://localhost:1995"):
         self.base_url = base_url.rstrip("/")
         self.api_prefix = f"{self.base_url}/api/v1/memories"
+        self._client = httpx.AsyncClient(timeout=30.0)
+
+    async def close(self):
+        await self._client.aclose()
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *exc):
+        await self.close()
 
     async def store_message(
         self,
@@ -35,14 +49,13 @@ class EverMemosClient:
         if group_name:
             payload["group_name"] = group_name
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.post(
-                self.api_prefix,
-                json=payload,
-                headers={"Content-Type": "application/json"},
-            )
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.post(
+            self.api_prefix,
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        resp.raise_for_status()
+        return resp.json()
 
     async def create_conversation_meta(
         self,
@@ -52,12 +65,10 @@ class EverMemosClient:
         scene_desc: dict,
         user_details: dict,
         created_at: str,
-        version: str = "1.0",
         default_timezone: str = "Asia/Shanghai",
     ) -> dict:
         """Create or update conversation metadata."""
         payload = {
-            "version": version,
             "scene": scene,
             "scene_desc": scene_desc,
             "name": name,
@@ -67,14 +78,13 @@ class EverMemosClient:
             "user_details": user_details,
             "tags": [],
         }
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.post(
-                f"{self.api_prefix}/conversation-meta",
-                json=payload,
-                headers={"Content-Type": "application/json"},
-            )
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.post(
+            f"{self.api_prefix}/conversation-meta",
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        resp.raise_for_status()
+        return resp.json()
 
     async def search_memory(
         self,
@@ -104,15 +114,14 @@ class EverMemosClient:
         if end_time:
             payload["end_time"] = end_time
 
-        async with httpx.AsyncClient(timeout=60.0) as client:
-            resp = await client.request(
-                "GET",
-                f"{self.api_prefix}/search",
-                json=payload,
-                headers={"Content-Type": "application/json"},
-            )
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.request(
+            "GET",
+            f"{self.api_prefix}/search",
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        resp.raise_for_status()
+        return resp.json()
 
     async def get_memories(
         self,
@@ -139,22 +148,20 @@ class EverMemosClient:
         if end_time:
             params["end_time"] = end_time
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.get(self.api_prefix, params=params)
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.get(self.api_prefix, params=params)
+        resp.raise_for_status()
+        return resp.json()
 
     async def get_conversation_meta(self, group_id: str | None = None) -> dict:
         """Get conversation metadata."""
         params = {}
         if group_id:
             params["group_id"] = group_id
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.get(
-                f"{self.api_prefix}/conversation-meta", params=params
-            )
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.get(
+            f"{self.api_prefix}/conversation-meta", params=params
+        )
+        resp.raise_for_status()
+        return resp.json()
 
     async def delete_memories(
         self,
@@ -171,12 +178,11 @@ class EverMemosClient:
         if group_id:
             payload["group_id"] = group_id
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.request(
-                "DELETE",
-                self.api_prefix,
-                json=payload,
-                headers={"Content-Type": "application/json"},
-            )
-            resp.raise_for_status()
-            return resp.json()
+        resp = await self._client.request(
+            "DELETE",
+            self.api_prefix,
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        resp.raise_for_status()
+        return resp.json()

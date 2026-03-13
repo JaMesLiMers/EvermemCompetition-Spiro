@@ -16,11 +16,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from scripts.transcript_parser import (
-    parse_transcript_with_metadata,
-    parse_speaker_analysis,
-    match_speaker,
-)
+from scripts.transcript_parser import parse_transcript_with_metadata
 from scripts.evermemos_api import EverMemosClient
 
 TIMEZONE = ZoneInfo("Asia/Shanghai")
@@ -32,31 +28,13 @@ def epoch_to_iso(epoch: int) -> str:
     return datetime.fromtimestamp(epoch, tz=TIMEZONE).isoformat()
 
 
-def build_user_details(speakers: list[dict], transcript_labels: list[str]) -> dict:
-    """Build user_details dict for conversation-meta from speaker analysis."""
+def build_user_details(speaker_labels: list[str]) -> dict:
+    """Build user_details dict for conversation-meta from transcript speaker labels."""
     details = {}
-    for s in speakers:
-        sid = s.get("unified_speaker_id", "unknown")
-        identity = s.get("identity", "")
-        relation = s.get("relation_to_user", "")
-        label = None
-        for tl in transcript_labels:
-            if identity and (identity in tl or tl in identity):
-                label = tl
-                break
-            if relation and (relation in tl or tl in relation):
-                label = tl
-                break
-        name = label or identity or relation or sid
-        details[sid] = {
-            "full_name": name,
+    for label in speaker_labels:
+        details[label] = {
+            "full_name": label,
             "role": "user",
-            "custom_role": identity,
-            "extra": {
-                "is_user": s.get("is_user", False),
-                "gender": s.get("gender", "unknown"),
-                "relation_to_user": relation,
-            },
         }
     return details
 
@@ -84,7 +62,6 @@ async def ingest_event(client: EverMemosClient, event: dict, progress: dict) -> 
         print(f"  SKIP (empty transcript): {event_id}")
         return True
 
-    speakers = parse_speaker_analysis(obj.get("basic_speaker_analysis", ""))
     parsed = parse_transcript_with_metadata(transcript, meta["basic_start_time"])
     turns = parsed["turns"]
     if not turns:
@@ -98,13 +75,13 @@ async def ingest_event(client: EverMemosClient, event: dict, progress: dict) -> 
         "description": obj.get("basic_scene", ""),
         "type": basic_types[0] if basic_types else "unknown",
     }
-    user_details = build_user_details(speakers, parsed["speakers"])
+    user_details = build_user_details(parsed["speakers"])
 
     try:
         await client.create_conversation_meta(
             group_id=event_id,
             name=title,
-            scene="assistant",
+            scene="group_chat",
             scene_desc=scene_desc,
             user_details=user_details,
             created_at=epoch_to_iso(meta["basic_start_time"]),
@@ -116,8 +93,7 @@ async def ingest_event(client: EverMemosClient, event: dict, progress: dict) -> 
     # Send each turn as a message
     failed_turns = []
     for idx, turn in enumerate(turns):
-        speaker_info = match_speaker(turn["speaker_label"], speakers)
-        sender = speaker_info["unified_speaker_id"] if speaker_info else turn["speaker_label"]
+        sender = turn["speaker_label"]
         sender_name = turn["speaker_label"]
 
         try:
@@ -195,11 +171,13 @@ async def main():
     with open(input_path, "r", encoding="utf-8") as f:
         events = json.load(f)
 
+    # Sort events chronologically
+    events.sort(key=lambda e: e["meta"]["basic_start_time"])
+
     print(f"Loaded {len(events)} events from {input_path}")
 
     progress = load_progress() if args.resume else {"completed": [], "failed": {}}
     completed_set = set(progress["completed"])
-    client = EverMemosClient(args.api_url)
 
     total = len(events)
     if args.limit > 0:
@@ -210,24 +188,25 @@ async def main():
     skip_count = 0
     fail_count = 0
 
-    for i, event in enumerate(events):
-        event_id = event["meta"]["basic_event_id"]
-        if event_id in completed_set:
-            skip_count += 1
-            continue
+    async with EverMemosClient(args.api_url) as client:
+        for i, event in enumerate(events):
+            event_id = event["meta"]["basic_event_id"]
+            if event_id in completed_set:
+                skip_count += 1
+                continue
 
-        title = event["object"].get("basic_title", "")
-        print(f"[{i+1}/{total}] {event_id[:12]}... {title[:40]}")
+            title = event["object"].get("basic_title", "")
+            print(f"[{i+1}/{total}] {event_id[:12]}... {title[:40]}")
 
-        ok = await ingest_event(client, event, progress)
-        if ok:
-            success_count += 1
-            progress["completed"].append(event_id)
-        else:
-            fail_count += 1
+            ok = await ingest_event(client, event, progress)
+            if ok:
+                success_count += 1
+                progress["completed"].append(event_id)
+            else:
+                fail_count += 1
 
-        if (i + 1) % 10 == 0:
-            save_progress(progress)
+            if (i + 1) % 10 == 0:
+                save_progress(progress)
 
     save_progress(progress)
     print(f"\nDone: {success_count} succeeded, {fail_count} failed, {skip_count} skipped (already done)")

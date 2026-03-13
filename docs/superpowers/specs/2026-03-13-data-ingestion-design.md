@@ -51,14 +51,13 @@ Two time formats in Fragment headers:
 3. Parse each line:
    - Try Format A: `\[(\d{2}:\d{2})\]\[(.+?)\]: (.+)` → (offset, speaker, content)
    - Fallback Format B: `\[(.+?)\]: (.+)` → (speaker, content), no time offset
-4. Strip audio annotations using a whitelist of known patterns: `[音调平稳]`, `[语速:较快]`, `[思考停顿]`, `[专业语气]`, `[认真语气]`, `[犹豫停顿]`, `[语调降低]`, `[肯定语气]`, `[表示理解]`, `[引导语气]`, `[列举语气]`, `[举例说明]`, `[音量恢复]`, `[语速平缓]`, `[音调上扬]`, `[语速稍快]`, `[正常语速]` etc. Pattern: match `\[[^\[\]]+\]` at the start of content, check against known annotation keywords (音调, 语速, 语气, 停顿, 音量, 说明, 理解, 引导, 列举)
+4. Strip audio annotations using a whitelist of known annotation keywords: 音调, 语速, 语气, 停顿, 音量, 说明, 理解, 引导, 列举, 表示, 肯定, 犹豫, 思考, 认真, 专业, 正常, 平稳, 较快, 稍快, 平缓, 上扬, 降低, 恢复. Only `[...]` brackets containing these keywords are stripped; other brackets (e.g., `[APP名称]`) are preserved.
 5. Calculate absolute time:
    - Format A: Fragment start + MM:SS offset
    - Format B: Interpolate evenly across Fragment duration based on turn index within that Fragment
 6. Map sender:
-   - `[user]` → user_id `79ef7f17-9d24-4a85-a6fe-de7d060bc090`
-   - All other labels → use label string as sender ID
-   - Note: without speaker_analysis data, we cannot determine which non-`[user]` speaker is the actual user in events that don't have a `[user]` label
+   - Use the speaker label string directly as both sender and sender_name
+   - No speaker_analysis mapping (field not present in dataset)
 
 ### Special Speaker Labels
 
@@ -76,10 +75,10 @@ Each parsed speaker turn becomes one message:
 
 ```json
 {
-  "message_id": "{event_id}_{fragment_idx}_{turn_idx}",
+  "message_id": "{event_id}_{turn_idx}",
   "create_time": "2026-02-23T06:13:30+08:00",
-  "sender": "unified_001",
-  "sender_name": "unified_001",
+  "sender": "speaker_label",
+  "sender_name": "speaker_label",
   "content": "cleaned text without annotations",
   "group_id": "{basic_event_id}",
   "role": "user"
@@ -104,8 +103,8 @@ Before sending messages for each event, create conversation metadata:
   "created_at": "ISO8601 of basic_start_time in Asia/Shanghai",
   "default_timezone": "Asia/Shanghai",
   "user_details": {
-    "79ef7f17-...": {"full_name": "user", "role": "user"},
-    "unified_001": {"full_name": "unified_001", "role": "user"}
+    "Speaker A": {"full_name": "Speaker A", "role": "user"},
+    "Speaker B": {"full_name": "Speaker B", "role": "user"}
   }
 }
 ```

@@ -1,37 +1,85 @@
 import re
-import json
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-TURN_PATTERN = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
-ANNOTATION_PATTERN = re.compile(r"\[[^\[\]]{1,20}\]\s*")
+TURN_PATTERN_A = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
+TURN_PATTERN_B = re.compile(r"^\[([^\]]+)\]:\s*(.+)$")
+ANNOTATION_KEYWORDS = re.compile(
+    r"\["
+    r"(?:[^\[\]]*(?:音调|语速|语气|停顿|音量|说明|理解|引导|列举|表示|肯定|犹豫|思考|认真|专业|正常|平稳|较快|稍快|平缓|上扬|降低|恢复)[^\[\]]*)"
+    r"\]\s*"
+)
 FRAGMENT_PATTERN = re.compile(r"^\[Fragment \d+:\s*(.+?)\s*-\s*(.+?)\]$")
 TITLE_PATTERN = re.compile(r"^标题:\s*(.+)$")
 TYPE_PATTERN = re.compile(r"^类型:\s*(.+)$")
 TIMEZONE = ZoneInfo("Asia/Shanghai")
 
 
-def parse_speaker_turns(lines: list[str], fragment_base_epoch: int) -> list[dict]:
-    """Parse transcript lines into speaker turns with absolute timestamps."""
+def parse_speaker_turns(
+    lines: list[str],
+    fragment_base_epoch: int,
+    fragment_duration: int = 0,
+) -> list[dict]:
+    """Parse transcript lines into speaker turns with absolute timestamps.
+
+    Supports Format A ([MM:SS][speaker]: text) and Format B ([speaker]: text).
+    Format B turns get interpolated timestamps across the fragment duration.
+    """
     turns = []
+    format_b_indices: list[int] = []
+
     for line in lines:
-        m = TURN_PATTERN.match(line.strip())
-        if not m:
+        stripped = line.strip()
+        # Try Format A first
+        m = TURN_PATTERN_A.match(stripped)
+        if m:
+            minutes, seconds = int(m.group(1)), int(m.group(2))
+            speaker_label = m.group(3)
+            raw_content = m.group(4)
+            content = ANNOTATION_KEYWORDS.sub("", raw_content).strip()
+            if not content:
+                continue
+            offset_seconds = minutes * 60 + seconds
+            turns.append({
+                "speaker_label": speaker_label,
+                "content": content,
+                "offset_seconds": offset_seconds,
+                "absolute_epoch": fragment_base_epoch + offset_seconds,
+            })
             continue
-        minutes, seconds = int(m.group(1)), int(m.group(2))
-        speaker_label = m.group(3)
-        raw_content = m.group(4)
-        content = ANNOTATION_PATTERN.sub("", raw_content).strip()
-        if not content:
-            continue
-        offset_seconds = minutes * 60 + seconds
-        absolute_epoch = fragment_base_epoch + offset_seconds
-        turns.append({
-            "speaker_label": speaker_label,
-            "content": content,
-            "offset_seconds": offset_seconds,
-            "absolute_epoch": absolute_epoch,
-        })
+
+        # Fallback to Format B
+        m = TURN_PATTERN_B.match(stripped)
+        if m:
+            speaker_label = m.group(1)
+            raw_content = m.group(2)
+            # Skip Fragment headers and metadata lines that match the pattern
+            if speaker_label.startswith("Fragment "):
+                continue
+            content = ANNOTATION_KEYWORDS.sub("", raw_content).strip()
+            if not content:
+                continue
+            turns.append({
+                "speaker_label": speaker_label,
+                "content": content,
+                "offset_seconds": 0,
+                "absolute_epoch": fragment_base_epoch,
+            })
+            format_b_indices.append(len(turns) - 1)
+
+    # Interpolate Format B timestamps evenly across fragment duration
+    if format_b_indices and fragment_duration > 0:
+        count = len(format_b_indices)
+        for i, idx in enumerate(format_b_indices):
+            offset = int(fragment_duration * i / max(count, 1))
+            turns[idx]["offset_seconds"] = offset
+            turns[idx]["absolute_epoch"] = fragment_base_epoch + offset
+    elif format_b_indices:
+        # No duration info: assign 1s increments
+        for i, idx in enumerate(format_b_indices):
+            turns[idx]["offset_seconds"] = i
+            turns[idx]["absolute_epoch"] = fragment_base_epoch + i
+
     return turns
 
 
@@ -71,6 +119,7 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
     all_turns = []
     current_fragment_lines = []
     current_fragment_base = event_start_epoch
+    current_fragment_end = event_start_epoch
     title = None
     types = []
 
@@ -80,9 +129,13 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
         fm = FRAGMENT_PATTERN.match(stripped)
         if fm:
             if current_fragment_lines:
-                all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base))
+                duration = max(0, current_fragment_end - current_fragment_base)
+                all_turns.extend(parse_speaker_turns(
+                    current_fragment_lines, current_fragment_base, duration
+                ))
                 current_fragment_lines = []
             current_fragment_base = parse_fragment_time(fm.group(1), event_start_epoch)
+            current_fragment_end = parse_fragment_time(fm.group(2), current_fragment_base)
             continue
 
         # Extract title from first occurrence
@@ -102,7 +155,10 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
         current_fragment_lines.append(line)
 
     if current_fragment_lines:
-        all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base))
+        duration = max(0, current_fragment_end - current_fragment_base)
+        all_turns.extend(parse_speaker_turns(
+            current_fragment_lines, current_fragment_base, duration
+        ))
 
     speakers = list({t["speaker_label"] for t in all_turns})
 
@@ -112,31 +168,3 @@ def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> d
         "types": types,
         "speakers": speakers,
     }
-
-
-def parse_speaker_analysis(speaker_analysis_json) -> list[dict]:
-    """Parse the basic_speaker_analysis into a list of speaker info dicts.
-
-    Handles both JSON string and pre-parsed list inputs."""
-    if not speaker_analysis_json:
-        return []
-    if isinstance(speaker_analysis_json, list):
-        return speaker_analysis_json
-    try:
-        return json.loads(speaker_analysis_json)
-    except (json.JSONDecodeError, TypeError):
-        return []
-
-
-def match_speaker(speaker_label: str, speakers: list[dict]) -> dict | None:
-    """Match a transcript speaker label to a speaker analysis entry.
-
-    Uses substring matching on identity and relation_to_user fields."""
-    for s in speakers:
-        identity = s.get("identity", "")
-        relation = s.get("relation_to_user", "")
-        if identity and (identity in speaker_label or speaker_label in identity):
-            return s
-        if relation and (relation in speaker_label or speaker_label in relation):
-            return s
-    return None
