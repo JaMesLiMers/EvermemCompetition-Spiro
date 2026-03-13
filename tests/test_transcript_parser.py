@@ -1,4 +1,4 @@
-from scripts.transcript_parser import parse_speaker_turns, parse_transcript, parse_transcript_with_metadata
+from pipeline.transcript_parser import parse_speaker_turns, parse_transcript, parse_transcript_with_metadata
 
 
 def test_parse_single_turn_format_a():

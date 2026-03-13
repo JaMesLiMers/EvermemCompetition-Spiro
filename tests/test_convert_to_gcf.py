@@ -1,5 +1,5 @@
 # tests/test_convert_to_gcf.py
-from scripts.convert_to_gcf import (
+from pipeline.convert_to_gcf import (
     parse_fragments, normalize_speaker, should_skip_speaker,
     build_gcf_groups, convert_event,
 )

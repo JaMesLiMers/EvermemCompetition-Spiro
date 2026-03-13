@@ -1,7 +1,7 @@
-from codex_agent.tasks.relationships import RelationshipsTask
-from codex_agent.tasks.profiling import ProfilingTask
-from codex_agent.tasks.timeline import TimelineTask
-from codex_agent.tasks.suggestions import SuggestionsTask
+from agent.tasks.relationships import RelationshipsTask
+from agent.tasks.profiling import ProfilingTask
+from agent.tasks.timeline import TimelineTask
+from agent.tasks.suggestions import SuggestionsTask
 
 
 def test_relationships_task_build_prompt_default():

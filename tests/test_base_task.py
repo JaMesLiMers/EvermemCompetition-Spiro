@@ -1,4 +1,4 @@
-from codex_agent.tasks.base import BaseTask
+from agent.tasks.base import BaseTask
 
 
 def test_build_prompt_substitutes_template():

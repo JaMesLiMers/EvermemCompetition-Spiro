@@ -1,7 +1,7 @@
 import pytest
 import httpx
 from unittest.mock import AsyncMock, patch, MagicMock
-from scripts.evermemos_api import EverMemosClient
+from shared.evermemos_api import EverMemosClient
 
 
 @pytest.fixture
