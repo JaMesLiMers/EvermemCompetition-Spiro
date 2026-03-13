@@ -6,11 +6,13 @@ import os
 import subprocess
 import sys
 import time
+import re
 from datetime import datetime
 
 from shared.evermemos_api import EverMemosClient
 
 from .config import AgentConfig
+from .tasks.event_cards import EventCardsTask
 from .tasks.profiling import ProfilingTask
 from .tasks.relationships import RelationshipsTask
 from .tasks.suggestions import SuggestionsTask
@@ -21,6 +23,7 @@ TASK_REGISTRY = {
     "profiling": ProfilingTask,
     "timeline": TimelineTask,
     "suggestions": SuggestionsTask,
+    "event_cards": EventCardsTask,
 }
 
 
@@ -52,6 +55,25 @@ async def prefetch_memories(base_url: str, group_id: str) -> tuple[str, int]:
         await client.close()
 
 
+def _extract_json(raw: str) -> str:
+    """Extract JSON from agent output, stripping markdown fences or surrounding text."""
+    # Try to find JSON in ```json ... ``` blocks
+    m = re.search(r"```json\s*\n(.*?)\n\s*```", raw, re.DOTALL)
+    if m:
+        return m.group(1).strip()
+    # Try to find a top-level JSON object
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
+    if m:
+        candidate = m.group(0)
+        try:
+            json.loads(candidate)
+            return candidate
+        except json.JSONDecodeError:
+            pass
+    # Fallback: return raw
+    return raw.strip()
+
+
 def _build_task(task_name: str, args: argparse.Namespace, group_id: str | None, prefetched: str):
     """Build a task instance from parsed CLI arguments."""
     task_class = TASK_REGISTRY[task_name]
@@ -76,38 +98,6 @@ def _build_task(task_name: str, args: argparse.Namespace, group_id: str | None, 
             kwargs[key] = value
 
     return task_class(**kwargs)
-
-
-def _build_metadata(
-    task_name: str,
-    args: argparse.Namespace,
-    config: AgentConfig,
-    group_id: str | None,
-    memory_count: int,
-    duration_s: float,
-) -> str:
-    """Build YAML frontmatter metadata for output files."""
-    lines = [
-        "---",
-        f"task: {task_name}",
-        f"model: {config.model}",
-        f"user_id: {args.user_id}",
-        f"group_id: {group_id or 'N/A'}",
-        f"timestamp: {datetime.now().isoformat()}",
-        f"duration_seconds: {duration_s:.1f}",
-        f"prefetched_memories: {memory_count}",
-    ]
-    if getattr(args, "focus_person", None):
-        lines.append(f"focus_person: {args.focus_person}")
-    if getattr(args, "start_date", None):
-        lines.append(f"start_date: {args.start_date}")
-    if getattr(args, "end_date", None):
-        lines.append(f"end_date: {args.end_date}")
-    if getattr(args, "keywords", None):
-        lines.append(f"keywords: {args.keywords}")
-    lines.append("---")
-    lines.append("")
-    return "\n".join(lines)
 
 
 def main(argv: list[str] | None = None):
@@ -170,19 +160,44 @@ def main(argv: list[str] | None = None):
             print(agent_result.stderr, file=sys.stderr)
         sys.exit(agent_result.returncode)
 
-    result = agent_result.stdout
+    raw_result = agent_result.stdout
+    result = _extract_json(raw_result)
     print(result)
 
     if not args.no_save:
         os.makedirs(args.output_dir, exist_ok=True)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{args.task}_{timestamp}.md"
+        filename = f"{args.task}_{timestamp}.json"
         filepath = os.path.join(args.output_dir, filename)
 
-        metadata = _build_metadata(args.task, args, config, group_id, memory_count, duration_s)
+        # Wrap result with metadata into a JSON envelope
+        metadata = {
+            "task": args.task,
+            "model": config.model,
+            "user_id": args.user_id,
+            "group_id": group_id or None,
+            "timestamp": datetime.now().isoformat(),
+            "duration_seconds": round(duration_s, 1),
+            "prefetched_memories": memory_count,
+        }
+        if getattr(args, "focus_person", None):
+            metadata["focus_person"] = args.focus_person
+        if getattr(args, "start_date", None):
+            metadata["start_date"] = args.start_date
+        if getattr(args, "end_date", None):
+            metadata["end_date"] = args.end_date
+        if getattr(args, "keywords", None):
+            metadata["keywords"] = args.keywords
+
+        # Try to parse result as JSON for clean output; fallback to raw string
+        try:
+            result_obj = json.loads(result)
+        except (json.JSONDecodeError, TypeError):
+            result_obj = result
+
+        envelope = {"metadata": metadata, "result": result_obj}
         with open(filepath, "w", encoding="utf-8") as f:
-            f.write(metadata)
-            f.write(result)
+            json.dump(envelope, f, ensure_ascii=False, indent=2)
         print(f"\n✓ 结果已保存至 {filepath}", file=sys.stderr)
 
         # Append to experiment manifest

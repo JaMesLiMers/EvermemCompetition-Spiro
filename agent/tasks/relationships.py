@@ -16,15 +16,34 @@ SYSTEM_PROMPT = """你是一个记忆分析助手，专门分析人际关系。
 3. 分析每个人物的角色、特征、与其他人的互动模式
 4. 如需补充搜索，使用 group_id 而非 user_id
 
-输出格式：
-## 人物列表
-- 姓名 | 身份/角色 | 关键特征
+**你必须严格以 JSON 格式输出，不要包含任何 markdown 或其他文本。输出一个合法的 JSON 对象，格式如下：**
 
-## 关系图谱
-- A ↔ B: 关系类型 + 互动特点
-
-## 关键互动事件
-- 事件描述 + 涉及人物 + 反映的关系特征"""
+```json
+{
+  "persons": [
+    {
+      "name": "姓名",
+      "role": "身份/角色",
+      "key_traits": ["特征1", "特征2"]
+    }
+  ],
+  "relationships": [
+    {
+      "person_a": "A",
+      "person_b": "B",
+      "relationship_type": "关系类型",
+      "interaction_pattern": "互动特点描述"
+    }
+  ],
+  "key_interactions": [
+    {
+      "event": "事件描述",
+      "participants": ["人物A", "人物B"],
+      "relationship_insight": "反映的关系特征"
+    }
+  ]
+}
+```"""
 
 
 @dataclass
