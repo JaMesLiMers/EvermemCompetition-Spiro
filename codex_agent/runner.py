@@ -15,6 +15,11 @@ class TaskRunner:
             "OPENAI_BASE_URL": self.config.base_url,
             "OPENAI_API_KEY": self.config.api_key,
         }
+        # Forward CODEX_HOME if set, so Codex reads local config.toml
+        import os
+        codex_home = os.environ.get("CODEX_HOME")
+        if codex_home:
+            env["CODEX_HOME"] = codex_home
         return AppServerConfig(
             codex_bin=self.config.codex_bin,
             env=env,

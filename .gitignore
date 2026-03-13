@@ -209,3 +209,7 @@ __marimo__/
 # Dataset JSON files
 Dataset/*
 !Dataset/README.md
+
+# Codex local binaries and config
+.codex-bin/
+.codex-local/
