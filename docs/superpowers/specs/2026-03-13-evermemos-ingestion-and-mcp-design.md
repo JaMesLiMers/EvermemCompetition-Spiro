@@ -163,9 +163,9 @@ Search memories using various retrieval methods.
 **Parameters:**
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `query` | string | no | - | Search query text (at least one of query, user_id, or group_id required) |
-| `user_id` | string | no | - | User ID filter |
-| `group_id` | string | no | - | Group ID filter |
+| `query` | string | no | - | Search query text |
+| `user_id` | string | no | - | User ID filter (at least one of user_id or group_id required) |
+| `group_id` | string | no | - | Group ID filter (at least one of user_id or group_id required) |
 | `retrieve_method` | string | no | `"keyword"` | One of: keyword, vector, hybrid, rrf, agentic |
 | `memory_types` | list[string] | no | `["episodic_memory"]` | Types: episodic_memory, foresight, event_log |
 | `top_k` | int | no | 40 | Max results (max: 100) |
