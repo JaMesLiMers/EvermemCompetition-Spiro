@@ -6,10 +6,11 @@ import os
 import sys
 from datetime import datetime
 
-from scripts.evermemos_api import EverMemosClient
+import subprocess
+
+from shared.evermemos_api import EverMemosClient
 
 from .config import AgentConfig
-from .runner import TaskRunner
 from .tasks.relationships import RelationshipsTask
 from .tasks.profiling import ProfilingTask
 from .tasks.timeline import TimelineTask
@@ -69,7 +70,7 @@ def main(argv: list[str] | None = None):
     group_id = args.group_id
     if not group_id:
         try:
-            dataset_path = "Dataset/basic_events_79ef7f17.json"
+            dataset_path = "data/basic_events_79ef7f17.json"
             with open(dataset_path) as f:
                 events = json.load(f)
             events.sort(key=lambda e: e["meta"]["basic_start_time"])
@@ -86,8 +87,6 @@ def main(argv: list[str] | None = None):
         if prefetched:
             print(f"Pre-fetched context ready ({len(prefetched)} chars)", file=sys.stderr)
 
-    runner = TaskRunner(config)
-
     task_class = TASK_REGISTRY[args.task]
     if args.task == "relationships":
         task = task_class(user_id=args.user_id, focus_person=args.focus_person, group_id=group_id, prefetched_context=prefetched)
@@ -103,7 +102,14 @@ def main(argv: list[str] | None = None):
     else:
         task = task_class(user_id=args.user_id, group_id=group_id, prefetched_context=prefetched)
 
-    result = runner.run(task)
+    prompt = task.build_prompt()
+    system_prompt = task.system_prompt
+    full_prompt = f"System: {system_prompt}\n\n{prompt}"
+    codex_result = subprocess.run(
+        [config.codex_bin, "--model", config.model, "--prompt", full_prompt],
+        capture_output=True, text=True, cwd=".",
+    )
+    result = codex_result.stdout
     print(result)
 
     if not args.no_save:

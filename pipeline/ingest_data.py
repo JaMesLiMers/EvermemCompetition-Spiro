@@ -16,11 +16,11 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from scripts.transcript_parser import parse_transcript_with_metadata
-from scripts.evermemos_api import EverMemosClient
+from pipeline.transcript_parser import parse_transcript_with_metadata
+from shared.evermemos_api import EverMemosClient
 
 TIMEZONE = ZoneInfo("Asia/Shanghai")
-PROGRESS_FILE = Path("scripts/ingestion_progress.json")
+PROGRESS_FILE = Path("pipeline/ingestion_progress.json")
 
 
 def epoch_to_iso(epoch: int) -> str:

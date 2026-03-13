@@ -4,7 +4,7 @@ import os
 import json
 from mcp.server.fastmcp import FastMCP
 
-from scripts.evermemos_api import EverMemosClient
+from shared.evermemos_api import EverMemosClient
 
 BASE_URL = os.environ.get("EVERMEMOS_BASE_URL", "http://localhost:1995")
 

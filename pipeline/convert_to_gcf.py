@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from scripts.transcript_parser import (
+from pipeline.transcript_parser import (
     FRAGMENT_PATTERN,
     TITLE_PATTERN,
     TYPE_PATTERN,
