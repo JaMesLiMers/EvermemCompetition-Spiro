@@ -87,18 +87,19 @@ Wraps the Codex Python SDK (`codex-app-server` package, importable as `codex_app
 **Thread/turn lifecycle per task:**
 1. Create `AppServerConfig` with `env={"OPENAI_BASE_URL": ..., "OPENAI_API_KEY": ...}` and optional `codex_bin`
 2. Start `AppServerClient` as context manager
-3. Call `thread_start(ThreadStartParams(model=..., developer_instructions=task.system_prompt))` — one thread per task
+3. Call `client.initialize()` to perform JSON-RPC handshake
+4. Call `thread_start(ThreadStartParams(model=..., developer_instructions=task.system_prompt))` — one thread per task
 4. Call `turn_start(thread_id, task.build_prompt())` to submit the user prompt
 5. Call `wait_for_turn_completed(turn_id)` to block until agent finishes (agent autonomously calls MCP tools during this phase)
 6. Extract result text from `TurnCompletedNotification`
 7. Client closes on context manager exit
 
-**Approval policy:** Set `approval_policy` to auto-approve on `ThreadStartParams`, since the agent needs to call MCP tools autonomously without human approval gates.
+**Approval policy:** The SDK's default `approval_handler` already auto-approves tool calls (returns `{"decision": "accept"}`), so no explicit `approval_policy` is needed on `ThreadStartParams`.
 
 **Error handling:**
 - `AppServerError` / `JsonRpcError` — log and re-raise with context
 - `TransportClosedError` — Codex process crashed, log stderr and raise
-- Use `retry_on_overload` for rate limit / overload errors from the model provider
+- Use `client.request_with_retry_on_overload()` for rate limit / overload errors from the model provider
 
 ### BaseTask (`tasks/base.py`)
 
@@ -186,6 +187,7 @@ with AppServerClient(config=AppServerConfig(
     codex_bin=self.config.codex_bin,
     env={"OPENAI_BASE_URL": self.config.base_url, "OPENAI_API_KEY": self.config.api_key},
 )) as client:
+    client.initialize()
     thread = client.thread_start(ThreadStartParams(
         model=self.config.model,
         developer_instructions=task.system_prompt,
