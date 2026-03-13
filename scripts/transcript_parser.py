@@ -6,6 +6,8 @@ from zoneinfo import ZoneInfo
 TURN_PATTERN = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
 ANNOTATION_PATTERN = re.compile(r"\[[^\[\]]{1,20}\]\s*")
 FRAGMENT_PATTERN = re.compile(r"^\[Fragment \d+:\s*(.+?)\s*-\s*(.+?)\]$")
+TITLE_PATTERN = re.compile(r"^标题:\s*(.+)$")
+TYPE_PATTERN = re.compile(r"^类型:\s*(.+)$")
 TIMEZONE = ZoneInfo("Asia/Shanghai")
 
 
@@ -52,25 +54,64 @@ def parse_transcript(transcript: str, event_start_epoch: int) -> list[dict]:
     """Parse a full transcript into speaker turns with absolute timestamps.
 
     Handles multiple Fragments, each with their own base time."""
+    result = parse_transcript_with_metadata(transcript, event_start_epoch)
+    return result["turns"]
+
+
+def parse_transcript_with_metadata(transcript: str, event_start_epoch: int) -> dict:
+    """Parse a full transcript, extracting both speaker turns and metadata.
+
+    Returns dict with:
+      - turns: list of speaker turn dicts
+      - title: first Fragment's title (from '标题:' line), or None
+      - types: first Fragment's types (from '类型:' line), or []
+      - speakers: set of unique speaker labels found
+    """
     lines = transcript.split("\n")
     all_turns = []
     current_fragment_lines = []
     current_fragment_base = event_start_epoch
+    title = None
+    types = []
 
     for line in lines:
-        fm = FRAGMENT_PATTERN.match(line.strip())
+        stripped = line.strip()
+
+        fm = FRAGMENT_PATTERN.match(stripped)
         if fm:
             if current_fragment_lines:
                 all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base))
                 current_fragment_lines = []
             current_fragment_base = parse_fragment_time(fm.group(1), event_start_epoch)
             continue
+
+        # Extract title from first occurrence
+        if title is None:
+            tm = TITLE_PATTERN.match(stripped)
+            if tm:
+                title = tm.group(1).strip()
+                continue
+
+        # Extract types from first occurrence
+        if not types:
+            tp = TYPE_PATTERN.match(stripped)
+            if tp:
+                types = [t.strip() for t in tp.group(1).split(",")]
+                continue
+
         current_fragment_lines.append(line)
 
     if current_fragment_lines:
         all_turns.extend(parse_speaker_turns(current_fragment_lines, current_fragment_base))
 
-    return all_turns
+    speakers = list({t["speaker_label"] for t in all_turns})
+
+    return {
+        "turns": all_turns,
+        "title": title,
+        "types": types,
+        "speakers": speakers,
+    }
 
 
 def parse_speaker_analysis(speaker_analysis_json) -> list[dict]:
