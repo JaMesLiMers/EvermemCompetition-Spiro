@@ -1,7 +1,7 @@
 """Convert competition dataset events to EverMemOS GroupChatFormat JSON files.
 
 Usage:
-    python scripts/convert_to_gcf.py --input Dataset/basic_events_79ef7f17.json --output data/gcf/
+    python -m pipeline.convert_to_gcf --input data/basic_events_79ef7f17.json --output data/gcf/
 """
 
 import argparse

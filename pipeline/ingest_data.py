@@ -1,10 +1,10 @@
-# scripts/ingest_data.py
+# pipeline/ingest_data.py
 """
 Batch ingest Dataset events into EverMemOS.
 
 Usage:
-    python scripts/ingest_data.py --input Dataset/basic_events_79ef7f17.json --limit 2
-    python scripts/ingest_data.py --input Dataset/basic_events_79ef7f17.json --resume
+    python -m pipeline.ingest_data --input data/basic_events_79ef7f17.json --limit 2
+    python -m pipeline.ingest_data --input data/basic_events_79ef7f17.json --resume
 """
 
 import argparse

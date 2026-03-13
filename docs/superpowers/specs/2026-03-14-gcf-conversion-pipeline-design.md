@@ -14,12 +14,12 @@ The current `ingest_data.py` script sends raw transcript turns directly to the E
 
 ## Solution Overview
 
-Build a conversion script (`scripts/convert_to_gcf.py`) that transforms competition dataset events into GroupChatFormat JSON files, then ingest via EverMemOS's official `run_memorize.py`.
+Build a conversion script (`pipeline/convert_to_gcf.py`) that transforms competition dataset events into GroupChatFormat JSON files, then ingest via EverMemOS's official `run_memorize.py`.
 
 ```
 Dataset JSON (832 events)
     ↓
-scripts/convert_to_gcf.py
+pipeline/convert_to_gcf.py
     ├── Parse transcript (title, types, fragments, speaker turns)
     ├── Normalize speakers (user/用户/User → user_main)
     ├── Smart split (large events → multiple groups)
@@ -35,7 +35,7 @@ EverMemOS run_memorize.py (official tool)
 
 ## Source Data Schema
 
-Each event in `Dataset/basic_events_79ef7f17.json` has this structure:
+Each event in `data/basic_events_79ef7f17.json` has this structure:
 
 ```
 event["meta"]["user_id"]              # "79ef7f17-..." (single user across all events)
@@ -213,8 +213,8 @@ Each file is a valid GroupChatFormat JSON:
 
 ```bash
 # Step 1: Convert dataset to GCF files
-python scripts/convert_to_gcf.py \
-  --input Dataset/basic_events_79ef7f17.json \
+python pipeline/convert_to_gcf.py \
+  --input data/basic_events_79ef7f17.json \
   --output data/gcf/ \
   --split-threshold-fragments 8 \
   --split-threshold-turns 100
@@ -235,7 +235,7 @@ A wrapper in the Makefile (`make convert-gcf` and `make ingest-gcf`) will be add
 ```makefile
 # Convert dataset to GroupChatFormat
 convert-gcf:
-	python scripts/convert_to_gcf.py \
+	python pipeline/convert_to_gcf.py \
 		--input $(INPUT) \
 		--output data/gcf/
 
@@ -251,7 +251,7 @@ ingest-gcf:
 
 ## Implementation Plan
 
-1. **`scripts/convert_to_gcf.py`** — New script (~200 lines)
+1. **`pipeline/convert_to_gcf.py`** — New script (~200 lines)
    - Reuses existing `transcript_parser.py` for parsing
    - Adds speaker normalization logic
    - Adds smart splitting logic
@@ -263,7 +263,7 @@ ingest-gcf:
 
 ## Reuse
 
-- `scripts/transcript_parser.py` — reuse `parse_speaker_turns()` for turn-level parsing. The current `parse_transcript_with_metadata()` only extracts the first fragment's title/types. The conversion script will implement its own fragment-level iteration to extract per-fragment metadata (title, types, time range, turns) for the splitting logic.
+- `pipeline/transcript_parser.py` — reuse `parse_speaker_turns()` for turn-level parsing. The current `parse_transcript_with_metadata()` only extracts the first fragment's title/types. The conversion script will implement its own fragment-level iteration to extract per-fragment metadata (title, types, time range, turns) for the splitting logic.
 - Speaker normalization is new logic, simple enough to inline in the conversion script
 - No changes needed to EverMemOS or `run_memorize.py`
 

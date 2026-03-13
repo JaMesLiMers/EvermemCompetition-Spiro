@@ -1,4 +1,4 @@
-# codex_agent/cli.py
+# agent/cli.py
 import argparse
 import asyncio
 import json
