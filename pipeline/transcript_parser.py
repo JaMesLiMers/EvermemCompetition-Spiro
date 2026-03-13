@@ -2,14 +2,10 @@ import re
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-TURN_PATTERN_A = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
+# Format B (primary, after normalization): [speaker]: text
 TURN_PATTERN_B = re.compile(r"^\[([^\]]+)\]:\s*(.+)$")
-# Format C: [MM:SS-MM:SS] SPEAKER_XX {display_name | confidence}: text
-TURN_PATTERN_C = re.compile(
-    r"^\[(\d+):(\d+)-\d+:\d+\]\s+"
-    r"(SPEAKER_\d+)\s+"
-    r"\{([^}]*)\}:\s*(.+)$"
-)
+# Format A (legacy, for backward compat): [MM:SS][speaker]: text
+TURN_PATTERN_A = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
 ANNOTATION_KEYWORDS = re.compile(
     r"\["
     r"(?:[^\[\]]*(?:音调|语速|语气|停顿|音量|说明|理解|引导|列举|表示|肯定|犹豫|思考|认真|专业|正常|平稳|较快|稍快|平缓|上扬|降低|恢复)[^\[\]]*)"
@@ -30,7 +26,8 @@ def parse_speaker_turns(
 ) -> list[dict]:
     """Parse transcript lines into speaker turns with absolute timestamps.
 
-    Supports Format A ([MM:SS][speaker]: text) and Format B ([speaker]: text).
+    Primary format: Format B ([speaker]: text) — all normalized data uses this.
+    Also supports Format A ([MM:SS][speaker]: text) for backward compatibility.
     Format B turns get interpolated timestamps across the fragment duration.
     """
     turns = []
@@ -42,30 +39,7 @@ def parse_speaker_turns(
         if METADATA_LINE.match(stripped) or SEGMENT_PATTERN.match(stripped):
             continue
 
-        # Try Format C first: [MM:SS-MM:SS] SPEAKER_XX {display | conf}: text
-        m = TURN_PATTERN_C.match(stripped)
-        if m:
-            minutes, seconds = int(m.group(1)), int(m.group(2))
-            speaker_label = m.group(3)
-            display_info = m.group(4)
-            # Extract display name from "{display_name | confidence}"
-            display_name = display_info.split("|")[0].strip() if "|" in display_info else display_info.strip()
-            if display_name:
-                speaker_label = display_name
-            raw_content = m.group(5)
-            content = ANNOTATION_KEYWORDS.sub("", raw_content).strip()
-            if not content:
-                continue
-            offset_seconds = minutes * 60 + seconds
-            turns.append({
-                "speaker_label": speaker_label,
-                "content": content,
-                "offset_seconds": offset_seconds,
-                "absolute_epoch": fragment_base_epoch + offset_seconds,
-            })
-            continue
-
-        # Try Format A: [MM:SS][speaker]: text
+        # Try Format A (legacy): [MM:SS][speaker]: text
         m = TURN_PATTERN_A.match(stripped)
         if m:
             minutes, seconds = int(m.group(1)), int(m.group(2))
@@ -83,7 +57,7 @@ def parse_speaker_turns(
             })
             continue
 
-        # Fallback to Format B
+        # Format B (primary): [speaker]: text
         m = TURN_PATTERN_B.match(stripped)
         if m:
             speaker_label = m.group(1)

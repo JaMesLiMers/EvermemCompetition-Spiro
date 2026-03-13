@@ -144,6 +144,26 @@ def test_annotation_whitelist_strips_known_annotations():
     assert turns[0]["content"] == "好的我知道了"
 
 
+def test_parse_transcript_normalized_format():
+    """Integration: normalized transcript with 说话人N labels and no timestamps."""
+    transcript = """[Fragment 1: 2026-03-14 10:00 - 2026-03-14 10:15]
+标题: 产品讨论
+类型: career
+
+[用户]: 我们来看一下这个方案
+[说话人1/男]: 这个方案不错
+[说话人2/女]: 我同意
+[同事/朋友]: 我也觉得可以"""
+    result = parse_transcript_with_metadata(transcript, event_start_epoch=1000000)
+    assert len(result["turns"]) == 4
+    assert result["turns"][0]["speaker_label"] == "用户"
+    assert result["turns"][1]["speaker_label"] == "说话人1/男"
+    assert result["turns"][2]["speaker_label"] == "说话人2/女"
+    assert result["turns"][3]["speaker_label"] == "同事/朋友"
+    assert result["title"] == "产品讨论"
+    assert result["types"] == ["career"]
+
+
 def test_mixed_format_a_and_b_in_fragments():
     """Different fragments can have different formats."""
     transcript = """[Fragment 1: 1000000 - 1000300]
