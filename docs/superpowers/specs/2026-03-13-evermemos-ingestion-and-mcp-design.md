@@ -67,7 +67,7 @@ JSON array in `basic_speaker_analysis`:
 
 ### Parsing Logic
 
-1. **Parse speaker analysis** — Build a mapping from speaker label (in transcript) to speaker info (identity, is_user, relation). Use fuzzy matching between transcript speaker labels and speaker analysis identity/relation fields.
+1. **Parse speaker analysis** — Build a mapping from speaker label (in transcript) to speaker info (identity, is_user, relation). Match by checking if the transcript speaker label contains the speaker analysis `identity` or `relation_to_user` as a substring (e.g., transcript label `访谈主持人/用户研究员/产品经理` matches speaker with `relation_to_user: "访谈主持人"` and `identity: "用户研究员/产品经理"`). If no match found, assign to a fallback "unknown" speaker.
 2. **Parse transcript** — Split by lines, identify Fragment headers (`[Fragment N: start - end]`) and speaker turns (`[MM:SS][Speaker]: content`).
 3. **Calculate absolute timestamps** — For each Fragment, use the Fragment's start time as base. Add the `MM:SS` offset to compute absolute `create_time` for each turn.
 4. **Strip annotations** — Remove `[音调平稳]`, `[思考停顿]` etc. from content, keeping only the actual speech text.
@@ -77,24 +77,47 @@ JSON array in `basic_speaker_analysis`:
 For each event:
 
 1. **Create conversation-meta** — `POST /api/v1/memories/conversation-meta` with:
+   - `version`: `"1.0"`
    - `group_id`: `basic_event_id`
    - `scene`: `"assistant"` (single user's life recording device)
-   - `scene_desc`: derived from `basic_scene`
+   - `scene_desc`: `{"description": basic_scene, "type": basic_type[0]}` (wrap the string into the required object format)
    - `name`: `basic_title`
-   - `user_details`: derived from `basic_speaker_analysis`
-   - `created_at`: from `basic_start_time`
+   - `user_details`: keyed by `unified_speaker_id`, with `full_name` from transcript label, `role: "user"` for all speakers, `custom_role` from `identity` field
+   - `created_at`: from `basic_start_time` (converted to ISO 8601 with Asia/Shanghai timezone, see Timezone section)
 
 2. **Send messages** — For each parsed speaker turn, `POST /api/v1/memories` with:
    - `message_id`: `{basic_event_id}_{turn_index}`
-   - `create_time`: absolute timestamp (ISO 8601)
+   - `create_time`: absolute timestamp (ISO 8601 with Asia/Shanghai timezone)
    - `sender`: `unified_speaker_id` from speaker analysis
    - `sender_name`: speaker label from transcript
    - `content`: cleaned speech text
    - `group_id`: `basic_event_id`
    - `group_name`: `basic_title`
-   - `role`: `"user"` if `is_user` else `"user"` (all are human speakers)
+   - `role`: `"user"` (all speakers are human — this is a life recording device, no AI participants)
 
 3. **Rate limiting** — Small delay between messages (0.1s) to avoid overwhelming the API.
+
+### Timezone Handling
+
+All timestamps are converted using **Asia/Shanghai (UTC+8)**. This is based on the dataset's Fragment headers showing local times (e.g., `2026-02-23 06:13`) that map to the epoch seconds assuming UTC+8.
+
+- `basic_start_time` / `basic_end_time` (epoch seconds) → `datetime.fromtimestamp(ts, tz=ZoneInfo("Asia/Shanghai")).isoformat()`
+- Fragment-relative `MM:SS` offsets → added to Fragment start time, output as ISO 8601 with `+08:00`
+
+### Empty Event Handling
+
+Some events (~24) have empty `basic_transcript` or empty `basic_speaker_analysis`. Handling:
+
+- **Empty transcript**: Skip the event entirely (no messages to send), log a warning with the event ID
+- **Empty speaker analysis**: Still parse and send transcript turns, but use the raw transcript speaker label as both `sender` and `sender_name`, with `is_user: false` as default
+
+### Error Handling
+
+- **API 4xx errors**: Log the error and skip the message, continue with the next one. Record failed message IDs in the progress file.
+- **API 5xx errors**: Retry up to 3 times with exponential backoff (1s, 2s, 4s). If still failing, skip and log.
+- **Malformed transcripts**: If transcript parsing fails (no valid speaker turns found), log a warning and skip the event.
+- **Network timeouts**: 30s timeout per request. On timeout, retry once, then skip.
+- **Partial event failures**: If conversation-meta succeeds but some messages fail, record the event as partially processed. On resume, re-send only failed messages.
 
 ### Resumability
 
@@ -140,16 +163,18 @@ Search memories using various retrieval methods.
 **Parameters:**
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `query` | string | yes | - | Search query text |
+| `query` | string | no | - | Search query text (at least one of query, user_id, or group_id required) |
 | `user_id` | string | no | - | User ID filter |
 | `group_id` | string | no | - | Group ID filter |
 | `retrieve_method` | string | no | `"keyword"` | One of: keyword, vector, hybrid, rrf, agentic |
 | `memory_types` | list[string] | no | `["episodic_memory"]` | Types: episodic_memory, foresight, event_log |
-| `top_k` | int | no | 10 | Max results |
+| `top_k` | int | no | 40 | Max results (max: 100) |
 | `start_time` | string | no | - | ISO 8601 start filter |
 | `end_time` | string | no | - | ISO 8601 end filter |
 
 **Maps to:** `GET /api/v1/memories/search`
+
+**Note:** The search endpoint uses GET with a JSON request body. The httpx client must explicitly send the body with a GET request.
 
 #### `get_memories`
 
@@ -163,6 +188,8 @@ Fetch memories by type with pagination.
 | `memory_type` | string | no | `"episodic_memory"` | One of: profile, episodic_memory, foresight, event_log |
 | `limit` | int | no | 40 | Max results |
 | `offset` | int | no | 0 | Pagination offset |
+| `start_time` | string | no | - | ISO 8601 start filter |
+| `end_time` | string | no | - | ISO 8601 end filter |
 
 **Maps to:** `GET /api/v1/memories`
 
@@ -175,8 +202,8 @@ Store a new message into EverMemOS memory.
 |-----------|------|----------|---------|-------------|
 | `content` | string | yes | - | Message content |
 | `sender` | string | yes | - | Sender ID |
-| `message_id` | string | no | auto-generated | Unique message ID |
-| `create_time` | string | no | now | ISO 8601 timestamp |
+| `message_id` | string | no | auto-generated UUID | Unique message ID (MCP server generates if omitted) |
+| `create_time` | string | no | current time ISO 8601 | Timestamp (MCP server generates if omitted) |
 | `sender_name` | string | no | sender | Display name |
 | `group_id` | string | no | - | Group ID |
 | `group_name` | string | no | - | Group name |
@@ -197,7 +224,7 @@ Get conversation metadata.
 
 #### `delete_memories`
 
-Delete memories by filter criteria.
+Delete memories by filter criteria. Filters use AND logic — providing both `user_id` and `group_id` deletes only memories matching both.
 
 **Parameters:**
 | Parameter | Type | Required | Default | Description |
