@@ -1,6 +1,6 @@
 [submodule "EverMemOS"]
 	path = EverMemOS
 	url = https://github.com/EverMind-AI/EverMemOS.git
-[submodule "codex"]
-	path = codex
-	url = https://github.com/openai/codex.git
+[submodule "opencode"]
+	path = opencode
+	url = https://github.com/opencode-ai/opencode.git
