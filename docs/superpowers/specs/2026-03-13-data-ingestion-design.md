@@ -14,6 +14,22 @@ Each event contains:
 
 ## Transcript Parsing
 
+### Speaker Turn Formats
+
+The dataset contains two speaker turn formats:
+
+**Format A (timestamped):**
+```
+[MM:SS][speaker_label]: [annotations] actual content
+```
+
+**Format B (no timestamp):**
+```
+[speaker_label]: actual content
+```
+
+Both formats must be parsed. The parser tries Format A first, then falls back to Format B.
+
 ### Fragment Structure
 
 ```
@@ -21,7 +37,7 @@ Each event contains:
 标题: ...
 类型: ...
 
-[MM:SS][speaker_label]: [annotations] actual content
+[speaker turns...]
 ```
 
 Two time formats in Fragment headers:
@@ -32,15 +48,27 @@ Two time formats in Fragment headers:
 
 1. Split transcript by Fragment headers using regex `\[Fragment \d+: (.+?) - (.+?)\]`
 2. Extract Fragment start time (parse date or epoch)
-3. Parse each line matching `\[(\d{2}:\d{2})\]\[(.+?)\]: (.+)` into (offset, speaker, content)
-4. Strip audio annotations: remove `[音调平稳]`, `[语速:较快]`, `[思考停顿]` etc. (pattern: `\[[\u4e00-\u9fff/a-zA-Z:：]+?\]` within content)
-5. Calculate absolute time: Fragment start + MM:SS offset
-6. Map sender: `[user]` → user_id `79ef7f17-9d24-4a85-a6fe-de7d060bc090`; all others → use label as-is
+3. Parse each line:
+   - Try Format A: `\[(\d{2}:\d{2})\]\[(.+?)\]: (.+)` → (offset, speaker, content)
+   - Fallback Format B: `\[(.+?)\]: (.+)` → (speaker, content), no time offset
+4. Strip audio annotations using a whitelist of known patterns: `[音调平稳]`, `[语速:较快]`, `[思考停顿]`, `[专业语气]`, `[认真语气]`, `[犹豫停顿]`, `[语调降低]`, `[肯定语气]`, `[表示理解]`, `[引导语气]`, `[列举语气]`, `[举例说明]`, `[音量恢复]`, `[语速平缓]`, `[音调上扬]`, `[语速稍快]`, `[正常语速]` etc. Pattern: match `\[[^\[\]]+\]` at the start of content, check against known annotation keywords (音调, 语速, 语气, 停顿, 音量, 说明, 理解, 引导, 列举)
+5. Calculate absolute time:
+   - Format A: Fragment start + MM:SS offset
+   - Format B: Interpolate evenly across Fragment duration based on turn index within that Fragment
+6. Map sender:
+   - `[user]` → user_id `79ef7f17-9d24-4a85-a6fe-de7d060bc090`
+   - All other labels → use label string as sender ID
+   - Note: without speaker_analysis data, we cannot determine which non-`[user]` speaker is the actual user in events that don't have a `[user]` label
+
+### Special Speaker Labels
+
+- `Media_Playback` and similar media labels (e.g., `被动媒体内容/[Media]...`) — include as regular turns, they represent ambient context that EverMemOS can use for memory extraction
 
 ### Skip Rules
 
 - Empty transcript → skip entire event
-- Lines that don't match speaker turn pattern → skip line
+- Events where transcript has content but yields zero parsed speaker turns → skip, log warning
+- Lines that don't match either speaker turn format → skip line
 
 ## Message Construction
 
@@ -69,7 +97,6 @@ Before sending messages for each event, create conversation metadata:
 
 ```json
 {
-  "version": "1.0",
   "scene": "group_chat",
   "scene_desc": {"description": "生活记录对话"},
   "name": "{first_fragment_title}",
@@ -77,14 +104,15 @@ Before sending messages for each event, create conversation metadata:
   "created_at": "ISO8601 of basic_start_time in Asia/Shanghai",
   "default_timezone": "Asia/Shanghai",
   "user_details": {
-    "79ef7f17-9d24-4a85-a6fe-de7d060bc090": {"full_name": "user", "role": "user"},
+    "79ef7f17-...": {"full_name": "user", "role": "user"},
     "unified_001": {"full_name": "unified_001", "role": "user"}
   }
 }
 ```
 
+- `scene` must be `"group_chat"` or `"assistant"` (enum constraint)
 - `name` sourced from first Fragment's `标题:` line
-- `user_details` collected from all speaker labels found in transcript
+- `user_details` dynamically built per event from all speaker labels found in that event's transcript
 
 ## Sending Strategy
 
@@ -118,11 +146,11 @@ Single file: `scripts/ingest_data.py`
 ```
 ingest_data.py
 ├── parse_transcript(transcript, start_time, end_time)
-│   → Parse Fragments and speaker turns, return message list
+│   → Parse Fragments and speaker turns (both formats), return message list
 ├── build_conversation_meta(event, speakers, fragment_title)
 │   → Build conversation-meta request body
 ├── send_messages(messages, session)
-│   → Send messages with retry and rate limiting
+│   → Send messages with retry and rate limiting (synchronous)
 ├── load_progress() / save_progress()
 │   → Resumability support
 └── main()
@@ -143,5 +171,5 @@ python scripts/ingest_data.py --data Dataset/basic_events_79ef7f17.json --base-u
 ### Dependencies
 
 - Python 3.10+
-- `httpx` (async HTTP client)
+- `httpx` (HTTP client, synchronous mode)
 - Standard library: `json`, `re`, `datetime`, `zoneinfo`, `argparse`, `pathlib`, `time`
