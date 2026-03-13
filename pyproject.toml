@@ -8,7 +8,7 @@ dependencies = [
 ]
 
 [project.scripts]
-codex-agent = "codex_agent.cli:main"
+codex-agent = "agent.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["codex_agent*", "mcp_server*", "scripts*"]
+include = ["agent*", "mcp_server*", "pipeline*", "shared*"]
