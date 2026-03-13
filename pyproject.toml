@@ -2,7 +2,13 @@
 name = "codex-agent"
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "httpx>=0.27",
+    "mcp>=1.0",
+]
+
+[project.scripts]
+codex-agent = "codex_agent.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["codex_agent*"]
+include = ["codex_agent*", "mcp_server*", "scripts*"]

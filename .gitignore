@@ -213,3 +213,10 @@ Dataset/*
 # Codex local binaries and config
 .codex-bin/
 .codex-local/
+
+# EverMemOS runtime
+.evermemos.pid
+logs/
+
+# Ingestion progress
+scripts/ingestion_progress.json
