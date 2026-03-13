@@ -1,10 +1,16 @@
 SHELL := /bin/bash
 .PHONY: help init init-env deploy stop status add-memory ingest-data run-task clean codex-bin codex-config
 
+# Auto-load .env if it exists
+ifneq (,$(wildcard .env))
+include .env
+export
+endif
+
 PROJECT_DIR := $(shell pwd)
-CODEX_BIN_DIR := $(PROJECT_DIR)/.codex-bin
-CODEX_BIN := $(CODEX_BIN_DIR)/codex
-CODEX_HOME := $(PROJECT_DIR)/.codex-local
+CODEX_BIN_DIR ?= $(PROJECT_DIR)/.codex-bin
+CODEX_BIN ?= $(CODEX_BIN_DIR)/codex
+CODEX_HOME ?= $(PROJECT_DIR)/.codex-local
 CONFIG_FILE := $(CODEX_HOME)/config.toml
 EVERMEMOS_PID := $(PROJECT_DIR)/.evermemos.pid
 EVERMEMOS_URL ?= http://localhost:1995
