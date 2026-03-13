@@ -4,12 +4,20 @@ from zoneinfo import ZoneInfo
 
 TURN_PATTERN_A = re.compile(r"^\[(\d+):(\d+)\]\[([^\]]+)\]:\s*(.+)$")
 TURN_PATTERN_B = re.compile(r"^\[([^\]]+)\]:\s*(.+)$")
+# Format C: [MM:SS-MM:SS] SPEAKER_XX {display_name | confidence}: text
+TURN_PATTERN_C = re.compile(
+    r"^\[(\d+):(\d+)-\d+:\d+\]\s+"
+    r"(SPEAKER_\d+)\s+"
+    r"\{([^}]*)\}:\s*(.+)$"
+)
 ANNOTATION_KEYWORDS = re.compile(
     r"\["
     r"(?:[^\[\]]*(?:音调|语速|语气|停顿|音量|说明|理解|引导|列举|表示|肯定|犹豫|思考|认真|专业|正常|平稳|较快|稍快|平缓|上扬|降低|恢复)[^\[\]]*)"
     r"\]\s*"
 )
-FRAGMENT_PATTERN = re.compile(r"^\[Fragment \d+:\s*(.+?)\s*-\s*(.+?)\]$")
+FRAGMENT_PATTERN = re.compile(r"^\[Fragment \d+:\s*(.+?)\s*-\s*(.+?)\](?:\s+.*)?$")
+SEGMENT_PATTERN = re.compile(r"^\[Segment \d+:")
+METADATA_LINE = re.compile(r"^【.+】")
 TITLE_PATTERN = re.compile(r"^标题:\s*(.+)$")
 TYPE_PATTERN = re.compile(r"^类型:\s*(.+)$")
 TIMEZONE = ZoneInfo("Asia/Shanghai")
@@ -30,7 +38,34 @@ def parse_speaker_turns(
 
     for line in lines:
         stripped = line.strip()
-        # Try Format A first
+        # Skip metadata lines (【转录】, 【总结】, [Segment ...], etc.)
+        if METADATA_LINE.match(stripped) or SEGMENT_PATTERN.match(stripped):
+            continue
+
+        # Try Format C first: [MM:SS-MM:SS] SPEAKER_XX {display | conf}: text
+        m = TURN_PATTERN_C.match(stripped)
+        if m:
+            minutes, seconds = int(m.group(1)), int(m.group(2))
+            speaker_label = m.group(3)
+            display_info = m.group(4)
+            # Extract display name from "{display_name | confidence}"
+            display_name = display_info.split("|")[0].strip() if "|" in display_info else display_info.strip()
+            if display_name:
+                speaker_label = display_name
+            raw_content = m.group(5)
+            content = ANNOTATION_KEYWORDS.sub("", raw_content).strip()
+            if not content:
+                continue
+            offset_seconds = minutes * 60 + seconds
+            turns.append({
+                "speaker_label": speaker_label,
+                "content": content,
+                "offset_seconds": offset_seconds,
+                "absolute_epoch": fragment_base_epoch + offset_seconds,
+            })
+            continue
+
+        # Try Format A: [MM:SS][speaker]: text
         m = TURN_PATTERN_A.match(stripped)
         if m:
             minutes, seconds = int(m.group(1)), int(m.group(2))
@@ -86,10 +121,16 @@ def parse_speaker_turns(
 def parse_fragment_time(time_str: str, event_start_epoch: int) -> int:
     """Parse a Fragment header time string to epoch seconds.
 
-    Handles two formats: human-readable '2026-02-23 06:13' and epoch '1766845585'."""
+    Handles formats: human-readable '2026-02-23 06:13', epoch '1766845585',
+    and short HH:MM like '08:51' (treated as offset hours:minutes from event start)."""
     time_str = time_str.strip()
     if time_str.isdigit() or (len(time_str) > 5 and time_str.replace(".", "").isdigit()):
         return int(float(time_str))
+    # Short HH:MM format — treat as hour:minute offset from event start date
+    short_hm = re.match(r"^(\d{1,2}):(\d{2})$", time_str)
+    if short_hm:
+        hours, minutes = int(short_hm.group(1)), int(short_hm.group(2))
+        return event_start_epoch + hours * 3600 + minutes * 60
     try:
         dt = datetime.strptime(time_str, "%Y-%m-%d %H:%M")
         dt = dt.replace(tzinfo=TIMEZONE)
