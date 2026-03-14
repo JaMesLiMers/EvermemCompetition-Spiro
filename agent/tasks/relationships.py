@@ -2,48 +2,37 @@ from dataclasses import dataclass
 
 from .base import BaseTask
 
-SYSTEM_PROMPT = """你是一个记忆分析助手，专门分析人际关系。
+SYSTEM_PROMPT = """You are a memory analysis assistant specialized in analyzing interpersonal relationships.
 
-你会收到预加载的情景记忆数据。请仔细阅读所有记忆，然后进行深入分析。
+You will receive pre-loaded episodic memory data. Read all memories carefully, then perform deep analysis.
 
-如果需要更多信息，可以使用以下工具进行补充搜索：
-- search_memory: 搜索记忆，支持 keyword/vector/hybrid 检索。**重要：必须提供 group_id 参数**
-- get_memories: 按类型获取记忆。**重要：必须提供 group_id 参数**
+If you need more information, use these tools for supplementary searches:
+- search_memory: Search memories (keyword/vector/hybrid). **Important: must provide group_id parameter**
+- get_memories: Get memories by type. **Important: must provide group_id parameter**
 
-分析要求：
-1. 仔细阅读所有预加载的记忆
-2. 识别所有出现的人物及其相互关系
-3. 分析每个人物的角色、特征、与其他人的互动模式
-4. 如需补充搜索，使用 group_id 而非 user_id
+Requirements:
+1. Read all pre-loaded memories carefully
+2. Identify all people mentioned and their relationships to the main user
+3. Analyze each person's role, traits, and interaction patterns
+4. **Critical: Each person must appear exactly once with a unique, consistent English name. Do NOT use role-based aliases — if someone is both "husband" and "male partner", pick ONE name and use it consistently.**
+5. Translate all names and descriptions to English
 
-**你必须严格以 JSON 格式输出，不要包含任何 markdown 或其他文本。输出一个合法的 JSON 对象，格式如下：**
+**Output strict JSON only — no markdown, no extra text. Output a valid JSON object in this exact format:**
 
 ```json
 {
-  "persons": [
+  "people": [
     {
-      "name": "姓名",
-      "role": "身份/角色",
-      "key_traits": ["特征1", "特征2"]
-    }
-  ],
-  "relationships": [
-    {
-      "person_a": "A",
-      "person_b": "B",
-      "relationship_type": "关系类型",
-      "interaction_pattern": "互动特点描述"
-    }
-  ],
-  "key_interactions": [
-    {
-      "event": "事件描述",
-      "participants": ["人物A", "人物B"],
-      "relationship_insight": "反映的关系特征"
+      "id": "snake_case_name",
+      "name": "Display Name",
+      "relationship": "Brief relationship description (e.g. Tech Lead & Mentor, Husband, Close Friend)",
+      "key_traits": ["trait1", "trait2"]
     }
   ]
 }
-```"""
+```
+
+For the id field, use a snake_case version of the name (e.g. "the_architect", "grandma"). These IDs will be referenced by other analyses, so consistency is critical."""
 
 
 @dataclass
@@ -54,9 +43,9 @@ class RelationshipsTask(BaseTask):
         self, user_id: str, focus_person: str | None = None, group_id: str | None = None, prefetched_context: str = ""
     ):
         self.focus_person = focus_person
-        template = "请分析以下群组对话中所有参与者的人际关系网络，特别关注「{user_id}」。"
+        template = "Analyze the interpersonal relationship network of all participants in this group conversation, focusing on '{user_id}'."
         if focus_person:
-            template = f"请重点分析「{{user_id}}」与「{focus_person}」的关系，同时梳理相关的人际网络。"
+            template = f"Focus on analyzing '{{user_id}}'s relationship with '{focus_person}', while mapping the broader social network."
         super().__init__(
             name="relationships",
             system_prompt=SYSTEM_PROMPT,

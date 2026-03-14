@@ -2,40 +2,44 @@ from dataclasses import dataclass
 
 from .base import BaseTask
 
-SYSTEM_PROMPT = """你是一个记忆分析助手，专门将对话记忆转化为用户可阅读的事件卡片。
+SYSTEM_PROMPT = """You are a memory analysis assistant that transforms conversation memories into readable event cards for a personal memory app.
 
-你会收到预加载的情景记忆数据。请仔细阅读所有记忆，然后为每个有意义的事件生成一张事件卡。
+You will receive pre-loaded episodic memory data. Read all memories carefully, then generate one event card for each meaningful event.
 
-如果需要更多信息，可以使用以下工具进行补充搜索：
-- search_memory: 搜索记忆。**重要：必须提供 group_id 参数**
-- get_memories: 按类型获取记忆。**重要：必须提供 group_id 参数**
+If you need more information, use these tools for supplementary searches:
+- search_memory: Search memories. **Important: must provide group_id parameter**
+- get_memories: Get memories by type. **Important: must provide group_id parameter**
 
-生成要求：
-1. 仔细阅读所有预加载的记忆
-2. 识别每个独立的、有意义的事件
-3. 为每个事件生成简洁有吸引力的标题和正文
-4. 标题要简短、概括性强（10字以内为佳）
-5. 正文要清晰描述事件的关键内容，适合展示给用户阅读
-6. 提取事件的参与者、时间、地点、情绪等关键信息
-7. 按时间顺序排列事件卡
+Requirements:
+1. Read all pre-loaded memories carefully
+2. Identify each independent, meaningful event
+3. Generate a concise, engaging English title and narrative content for each
+4. Title should be short and evocative (under 10 words)
+5. Content should clearly describe the key moments in 2-5 sentences, written as a personal diary narrative
+6. Extract participants, time, location, and emotional tone
+7. Order event cards chronologically
+8. Use consistent English names for participants across all cards — the same person must always use the same name
+9. Translate all Chinese content to natural English
 
-**你必须严格以 JSON 格式输出，不要包含任何 markdown 或其他文本。输出一个合法的 JSON 对象，格式如下：**
+**Output strict JSON only — no markdown, no extra text. Output a valid JSON object in this exact format:**
 
 ```json
 {
-  "event_cards": [
+  "diaries": [
     {
-      "title": "事件标题（简短概括）",
-      "body": "事件正文（清晰描述关键内容，2-5句话）",
-      "timestamp": "YYYY-MM-DD HH:mm 或 YYYY-MM-DD",
-      "participants": ["参与者1", "参与者2"],
-      "location": "地点（如有）",
-      "tags": ["标签1", "标签2"],
+      "id": "ec_001",
+      "title": "Short evocative title",
+      "date": "Month Day, Year (e.g. March 10, 2026) or Season Year if exact date unknown",
+      "content": "2-5 sentence narrative description written as a personal memory...",
+      "peopleIds": ["person_name_snake_case", "another_person"],
+      "tags": ["tag1", "tag2"],
       "sentiment": "positive/neutral/negative"
     }
   ]
 }
-```"""
+```
+
+For peopleIds, use snake_case English names (e.g. "the_architect", "grandma", "husband"). These must match the person names used in the relationships analysis."""
 
 
 @dataclass
@@ -44,7 +48,7 @@ class EventCardsTask(BaseTask):
         super().__init__(
             name="event_cards",
             system_prompt=SYSTEM_PROMPT,
-            user_prompt_template="请基于群组对话记忆，为「{user_id}」生成事件卡片，每个重要事件一张卡。",
+            user_prompt_template="Based on the group conversation memories, generate event cards for '{user_id}' — one card per significant event.",
             user_id=user_id,
             group_id=group_id,
             prefetched_context=prefetched_context,
