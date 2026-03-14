@@ -1,87 +1,115 @@
-# 基础事件数据（Basic Events）
+# Data
 
-## 数据格式
+## Overview
 
-数据文件为 JSON 数组，共 832 条记录，每条包含 `meta`（元信息）和 `object`（事件内容）两部分：
+Dataset for the [EverMemOS competition](https://github.com/EverMemOS) — **832 real conversation events** captured by the Spiro wearable band. All transcripts have been speaker-normalized and converted to structured formats for downstream analysis.
+
+## Files
+
+| File | Description | Size |
+|------|-------------|------|
+| `basic_events_79ef7f17.json` | Raw dataset with embedded speaker mappings | 13 MB, 832 events |
+| `gcf_all.json` | Merged GroupChatFormat output (72 conversations, 15K messages) | 5.2 MB |
+| `last100_events.json` | Subset of recent events for quick testing | 1.4 MB |
+| `demo_audio.mp3` | Audio sample from the Spiro wearable | 6.5 MB |
+| `demo_output.json` | Sample analysis output | 1.7 KB |
+
+## Data Format
+
+### Event Structure
+
+Each event in `basic_events_79ef7f17.json` is a JSON object with two top-level keys:
 
 ```json
 {
   "meta": {
-    "user_id":          "用户 ID",
-    "basic_event_id":   "事件唯一标识",
-    "basic_start_time": "事件开始时间（epoch 秒）",
-    "basic_end_time":   "事件结束时间（epoch 秒）"
+    "user_id":          "User ID (UUID)",
+    "basic_event_id":   "Event ID (UUID)",
+    "basic_start_time": "Start time (Unix epoch seconds)",
+    "basic_end_time":   "End time (Unix epoch seconds)"
   },
   "object": {
-    "basic_transcript": "规范化后的转录文本"
+    "basic_transcript": "Normalized transcript text"
   }
 }
 ```
 
-## 字段说明
+#### `meta` Fields
 
-### meta
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | string | User unique identifier (UUID) |
+| `basic_event_id` | string | Event unique identifier (UUID) |
+| `basic_start_time` | number | Event start time, Unix epoch seconds |
+| `basic_end_time` | number | Event end time, Unix epoch seconds |
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `user_id` | string | 用户唯一标识（UUID） |
-| `basic_event_id` | string | 事件唯一标识（UUID） |
-| `basic_start_time` | number | 事件开始时间，Unix epoch 秒 |
-| `basic_end_time` | number | 事件结束时间，Unix epoch 秒 |
+#### `object` Fields
 
-### object
+| Field | Type | Description |
+|-------|------|-------------|
+| `basic_transcript` | string | Speaker-normalized transcript (see format below) |
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `basic_transcript` | string | 规范化后的转录文本（见下方格式说明） |
+### Fragment Structure
 
-## 转录文本格式 (basic_transcript)
-
-经过 `scripts/normalize_speakers.py` 规范化后，转录文本统一为以下格式：
-
-### Fragment 结构
+Transcripts are organized into fragments, each representing a contiguous segment of conversation:
 
 ```
 [Fragment N: YYYY-MM-DD HH:MM - YYYY-MM-DD HH:MM]
-标题: 对话标题
-类型: career, social, home, ...
+Title: Conversation title
+Type: career, social, home, ...
 
-[说话人1]: 说话内容
-[用户]: 说话内容
-[同事/朋友]: 说话内容
+[Speaker1]: Utterance text
+[User]: Utterance text
+[Colleague/Friend]: Utterance text
 ```
 
-### 说话人标签
+### Speaker Label Normalization
 
-| 标签类型 | 格式 | 说明 |
-|----------|------|------|
-| 主用户 | `[用户]` | 录音设备持有者 |
-| 通用说话人 | `[说话人1]`, `[说话人2]`, ... | 按出场顺序编号，每个事件独立编号 |
-| 通用说话人+性别 | `[说话人1/男]`, `[说话人2/女]` | 带性别标注 |
-| 有意义角色 | `[同事/朋友]`, `[伴侣]`, `[访谈主持人]` 等 | 保留原始角色描述 |
+Speaker labels are normalized by `scripts/normalize_speakers.py` into the following categories:
 
-### 对话行格式
+| Label Type | Format | Description |
+|------------|--------|-------------|
+| Primary user | `[User]` | The person wearing the recording device |
+| Generic speaker | `[Speaker1]`, `[Speaker2]`, ... | Numbered by order of appearance; numbering resets per event |
+| Generic + gender | `[Speaker1/M]`, `[Speaker2/F]` | With gender annotation |
+| Named role | `[Colleague/Friend]`, `[Partner]`, `[Interviewer]`, etc. | Original role description preserved |
 
-所有对话行统一为 Format B（无时间戳）：
+### Dialogue Line Format
+
+All dialogue lines follow a consistent format (no timestamps):
 
 ```
-[说话人标签]: 说话内容
+[Speaker Label]: Utterance content
 ```
 
-### 非对话行
+### Non-Dialogue Lines
 
-转录文本中可能包含以下非对话行（pipeline 解析时自动跳过）：
+Transcripts may contain the following non-dialogue lines, which are automatically skipped during pipeline parsing:
 
-- Fragment 头: `[Fragment N: ...]`
-- 标题/类型: `标题: ...` / `类型: ...`
-- 元数据: `【完整转录与总结】` 等
-- 环境描述: `[安静环境] [音质清晰]` 等
-- 被动媒体: `被动媒体，转录内容已略过`
+- **Fragment header:** `[Fragment N: ...]`
+- **Title / Type:** `Title: ...` / `Type: ...`
+- **Metadata:** `[Full Transcript and Summary]`, etc.
+- **Environment notes:** `[Quiet environment] [Clear audio]`, etc.
+- **Passive media:** `Passive media, transcript content omitted`
 
-## 规范化脚本
+## Pipeline Flow
 
-```bash
-python scripts/normalize_speakers.py data/basic_events_79ef7f17.json
+```
+Spiro Wearable Band
+    │
+    ▼
+basic_events_79ef7f17.json   ← 832 raw events with speaker mappings
+    │
+    ├─► normalize_speakers.py ← Standardize speaker labels
+    │
+    ▼
+gcf_all.json                 ← Merged GroupChatFormat for EverMemOS
+    │
+    ▼
+EverMemOS API (localhost:1995)
 ```
 
-详见 `scripts/normalize_speakers.py` 注释。
+1. **Capture:** The Spiro band records conversations and produces raw event transcripts.
+2. **Normalize:** `scripts/normalize_speakers.py` standardizes all speaker labels into a consistent format.
+3. **Convert:** The pipeline converts normalized events into GroupChatFormat (`gcf_all.json`), which merges related fragments into conversations.
+4. **Ingest:** GCF data is posted to the EverMemOS API for memory storage and retrieval.
