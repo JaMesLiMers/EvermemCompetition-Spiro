@@ -27,7 +27,7 @@
     <mxCell id="proc_lane" value="AI Processing" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
       <mxGeometry x="460" y="100" width="560" height="200" as="geometry"/>
     </mxCell>
-    <mxCell id="proc_gemini" value="Gemini 2.0 Flash&#xa;Audio Processing" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="proc_lane">
+    <mxCell id="proc_gemini" value="Gemini 3 Pro&#xa;Audio Processing" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="proc_lane">
       <mxGeometry x="20" y="80" width="140" height="50" as="geometry"/>
     </mxCell>
     <mxCell id="proc_parser" value="Event Parser&#xa;(832 Events)" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="proc_lane">

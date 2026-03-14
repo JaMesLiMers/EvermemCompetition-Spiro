@@ -158,10 +158,10 @@ The opencode MCP configuration (`opencode.json` at project root) must include th
 
 ```json
 {
-  "mcpServers": {
+  "mcp": {
     "evermemos": {
-      "command": "python",
-      "args": ["-m", "mcp_server.server"]
+      "type": "local",
+      "command": ["python", "-m", "mcp_server.server"]
     }
   }
 }

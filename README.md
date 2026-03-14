@@ -44,7 +44,6 @@ Spiro is a reflective wearable AI that transforms everyday life into language, m
 4. **Personal Pattern Tracking** — Over weeks and months, identifies recurring themes in your work, relationships, and emotional cycles to support clearer self-awareness
 
 ---
----
 
 <p align="center">
   <img src="figure/hardware_demo.jpg" alt="Hardware" width="100%">
@@ -63,7 +62,7 @@ Spiro's pipeline transforms raw audio from the wearable band into meaningful, pe
 ![Algorithm Flowchart](docs/diagrams/algorithm-flowchart.drawio.svg)
 
 1. The band captures ambient audio from daily conversations
-2. Gemini 2.0 Flash processes the audio stream into structured events
+2. Gemini 3 Pro processes the audio stream into structured events
 3. GPT-4o-mini infers speaker roles (e.g., "Speaker 1" → "Product Manager")
 4. Events are converted to GroupChatFormat and ingested into EverMemOS
 5. EverMemOS extracts episodic memories and builds searchable indices
@@ -343,9 +342,9 @@ make clean                 # Clean cache and temporary files
 
 - [EverMemOS](https://github.com/anthropics/evermemos) — Long-term memory engine
 - [Claude Sonnet 4.6](https://anthropic.com) — AI analysis via opencode
-- [Gemini 2.0 Flash](https://ai.google.dev) — Audio processing
+- [Gemini 3 Pro](https://ai.google.dev) — Audio processing
 - GPT-4o-mini — Speaker role inference
-- React + vis.js — Visualization
+- React + D3.js — Visualization
 - Docker — Infrastructure orchestration
 
 Built for the [EverMemOS Competition](https://github.com/anthropics/evermemos)
