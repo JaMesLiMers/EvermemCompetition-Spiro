@@ -8,6 +8,7 @@ import sys
 import time
 import re
 from datetime import datetime
+from pathlib import Path
 
 from shared.evermemos_api import EverMemosClient
 
@@ -117,25 +118,45 @@ def main(argv: list[str] | None = None):
     config = AgentConfig.from_env()
     evermemos_url = config.evermemos_url
 
-    # Auto-detect group_id from dataset if not provided
+    # Auto-detect group_ids from GCF file if not provided
     group_id = args.group_id
-    if not group_id:
+    group_ids: list[str] = []
+    if group_id:
+        group_ids = [group_id]
+    else:
         try:
-            dataset_path = "data/basic_events_79ef7f17.json"
-            with open(dataset_path) as f:
-                events = json.load(f)
-            events.sort(key=lambda e: e["meta"]["basic_start_time"])
-            group_id = events[0]["meta"]["basic_event_id"]
-            print(f"Auto-detected group_id: {group_id}", file=sys.stderr)
+            gcf_path = Path("data/gcf_all.json")
+            if gcf_path.exists():
+                with open(gcf_path) as f:
+                    gcf_list = json.load(f)
+                for gcf in gcf_list:
+                    gid = gcf.get("conversation_meta", {}).get("group_id")
+                    if gid:
+                        group_ids.append(gid)
+                if group_ids:
+                    group_id = group_ids[0]
+                    print(f"Auto-detected {len(group_ids)} group_ids from data/gcf_all.json", file=sys.stderr)
         except Exception:
             pass
 
-    # Pre-fetch memories
+    # Pre-fetch memories from all groups (capped to avoid oversized prompts)
     prefetched = ""
     memory_count = 0
-    if group_id:
-        print("Pre-fetching memories...", file=sys.stderr)
-        prefetched, memory_count = asyncio.run(prefetch_memories(evermemos_url, group_id))
+    MAX_PREFETCH_CHARS = 50000  # Cap total context to ~50KB
+    if group_ids:
+        print(f"Pre-fetching memories from {len(group_ids)} groups...", file=sys.stderr)
+        all_parts = []
+        total_chars = 0
+        for gid in group_ids:
+            ctx, cnt = asyncio.run(prefetch_memories(evermemos_url, gid))
+            if ctx:
+                if total_chars + len(ctx) > MAX_PREFETCH_CHARS:
+                    print(f"  Reached {MAX_PREFETCH_CHARS} char limit, stopping prefetch", file=sys.stderr)
+                    break
+                all_parts.append(ctx)
+                memory_count += cnt
+                total_chars += len(ctx)
+        prefetched = "\n".join(all_parts)
         if prefetched:
             print(f"Pre-fetched context ready ({len(prefetched)} chars, {memory_count} memories)", file=sys.stderr)
 
@@ -145,13 +166,25 @@ def main(argv: list[str] | None = None):
     system_prompt = task.system_prompt
     full_prompt = f"System: {system_prompt}\n\n{prompt}"
 
+    import tempfile
+
     start_time = time.monotonic()
-    agent_result = subprocess.run(
-        [config.agent_bin, "run", "--model", config.model, full_prompt],
-        capture_output=True,
-        text=True,
-        cwd=".",
-    )
+
+    # Write prompt to temp file to avoid "Argument list too long" error
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False, encoding="utf-8") as tmp:
+        tmp.write(full_prompt)
+        tmp_path = tmp.name
+
+    try:
+        agent_result = subprocess.run(
+            f'cat "{tmp_path}" | {config.agent_bin} run --model {config.model}',
+            capture_output=True,
+            text=True,
+            shell=True,
+            cwd=".",
+        )
+    finally:
+        os.unlink(tmp_path)
     duration_s = time.monotonic() - start_time
 
     if agent_result.returncode != 0:

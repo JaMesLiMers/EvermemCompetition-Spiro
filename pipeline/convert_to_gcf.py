@@ -6,6 +6,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -33,6 +34,76 @@ _MAIN_USER_PREFIX = "被动媒体"
 PASSIVE_MEDIA_MARKER = "被动媒体，转录内容已略过"
 
 _TURN_WINDOW_SIZE = 100  # For windowed splitting of single large fragments
+
+# Regex for parsing speaker mapping table entries
+# Matches: SPEAKER_XX: {label/role | confidence} (reason: ...)
+# or:      SPEAKER_XX: {label (role) | confidence} (reason: ...)
+_MAPPING_ENTRY = re.compile(
+    r"SPEAKER_\d+(?:\s*\([^)]*\))?:\s*\{(.+?)\s*\|\s*\w+(?:-\w+)?\}"
+)
+
+# Prefixes to strip for cleaner labels
+_UNKNOWN_PREFIXES = ("未知", "Unknown ")
+
+
+def parse_speaker_mapping(transcript: str) -> dict[str, str]:
+    """Parse speaker mapping table from transcript header.
+
+    Returns a dict mapping raw transcript labels to enriched role labels.
+    e.g. {"未知参与者A": "核心研发主导A", "未知参与者B": "技术骨干B"}
+    """
+    mapping: dict[str, str] = {}
+
+    lines = transcript.split("\n")
+    in_mapping = False
+    for line in lines:
+        stripped = line.strip()
+        if "说话人映射表" in stripped or "Speaker Mapping Table" in stripped:
+            in_mapping = True
+            continue
+        if in_mapping:
+            # End of mapping section
+            if stripped.startswith("【") or stripped.startswith("[Integration") or stripped == "":
+                if mapping:  # only break if we found entries
+                    break
+                continue
+
+            m = _MAPPING_ENTRY.search(stripped)
+            if m:
+                desc = m.group(1).strip()
+                # desc is like "未知参与者B/技术骨干" or "核心女性参与者/项目协调人"
+                # or "Person A (Male, Viewer/Commentator)"
+                parts = re.split(r"[/（(]", desc, maxsplit=1)
+                if len(parts) == 2:
+                    label = parts[0].strip()
+                    role = parts[1].rstrip(")）").strip()
+                    if label and role:
+                        mapping[label] = role
+
+    return mapping
+
+
+def enrich_speaker_label(label: str, speaker_mapping: dict[str, str]) -> str:
+    """Enrich a speaker label using mapping table and cleanup rules.
+
+    Priority:
+    1. Exact match in speaker_mapping → use role
+    2. Strip "未知" prefix if the remainder is meaningful (>1 char)
+    3. Return original label
+    """
+    # 1. Check mapping table
+    if label in speaker_mapping:
+        return speaker_mapping[label]
+
+    # 2. Strip "未知"/"Unknown " prefix
+    for prefix in _UNKNOWN_PREFIXES:
+        if label.startswith(prefix):
+            remainder = label[len(prefix):]
+            # Only use remainder if it's meaningful (not just "人" or single letter)
+            if len(remainder) > 1 and remainder not in ("人", "参与者"):
+                return remainder
+
+    return label
 
 
 def normalize_speaker(speaker: str) -> str:
@@ -155,7 +226,7 @@ def _build_user_details(speakers: set[str]) -> dict:
     return details
 
 
-def _build_conversation_list(turns: list[dict], group_id: str) -> list[dict]:
+def _build_conversation_list(turns: list[dict], group_id: str, speaker_mapping: dict[str, str]) -> list[dict]:
     """Convert parsed turns into GCF conversation_list messages."""
     messages = []
     msg_idx = 0
@@ -164,13 +235,20 @@ def _build_conversation_list(turns: list[dict], group_id: str) -> list[dict]:
         if should_skip_speaker(speaker):
             continue
         normalized = normalize_speaker(speaker)
+        if normalized == "user_main":
+            sender = "user_main"
+            sender_name = speaker  # preserve original label for display
+        else:
+            enriched = enrich_speaker_label(normalized, speaker_mapping)
+            sender = enriched
+            sender_name = enriched
         msg_id = f"{group_id}_{msg_idx}"
         messages.append(
             {
                 "message_id": msg_id,
                 "create_time": _epoch_to_iso(turn["absolute_epoch"]),
-                "sender": normalized,
-                "sender_name": speaker,
+                "sender": sender,
+                "sender_name": sender_name,
                 "role": "user",
                 "type": "text",
                 "content": turn["content"],
@@ -216,11 +294,15 @@ def build_gcf_groups(
     fragments: list[dict],
     split_frag_threshold: int = 8,
     split_turn_threshold: int = 100,
+    speaker_mapping: dict[str, str] | None = None,
 ) -> list[dict]:
     """Build GCF group dicts from parsed fragments with smart splitting.
 
     Returns a list of GCF dicts (each is a complete GroupChatFormat JSON structure).
     """
+    if speaker_mapping is None:
+        speaker_mapping = {}
+
     total_turns = sum(len(f["turns"]) for f in fragments)
     needs_split = len(fragments) > split_frag_threshold or total_turns > split_turn_threshold
 
@@ -232,7 +314,7 @@ def build_gcf_groups(
         for part_idx in range(0, len(turns), _TURN_WINDOW_SIZE):
             window = turns[part_idx : part_idx + _TURN_WINDOW_SIZE]
             gid = f"{event_id}_part{part_idx // _TURN_WINDOW_SIZE}"
-            msgs = _build_conversation_list(window, gid)
+            msgs = _build_conversation_list(window, gid, speaker_mapping)
             if msgs:
                 groups.append(_build_single_gcf(gid, frag["title"], frag["types"], frag["base_epoch"], msgs))
         return groups
@@ -242,7 +324,7 @@ def build_gcf_groups(
         all_turns = []
         for f in fragments:
             all_turns.extend(f["turns"])
-        msgs = _build_conversation_list(all_turns, event_id)
+        msgs = _build_conversation_list(all_turns, event_id, speaker_mapping)
         if not msgs:
             return []
         title = fragments[0]["title"] if fragments else None
@@ -254,7 +336,7 @@ def build_gcf_groups(
     groups = []
     for part_idx, frag in enumerate(fragments):
         gid = f"{event_id}_part{part_idx}"
-        msgs = _build_conversation_list(frag["turns"], gid)
+        msgs = _build_conversation_list(frag["turns"], gid, speaker_mapping)
         if msgs:
             groups.append(_build_single_gcf(gid, frag["title"], frag["types"], frag["base_epoch"], msgs))
     return groups
@@ -283,13 +365,25 @@ def convert_event(
     if not fragments:
         return []
 
-    return build_gcf_groups(event_id, start_epoch, fragments, split_frag_threshold, split_turn_threshold)
+    # Merge embedded mapping with in-transcript mapping (transcript takes priority)
+    speaker_mapping: dict[str, str] = {}
+    embedded = event["object"].get("speaker_mapping", {})
+    if embedded:
+        speaker_mapping.update(embedded)
+    transcript_mapping = parse_speaker_mapping(transcript)
+    speaker_mapping.update(transcript_mapping)
+
+    return build_gcf_groups(
+        event_id, start_epoch, fragments,
+        split_frag_threshold, split_turn_threshold,
+        speaker_mapping=speaker_mapping,
+    )
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Convert dataset to GroupChatFormat JSON files")
+    parser = argparse.ArgumentParser(description="Convert dataset to GroupChatFormat JSON")
     parser.add_argument("--input", required=True, help="Path to dataset JSON file")
-    parser.add_argument("--output", required=True, help="Output directory for GCF files")
+    parser.add_argument("--output", default="data/gcf_all.json", help="Output JSON file path")
     parser.add_argument(
         "--split-threshold-fragments", type=int, default=8, help="Split events with more fragments than this"
     )
@@ -304,8 +398,8 @@ def main():
         print(f"Error: File not found: {input_path}")
         sys.exit(1)
 
-    output_dir = Path(args.output)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = Path(args.output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(input_path, encoding="utf-8") as f:
         events = json.load(f)
@@ -319,9 +413,12 @@ def main():
     split_count = 0
     total_groups = 0
     total_messages = 0
+    all_groups: list[dict] = []
 
     for i, event in enumerate(events):
-        groups = convert_event(event, args.split_threshold_fragments, args.split_threshold_turns)
+        groups = convert_event(
+            event, args.split_threshold_fragments, args.split_threshold_turns,
+        )
 
         if not groups:
             skipped += 1
@@ -331,23 +428,23 @@ def main():
             split_count += 1
 
         for gcf in groups:
-            gid = gcf["conversation_meta"]["group_id"]
-            out_path = output_dir / f"{gid}.json"
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(gcf, f, ensure_ascii=False, indent=2)
+            all_groups.append(gcf)
             total_groups += 1
             total_messages += len(gcf["conversation_list"])
 
         if (i + 1) % 50 == 0:
             print(f"  [{i + 1}/{total}] processed...")
 
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(all_groups, f, ensure_ascii=False, indent=2)
+
     print("\nConversion complete:")
     print(f"  Events processed: {total}")
     print(f"  Events skipped:   {skipped}")
     print(f"  Events split:     {split_count}")
-    print(f"  GCF files output: {total_groups}")
+    print(f"  GCF groups:       {total_groups}")
     print(f"  Total messages:   {total_messages}")
-    print(f"  Output directory: {output_dir}")
+    print(f"  Output file:      {output_path}")
 
 
 if __name__ == "__main__":

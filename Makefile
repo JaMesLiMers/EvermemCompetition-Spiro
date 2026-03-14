@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: help init init-env deploy stop status add-memory convert-gcf ingest-gcf run-task lint test clean
+.PHONY: help init init-env deploy stop status add-memory convert-gcf generate-speaker-mappings ingest-gcf run-task lint test clean
 
 # Auto-load .env if it exists
 ifneq (,$(wildcard .env))
@@ -172,29 +172,27 @@ convert-gcf: ## 转换数据集为 GroupChatFormat (INPUT=path/to/data.json [LIM
 		echo "可选: LIMIT=5  SPLIT_FRAGS=8  SPLIT_TURNS=100"; \
 		exit 1; \
 	fi
-	python -m pipeline.convert_to_gcf --input $(INPUT) --output data/gcf/ \
+	python -m pipeline.convert_to_gcf --input $(INPUT) --output data/gcf_all.json \
 		$(if $(SPLIT_FRAGS),--split-threshold-fragments $(SPLIT_FRAGS)) \
 		$(if $(SPLIT_TURNS),--split-threshold-turns $(SPLIT_TURNS)) \
 		$(if $(LIMIT),--limit $(LIMIT))
 
-ingest-gcf: ## 通过官方工具灌入 GCF 文件 ([GCF_DIR=data/gcf/] [API_URL=...])
-	@GCF_DIR=$${GCF_DIR:-data/gcf}; \
-	API_URL=$${API_URL:-$(EVERMEMOS_URL)/api/v1/memories}; \
-	count=$$(ls "$$GCF_DIR"/*.json 2>/dev/null | wc -l); \
-	if [ "$$count" -eq 0 ]; then \
-		echo "错误: $$GCF_DIR 下没有 JSON 文件，请先运行 make convert-gcf"; \
+generate-speaker-mappings: ## 用 LLM 批量生成说话人映射 (INPUT=path/to/data.json [MODEL=gpt-4o-mini])
+	@if [ -z "$(INPUT)" ]; then \
+		echo "用法: make generate-speaker-mappings INPUT=data/basic_events_79ef7f17.json"; \
+		echo "可选: MODEL=gpt-4o-mini  CONCURRENCY=10  DRY_RUN=1"; \
 		exit 1; \
-	fi; \
-	echo "==> 准备灌入 $$count 个 GCF 文件..."; \
-	i=0; \
-	for f in $$(realpath "$$GCF_DIR"/*.json); do \
-		i=$$((i + 1)); \
-		echo "  [$$i/$$count] $$f"; \
-		(cd EverMemOS && uv run python src/bootstrap.py src/run_memorize.py \
-			--input "$$f" --scene group_chat \
-			--api-url "$$API_URL"); \
-	done; \
-	echo "==> ✓ 灌入完成 ($$count 个文件)"
+	fi
+	python -m pipeline.generate_speaker_mapping --input $(INPUT) --output data/speaker_mappings.json \
+		--model $${MODEL:-gpt-4o-mini} \
+		--concurrency $${CONCURRENCY:-10} \
+		$(if $(DRY_RUN),--dry-run)
+
+ingest-gcf: ## 批量灌入 GCF 数据 ([INPUT=data/gcf_all.json] [API_URL=...] [CONCURRENCY=5])
+	python -m pipeline.ingest_gcf \
+		--input $${INPUT:-data/gcf_all.json} \
+		--api-url $${API_URL:-$(EVERMEMOS_URL)/api/v1/memories} \
+		--concurrency $${CONCURRENCY:-5}
 
 run-task: ## 运行分析任务 (TASK=relationships|profiling|timeline|suggestions USER_ID=xxx)
 	@if [ -z "$(TASK)" ] || [ -z "$(USER_ID)" ]; then \
@@ -217,7 +215,7 @@ test: ## 运行测试
 	pytest
 
 clean: ## 清理构建产物和运行时文件
-	rm -rf data/gcf
+	rm -f data/gcf_all.json
 	rm -f $(EVERMEMOS_PID) $(WORKER_PID)
 	rm -f pipeline/ingestion_progress.json
 	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './opencode/*' -exec rm -rf {} + 2>/dev/null || true
