@@ -1,0 +1,291 @@
+[
+  {
+    "id": "user_main",
+    "name": "user_main",
+    "relationship": "核心用户/产品团队成员/家庭成员",
+    "diaryIds": [
+      "ec_011",
+      "ec_014",
+      "ec_015",
+      "ec_016",
+      "ec_018",
+      "ec_020",
+      "ec_021",
+      "ec_024",
+      "ec_026",
+      "ec_027",
+      "ec_029",
+      "ec_042",
+      "ec_043"
+    ],
+    "occurrenceCount": 13
+  },
+  {
+    "id": "男伴侣",
+    "name": "男伴侣",
+    "relationship": "伴侣关系中的男方",
+    "diaryIds": [
+      "ec_001",
+      "ec_002",
+      "ec_003",
+      "ec_004"
+    ],
+    "occurrenceCount": 4
+  },
+  {
+    "id": "女伴侣",
+    "name": "女伴侣",
+    "relationship": "伴侣关系中的女方",
+    "diaryIds": [
+      "ec_001",
+      "ec_003",
+      "ec_004"
+    ],
+    "occurrenceCount": 3
+  },
+  {
+    "id": "丈夫",
+    "name": "丈夫",
+    "relationship": "婚姻关系中的丈夫",
+    "diaryIds": [
+      "ec_019",
+      "ec_020",
+      "ec_021",
+      "ec_022",
+      "ec_023",
+      "ec_024",
+      "ec_025",
+      "ec_030",
+      "ec_031"
+    ],
+    "occurrenceCount": 9
+  },
+  {
+    "id": "妻子",
+    "name": "妻子",
+    "relationship": "婚姻关系中的妻子",
+    "diaryIds": [
+      "ec_019",
+      "ec_022",
+      "ec_023",
+      "ec_025",
+      "ec_030",
+      "ec_031"
+    ],
+    "occurrenceCount": 6
+  },
+  {
+    "id": "母亲/设计师",
+    "name": "母亲/设计师",
+    "relationship": "家庭中的母亲，同时是产品设计团队成员",
+    "diaryIds": [
+      "ec_037",
+      "ec_038",
+      "ec_039",
+      "ec_040",
+      "ec_041"
+    ],
+    "occurrenceCount": 5
+  },
+  {
+    "id": "外婆",
+    "name": "外婆",
+    "relationship": "家庭中的外祖母",
+    "diaryIds": [
+      "ec_043",
+      "ec_044",
+      "ec_045",
+      "ec_046",
+      "ec_047",
+      "ec_048"
+    ],
+    "occurrenceCount": 6
+  },
+  {
+    "id": "父亲",
+    "name": "父亲",
+    "relationship": "家庭中的父亲/user_main的父亲",
+    "diaryIds": [
+      "ec_042",
+      "ec_043"
+    ],
+    "occurrenceCount": 2
+  },
+  {
+    "id": "姑姑",
+    "name": "姑姑",
+    "relationship": "家庭亲属",
+    "diaryIds": [
+      "ec_043",
+      "ec_046"
+    ],
+    "occurrenceCount": 2
+  },
+  {
+    "id": "架构师",
+    "name": "架构师",
+    "relationship": "技术团队架构师",
+    "diaryIds": [
+      "ec_010",
+      "ec_011",
+      "ec_012",
+      "ec_014",
+      "ec_016",
+      "ec_017"
+    ],
+    "occurrenceCount": 6
+  },
+  {
+    "id": "产品设计负责人",
+    "name": "产品设计负责人",
+    "relationship": "产品团队设计负责人",
+    "diaryIds": [
+      "ec_010",
+      "ec_011",
+      "ec_012",
+      "ec_013",
+      "ec_014"
+    ],
+    "occurrenceCount": 5
+  },
+  {
+    "id": "产品负责人",
+    "name": "产品负责人",
+    "relationship": "产品团队负责人",
+    "diaryIds": [
+      "ec_032",
+      "ec_033",
+      "ec_034",
+      "ec_035",
+      "ec_036"
+    ],
+    "occurrenceCount": 5
+  },
+  {
+    "id": "开发人员",
+    "name": "开发人员",
+    "relationship": "技术开发人员",
+    "diaryIds": [
+      "ec_009",
+      "ec_010",
+      "ec_011",
+      "ec_013",
+      "ec_014",
+      "ec_015",
+      "ec_017",
+      "ec_018"
+    ],
+    "occurrenceCount": 8
+  },
+  {
+    "id": "质量保证负责人",
+    "name": "质量保证负责人",
+    "relationship": "QA负责人",
+    "diaryIds": [
+      "ec_009"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "数据分析师",
+    "name": "数据分析师",
+    "relationship": "数据分析团队成员",
+    "diaryIds": [
+      "ec_009"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "资深工程师",
+    "name": "资深工程师",
+    "relationship": "技术团队资深工程师",
+    "diaryIds": [
+      "ec_017"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "技术负责人",
+    "name": "技术负责人",
+    "relationship": "技术团队负责人",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "产品经理",
+    "name": "产品经理",
+    "relationship": "产品管理人员",
+    "diaryIds": [
+      "ec_018"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "初级产品经理",
+    "name": "初级产品经理",
+    "relationship": "初级产品管理人员",
+    "diaryIds": [
+      "ec_013"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "设计主管",
+    "name": "设计主管",
+    "relationship": "设计团队主管",
+    "diaryIds": [
+      "ec_032",
+      "ec_033",
+      "ec_034",
+      "ec_035",
+      "ec_036"
+    ],
+    "occurrenceCount": 5
+  },
+  {
+    "id": "ui设计师",
+    "name": "UI设计师",
+    "relationship": "UI设计团队成员",
+    "diaryIds": [
+      "ec_032",
+      "ec_035"
+    ],
+    "occurrenceCount": 2
+  },
+  {
+    "id": "好友",
+    "name": "好友",
+    "relationship": "user_main的朋友",
+    "diaryIds": [
+      "ec_026",
+      "ec_027",
+      "ec_028",
+      "ec_029"
+    ],
+    "occurrenceCount": 4
+  },
+  {
+    "id": "视频博主",
+    "name": "视频博主",
+    "relationship": "记录日常生活的博主",
+    "diaryIds": [
+      "ec_023",
+      "ec_024"
+    ],
+    "occurrenceCount": 2
+  },
+  {
+    "id": "朋友（停车）",
+    "name": "朋友（停车）",
+    "relationship": "男伴侣的朋友",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "软件工程师",
+    "name": "软件工程师",
+    "relationship": "技术团队软件工程师",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  }
+]

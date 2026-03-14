@@ -226,3 +226,9 @@ clean: ## 清理构建产物和运行时文件
 	rm -f pipeline/ingestion_progress.json
 	find . -type d -name __pycache__ -not -path './EverMemOS/*' -not -path './opencode/*' -exec rm -rf {} + 2>/dev/null || true
 	@echo "✓ 已清理"
+
+export-demo: ## Export task outputs to app_demo/data/ for static demo
+	python scripts/export_demo_data.py --input-dir output --output-dir app_demo/data
+
+demo: ## Start the demo app (requires npm)
+	cd app_demo && npm run dev

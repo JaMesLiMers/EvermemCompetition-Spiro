@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-03-14T16:09:43.371102+00:00",
+  "source_files": {
+    "relationships": "relationships_20260314_215921.json",
+    "event_cards": "event_cards_20260314_220101.json",
+    "profiling": "profiling_20260314_213724.json",
+    "suggestions": "suggestions_20260314_215854.json"
+  }
+}
