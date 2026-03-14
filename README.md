@@ -1,90 +1,114 @@
-# EverMemOS Competition — Agent Memory Analysis
+<p align="center">
+  <img src="figure/cover_pic.jpg" alt="Spiro" width="100%">
+</p>
 
-AI Agent 驱动的记忆分析系统。通过 [EverMemOS](https://github.com/anthropics/evermemos) 存储和检索对话记忆，利用 [opencode](https://opencode.ai) + Claude Sonnet 4.6 进行智能分析。
+# Spiro — World-First Context-Native Empathic AI Wearable
 
-## 架构概览
+> From Life to Language. Carry your days with you.
 
-```
-data/*.json           原始对话事件数据 (832 events)
-    │
-    ▼
-pipeline/             数据预处理
-  generate_speaker_mapping.py → LLM 批量推断说话人角色 (gpt-4o-mini)
-  convert_to_gcf.py           → 转换为 GroupChatFormat + 说话人标签丰富
-    │
-    ▼
-data/gcf/             GCF 文件 (3089 groups, 141K messages)
-data/gcf_all.json     合并后的单文件
-    │
-    ▼
-pipeline/
-  ingest_gcf.py       → 异步批量灌入 EverMemOS
-    │
-    ▼
-EverMemOS/            记忆存储引擎 (Docker)
-  MongoDB + Elasticsearch + Milvus + Redis
-    │
-    ▼
-agent/                分析任务 (JSON 输出)
-  cli.py                → opencode run + Claude Sonnet 4.6
-  tasks/                → relationships / profiling / timeline / suggestions / event_cards
-    │
-    ▼
-output/               分析结果 (.json)
-```
+[![EverMemOS](https://img.shields.io/badge/Powered%20by-EverMemOS-blue)](https://github.com/anthropics/evermemos)
+[![Python](https://img.shields.io/badge/Python-3.10+-green)](https://python.org)
+[![Docker](https://img.shields.io/badge/Docker-Required-blue)](https://docker.com)
 
-## 目录结构
+---
 
-```
-.
-├── agent/                  # AI Agent 分析模块
-│   ├── cli.py              #   CLI 入口，调用 opencode run 执行分析
-│   ├── config.py           #   AgentConfig (从环境变量读取配置)
-│   ├── setup_mcp.py        #   MCP 配置校验
-│   └── tasks/              #   5 种分析任务 (JSON 输出)
-│       ├── base.py         #     BaseTask 基类
-│       ├── relationships.py#     人际关系分析
-│       ├── profiling.py    #     用户画像分析
-│       ├── timeline.py     #     时间线分析
-│       ├── suggestions.py  #     智能建议
-│       └── event_cards.py  #     事件卡片生成
-├── pipeline/               # 数据预处理管道
-│   ├── generate_speaker_mapping.py  # LLM 批量生成说话人角色映射
-│   ├── convert_to_gcf.py   #   转换原始数据 → GroupChatFormat
-│   ├── ingest_gcf.py       #   异步批量灌入 EverMemOS
-│   ├── transcript_parser.py#   对话文本解析器
-│   └── extract_transcript.py#  音频转录提取
-├── mcp_server/             # MCP Server (EverMemOS ↔ Agent 桥梁)
-│   └── server.py           #   5 个 MCP tools: search/get/store/delete/meta
-├── shared/                 # 共享模块
-│   └── evermemos_api.py    #   EverMemOS REST API 异步客户端
-├── EverMemOS/              # EverMemOS 服务 (git submodule)
-├── opencode/               # opencode CLI 源码 (git submodule)
-├── data/                   # 数据
-│   ├── basic_events_79ef7f17.json  # 原始数据集 (832 events, 含嵌入的说话人角色映射)
-│   └── gcf_all.json                # GCF 合并文件
-├── tests/                  # 测试
-├── opencode.json           # opencode 配置 (provider + MCP)
-├── pyproject.toml          # Python 项目配置
-├── Makefile                # 一键操作命令
-└── .env                    # 环境变量 (不提交)
-```
+<p align="center">
+  <img src="figure/core_tension.png" alt="The Core Tension" width="100%">
+</p>
 
-## 快速开始
+## The Core Tension
 
-### 前置条件
+Life is becoming clearer. Yet harder to feel. We can record almost everything — steps, sleep, conversations, data. But meaning is fading. Spiro exists to bring meaning back.
+
+---
+
+<p align="center">
+  <img src="figure/introducing.png" alt="Introducing Spiro" width="100%">
+</p>
+
+## Introducing Spiro
+
+Spiro is a reflective wearable AI that transforms everyday life into language, memory, and meaning. It quietly listens to everyday life and returns lived experience as words. No manual journaling required.
+
+---
+
+<p align="center">
+  <img src="figure/stream.jpg" alt="Features" width="100%">
+</p>
+
+## Features
+
+1. **Capture Meaningful Moments** — Automatically identifies important conversations, emotional shifts, and personal milestones, turning them into poems and art in the app
+2. **On-Demand Perspective** — Rotate the band to surface a relevant moment from your past — a time you handled something similar or showed strength. No advice. Just your own evidence.
+3. **Relationship Pattern Insights** — Analyzes long-term interaction patterns — including frequency of contact and emotional tone — to show how your relationships evolve over time
+4. **Personal Pattern Tracking** — Over weeks and months, identifies recurring themes in your work, relationships, and emotional cycles to support clearer self-awareness
+
+---
+
+<p align="center">
+  <img src="figure/User%20Scenario.png" alt="User Scenarios" width="100%">
+</p>
+
+## User Scenarios
+
+Spiro adapts to your life across different moments:
+
+1. **Before a Big Moment** — About to step on stage, heart racing. Spiro responds with evidence from your past: "You've been here before."
+2. **Capturing a Glimmer** — A casual remark about a sunset becomes a card: "A small moment, kept."
+3. **Relationship Insight** — After a gathering, Spiro reflects: "Your tone has become more relaxed over time." It reveals the pattern.
+4. **A Longer View** — On a quiet night, Spiro compares: "Three months ago, you hesitated. This week, you responded within seconds." Growth, made visible.
+
+---
+
+<p align="center">
+  <img src="figure/hardware_demo.jpg" alt="Hardware" width="100%">
+</p>
+
+## Hardware
+
+Spiro is a wearable band with a custom-designed PCB, available in silver and gold. Designed as everyday jewelry with embedded AI — always with you, never intrusive.
+
+---
+
+## How It Works — From Audio to Insight
+
+Spiro's pipeline transforms raw audio from the wearable band into meaningful, personalized content through a multi-stage AI pipeline:
+
+![Algorithm Flowchart](docs/diagrams/algorithm-flowchart.drawio.svg)
+
+1. The band captures ambient audio from daily conversations
+2. Gemini 2.0 Flash processes the audio stream into structured events
+3. GPT-4o-mini infers speaker roles (e.g., "Speaker 1" → "Product Manager")
+4. Events are converted to GroupChatFormat and ingested into EverMemOS
+5. EverMemOS extracts episodic memories and builds searchable indices
+6. Claude Sonnet analyzes memories through 5 specialized tasks
+7. Results are rendered in the React app as cards, timelines, and relationship graphs
+
+---
+
+## System Architecture
+
+![System Architecture](docs/diagrams/system-architecture.drawio.svg)
+
+The system follows a layered architecture: the hardware layer captures audio, the data pipeline preprocesses and ingests conversation events, the memory engine (EverMemOS) manages long-term storage and retrieval, the AI agent layer performs analysis via Claude Sonnet, and the presentation layer renders results in a React-based UI.
+
+---
+
+## Quick Start
+
+### Prerequisites
 
 - Docker & Docker Compose
 - Python >= 3.10
-- [opencode CLI](https://opencode.ai) (`npm i -g @anthropic-ai/opencode` 或 `curl -fsSL https://opencode.ai/install | bash`)
+- [opencode CLI](https://opencode.ai) (`npm i -g @anthropic-ai/opencode` or `curl -fsSL https://opencode.ai/install | bash`)
 
-### 1. 初始化
+### Step 1: Initialize
 
 ```bash
 make init
 ```
 
-编辑 `.env`，填入 API Key：
+Edit `.env` and fill in your API key:
 
 ```bash
 # .env
@@ -93,136 +117,153 @@ EVERMEMOS_BASE_URL=http://localhost:1995
 OPENCODE_API_KEY=your-api-key-here
 ```
 
-### 2. 部署服务
+### Step 2: Deploy Services
 
 ```bash
 make deploy
 ```
 
-启动 Docker 基础设施 (Redis/MongoDB/Elasticsearch/Milvus) + EverMemOS 服务 + arq Worker。
+This starts the Docker infrastructure (Redis/MongoDB/Elasticsearch/Milvus), the EverMemOS service, and the arq Worker.
 
-验证服务状态：
+Verify service status:
 
 ```bash
 make status
 ```
 
-### 3. 准备数据
+### Step 3: Prepare Data
 
-#### 3a. 生成说话人角色映射
+#### 3a. Generate Speaker Role Mappings
 
-使用 gpt-4o-mini 为每个事件的说话人推断具体角色（如 "说话人1" → "产品经理"）：
+Use GPT-4o-mini to infer specific roles for each event's speakers (e.g., "Speaker 1" → "Product Manager"):
 
 ```bash
 make generate-speaker-mappings INPUT=data/basic_events_79ef7f17.json
-# 可选参数: MODEL=gpt-4o-mini  CONCURRENCY=10  DRY_RUN=1
+# Optional: MODEL=gpt-4o-mini  CONCURRENCY=10  DRY_RUN=1
 ```
 
-输出 `data/speaker_mappings.json`，包含每个事件的说话人角色映射。支持断点续传（已处理的事件会跳过），使用 `--force` 强制重新生成。
+Outputs `data/speaker_mappings.json` with per-event speaker role mappings. Supports resumption (already-processed events are skipped); use `--force` to regenerate.
 
-#### 3b. 转换为 GCF
+#### 3b. Convert to GCF
 
-将原始事件数据转换为 GroupChatFormat，自动应用事件中嵌入的说话人角色映射：
+Convert raw event data to GroupChatFormat, automatically applying the embedded speaker role mappings:
 
 ```bash
 make convert-gcf INPUT=data/basic_events_79ef7f17.json
-# 可选参数: LIMIT=10  SPLIT_FRAGS=8  SPLIT_TURNS=100
+# Optional: LIMIT=10  SPLIT_FRAGS=8  SPLIT_TURNS=100
 ```
 
-### 4. 灌入数据
+### Step 4: Ingest Data
 
 ```bash
 make ingest-gcf
-# 可选参数: GCF_DIR=data/gcf/  API_URL=http://localhost:1995/api/v1/memories  CONCURRENCY=5
+# Optional: INPUT=data/gcf_all.json  API_URL=http://localhost:1995/api/v1/memories  CONCURRENCY=5
 ```
 
-异步并发灌入，带双进度条（文件级 + 消息级），默认并发度 5。
+Asynchronous concurrent ingestion with dual progress bars (file-level + message-level), default concurrency of 5.
 
-### 5. 运行分析
+### Step 5: Run Analysis
 
 ```bash
-# 人际关系分析
+# Relationship analysis
 make run-task TASK=relationships USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 
-# 用户画像
+# User profiling
 make run-task TASK=profiling USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 
-# 时间线
+# Timeline
 make run-task TASK=timeline USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 
-# 智能建议
+# Suggestions
 make run-task TASK=suggestions USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 
-# 事件卡片
+# Event cards
 make run-task TASK=event_cards USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 ```
 
-可选参数：
+Optional parameters:
 
-| 参数 | 适用任务 | 说明 |
-|------|----------|------|
-| `FOCUS_PERSON=xxx` | relationships | 重点分析某人的关系 |
-| `START_DATE=2024-01-01` | timeline | 起始日期 |
-| `END_DATE=2024-12-31` | timeline | 结束日期 |
-| `KEYWORDS="k1 k2"` | timeline | 关键词过滤 |
+| Parameter | Applicable Tasks | Description |
+|-----------|-----------------|-------------|
+| `FOCUS_PERSON=xxx` | relationships | Focus analysis on a specific person |
+| `START_DATE=2024-01-01` | timeline | Start date filter |
+| `END_DATE=2024-12-31` | timeline | End date filter |
+| `KEYWORDS="k1 k2"` | timeline | Keyword filter |
 
-分析结果保存在 `output/` 目录下（JSON 格式，包含 metadata 信封）。
+Analysis results are saved in the `output/` directory (JSON format with metadata envelope).
 
-### 6. 停止服务
+### Step 6: Stop Services
 
 ```bash
 make stop
 ```
 
-## 完整实验流程 (从零开始)
+### End-to-End Workflow
 
 ```bash
-make init                  # 初始化环境
-make deploy                # 启动所有服务
-make status                # 确认服务就绪
+make init                  # Initialize environment
+make deploy                # Start all services
+make status                # Confirm services are ready
 
-# 数据预处理
+# Data preprocessing
 make generate-speaker-mappings INPUT=data/basic_events_79ef7f17.json
 make convert-gcf INPUT=data/basic_events_79ef7f17.json
-make ingest-gcf            # 灌入 GCF 数据
+make ingest-gcf            # Ingest GCF data
 
-# 运行全部分析任务
+# Run all analysis tasks
 make run-task TASK=relationships USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 make run-task TASK=profiling    USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 make run-task TASK=timeline     USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 make run-task TASK=suggestions  USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 make run-task TASK=event_cards  USER_ID=79ef7f17-9d24-4a85-a6fe-de7d060bc090
 
-make stop                  # 清理
+make stop                  # Clean up
 ```
 
-## 说话人角色推断
+---
 
-原始数据中大量说话人标签是匿名的（如 "说话人1/女"、"未知参与者A"）。`generate_speaker_mapping.py` 通过以下方式解决：
+## Project Structure
 
-1. 将每个事件的对话内容（含标题和类型）发送给 gpt-4o-mini
-2. 模型根据对话上下文推断每个说话人的具体角色
-3. 结果已嵌入 `data/basic_events_79ef7f17.json` 的 `event.object.speaker_mapping` 字段，GCF 转换时自动应用
+| Directory | Description |
+|-----------|-------------|
+| [`agent/`](agent/README.md) | AI Agent analysis module — 5 task types powered by Claude Sonnet |
+| [`pipeline/`](pipeline/README.md) | Data preprocessing — speaker mapping, GCF conversion, ingestion |
+| [`mcp_server/`](mcp_server/README.md) | MCP Server bridging EverMemOS and AI agents |
+| [`shared/`](shared/README.md) | Shared utilities — EverMemOS async API client |
+| [`data/`](data/README.md) | Datasets — 832 conversation events |
+| [`app_demo/`](app_demo/README.md) | React visualization UI |
+| `EverMemOS/` | Memory engine (git submodule) — [docs](EverMemOS/docs/) |
+| `opencode/` | opencode CLI (git submodule) |
 
-示例映射：
-- `说话人1/女` → `产品经理`
-- `说话人2/男` → `后端工程师`
-- `说话人1` → `丈夫`
-- `未知参与者A` → `客户`
+---
 
-832 个事件中 765 个成功生成了具体角色标签，共 3975 个标签。
+## Advanced Usage
 
-## 配置说明
+### Speaker Role Inference
 
-### 环境变量 (`.env`)
+Raw data contains many anonymous speaker labels (e.g., "Speaker 1/Female", "Unknown Participant A"). `generate_speaker_mapping.py` resolves this by:
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `AGENT_MODEL` | opencode 使用的模型 | `anthropic/claude-sonnet-4-6` |
-| `EVERMEMOS_BASE_URL` | EverMemOS API 地址 | `http://localhost:1995` |
-| `OPENCODE_API_KEY` | API Key (通过 uniapi 代理) | 无 |
+1. Sending each event's conversation content (including title and type) to GPT-4o-mini
+2. The model infers specific roles for each speaker based on conversational context
+3. Results are embedded in the `event.object.speaker_mapping` field of `data/basic_events_79ef7f17.json` and automatically applied during GCF conversion
 
-### opencode 配置 (`opencode.json`)
+Example mappings:
+- `Speaker 1/Female` → `Product Manager`
+- `Speaker 2/Male` → `Backend Engineer`
+- `Speaker 1` → `Husband`
+- `Unknown Participant A` → `Client`
+
+Out of 832 events, 765 successfully generated specific role labels, totaling 3,975 labels.
+
+### Environment Variables (`.env`)
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AGENT_MODEL` | Model used by opencode | `anthropic/claude-sonnet-4-6` |
+| `EVERMEMOS_BASE_URL` | EverMemOS API URL | `http://localhost:1995` |
+| `OPENCODE_API_KEY` | API Key (via uniapi proxy) | — |
+
+### opencode Configuration (`opencode.json`)
 
 ```json
 {
@@ -248,51 +289,77 @@ make stop                  # 清理
 
 ### MCP Tools
 
-Agent 在分析时可通过 MCP 调用以下工具：
+The agent can call the following tools via MCP during analysis:
 
-| Tool | 说明 |
-|------|------|
-| `search_memory` | 搜索记忆 (keyword/vector/hybrid/rrf/agentic) |
-| `get_memories` | 按类型获取记忆 (episodic/profile/foresight/event_log) |
-| `store_message` | 存入新消息 |
-| `get_conversation_meta` | 获取对话元数据 |
-| `delete_memories` | 删除记忆 |
+| Tool | Description |
+|------|-------------|
+| `search_memory` | Search memories (keyword/vector/hybrid/rrf/agentic) |
+| `get_memories` | Retrieve memories by type (episodic/profile/foresight/event_log) |
+| `store_message` | Store a new message |
+| `get_conversation_meta` | Get conversation metadata |
+| `delete_memories` | Delete memories |
 
-## 基础设施
+### Task Parameters
 
-Docker 服务 (通过 `EverMemOS/docker-compose.yaml`)：
+| Parameter | Applicable Tasks | Description |
+|-----------|-----------------|-------------|
+| `FOCUS_PERSON=xxx` | relationships | Focus analysis on a specific person's relationships |
+| `START_DATE=2024-01-01` | timeline | Start date for timeline range |
+| `END_DATE=2024-12-31` | timeline | End date for timeline range |
+| `KEYWORDS="k1 k2"` | timeline | Filter by keywords |
 
-| 服务 | 端口 | 用途 |
-|------|------|------|
-| Redis | 6379 | 缓存 + 任务队列 |
-| MongoDB | 27017 | 文档存储 |
-| Elasticsearch | 19200 | 全文检索 |
-| Milvus | 19530 | 向量检索 |
-| EverMemOS | 1995 | 记忆管理 API |
+### Infrastructure
 
-## 开发
+Docker services (via `EverMemOS/docker-compose.yaml`):
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| Redis | 6379 | Cache + task queue |
+| MongoDB | 27017 | Document storage |
+| Elasticsearch | 19200 | Full-text search |
+| Milvus | 19530 | Vector search |
+| EverMemOS | 1995 | Memory management API |
+
+### All Make Commands
 
 ```bash
-pip install -e ".[dev]"    # 安装开发依赖
-make test                  # 运行测试
-make lint                  # 代码检查
-make clean                 # 清理缓存和临时文件
+make help                       # Show all available commands
+make init                       # One-click init: submodules + dependencies + env template
+make deploy                     # One-click deploy: Docker + EverMemOS + Worker
+make stop                       # Stop all services
+make status                     # Check service status
+make add-memory                 # Store a single memory
+make generate-speaker-mappings  # LLM batch speaker role mapping
+make convert-gcf                # Convert data to GroupChatFormat
+make ingest-gcf                 # Async batch ingest GCF files into EverMemOS
+make run-task                   # Run analysis task
+make export-demo                # Export task outputs to app_demo/data/ for static demo
+make demo                       # Start the demo app (requires npm)
+make backup                     # Backup EverMemOS data (MongoDB dump)
+make restore                    # Restore EverMemOS data from backup
+make lint                       # Run code checks
+make test                       # Run tests
+make clean                      # Clean temporary files
 ```
 
-## 所有 Make 命令
+### Development
 
 ```bash
-make help                       # 显示所有可用命令
-make init                       # 一键初始化：子模块 + 依赖 + env 模板
-make deploy                     # 一键部署：Docker + EverMemOS + Worker
-make stop                       # 停止所有服务
-make status                     # 检查服务状态
-make add-memory                 # 存入单条记忆
-make generate-speaker-mappings  # LLM 批量生成说话人角色映射
-make convert-gcf                # 转换数据为 GroupChatFormat
-make ingest-gcf                 # 异步批量灌入 GCF 文件到 EverMemOS
-make run-task                   # 运行分析任务
-make lint                       # 代码检查
-make test                       # 运行测试
-make clean                      # 清理临时文件
+pip install -e ".[dev]"    # Install dev dependencies
+make test                  # Run tests
+make lint                  # Code linting
+make clean                 # Clean cache and temporary files
 ```
+
+---
+
+## Built With
+
+- [EverMemOS](https://github.com/anthropics/evermemos) — Long-term memory engine
+- [Claude Sonnet 4.6](https://anthropic.com) — AI analysis via opencode
+- [Gemini 2.0 Flash](https://ai.google.dev) — Audio processing
+- GPT-4o-mini — Speaker role inference
+- React + vis.js — Visualization
+- Docker — Infrastructure orchestration
+
+Built for the [EverMemOS Competition](https://github.com/anthropics/evermemos)
