@@ -1,7 +1,7 @@
 # Documentation Redesign — Design Spec
 
 **Date:** 2026-03-14
-**Status:** Draft
+**Status:** Approved
 **Audience:** Competition judges (primary), developers (secondary)
 **Language:** English only
 **Narrative:** Companion + technical hybrid
@@ -39,7 +39,11 @@ Top-down storytelling structure. Judges get the full picture in one scroll.
 
 **Narrative arc:** Why (tension) → What (intro + features + scenarios) → How (hardware + algorithm + architecture) → Try it (quick start + advanced)
 
+**Note:** The Makefile `run-task` help string currently omits `event_cards` — update it to list all 5 task types.
+
 ### 2. Drawio Diagrams
+
+Create `docs/diagrams/` directory. Export diagrams to SVG (`docs/diagrams/*.svg`) for embedding in READMEs. SVG is preferred for scalability and GitHub rendering.
 
 #### 2a. Algorithm Flowchart (`docs/diagrams/algorithm-flowchart.drawio`)
 
@@ -102,7 +106,7 @@ For `pipeline/README.md` — detailed view of the data transformation steps with
 
 ### 3. Subfolder READMEs
 
-All in English. Each follows a consistent structure: Overview → How it works → Usage → Reference.
+All in English. Each follows a consistent structure: Overview → How it works → Usage → Reference. Replace existing subfolder READMEs where they exist.
 
 #### 3a. `pipeline/README.md`
 
@@ -140,6 +144,7 @@ All in English. Each follows a consistent structure: Overview → How it works �
   - `get_conversation_meta` — get conversation metadata
   - `delete_memories` — remove memories
 - **Configuration:** opencode.json MCP server setup
+- **Dependencies:** `requirements.txt` and installation
 - **How it connects:** EverMemOS REST API ↔ MCP Protocol ↔ Agent
 
 #### 3d. `shared/README.md`
@@ -187,7 +192,14 @@ All existing figures stored in `figure/` directory. Referenced via relative path
 ![Hardware](figure/hardware_demo.jpg)
 ```
 
-Drawio diagrams stored in `docs/diagrams/` and referenced as images (exported to SVG or PNG) or linked directly.
+Drawio diagrams stored in `docs/diagrams/`. Export to SVG for README embedding:
+
+```markdown
+![Algorithm Flowchart](docs/diagrams/algorithm-flowchart.svg)
+![System Architecture](docs/diagrams/system-architecture.svg)
+```
+
+The `.drawio` source files are kept alongside the SVGs for future editing.
 
 ## Terminology
 

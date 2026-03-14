@@ -44,20 +44,6 @@ Spiro is a reflective wearable AI that transforms everyday life into language, m
 4. **Personal Pattern Tracking** — Over weeks and months, identifies recurring themes in your work, relationships, and emotional cycles to support clearer self-awareness
 
 ---
-
-<p align="center">
-  <img src="figure/User%20Scenario.png" alt="User Scenarios" width="100%">
-</p>
-
-## User Scenarios
-
-Spiro adapts to your life across different moments:
-
-1. **Before a Big Moment** — About to step on stage, heart racing. Spiro responds with evidence from your past: "You've been here before."
-2. **Capturing a Glimmer** — A casual remark about a sunset becomes a card: "A small moment, kept."
-3. **Relationship Insight** — After a gathering, Spiro reflects: "Your tone has become more relaxed over time." It reveals the pattern.
-4. **A Longer View** — On a quiet night, Spiro compares: "Three months ago, you hesitated. This week, you responded within seconds." Growth, made visible.
-
 ---
 
 <p align="center">
