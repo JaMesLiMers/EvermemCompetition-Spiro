@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "id": "lt_001",
+    "name": "Family & Infant Care",
+    "gravity": 88,
+    "description": "A newborn's arrival weaves every conversation into a tapestry of tender vigilance, where feeding schedules and tiny fingernails become the measure of love.",
+    "icon": "👶",
+    "color": "blue"
+  },
+  {
+    "id": "lt_002",
+    "name": "Romantic Partnership",
+    "gravity": 82,
+    "description": "Two lives move in quiet orbit around each other, navigating roads and evenings with the effortless grammar of long companionship.",
+    "icon": "💑",
+    "color": "amber"
+  },
+  {
+    "id": "lt_003",
+    "name": "Tech Product Design",
+    "gravity": 78,
+    "description": "Ideas collide in fluorescent meeting rooms where every swipe, sound wave, and event card is a small argument about what technology should feel like.",
+    "icon": "🎨",
+    "color": "purple"
+  },
+  {
+    "id": "lt_004",
+    "name": "Extended Family & Kinship",
+    "gravity": 72,
+    "description": "Grandmothers recall the weight of sleepless nights, aunts remember childhood compliments, and reunion tables hold more stories than food.",
+    "icon": "🏠",
+    "color": "emerald"
+  },
+  {
+    "id": "lt_005",
+    "name": "Friendship & Social Life",
+    "gravity": 58,
+    "description": "Friends chase sunsets on bikes, argue over where to eat, and turn ordinary street corners into the backdrop of small, irreplaceable moments.",
+    "icon": "🤝",
+    "color": "amber"
+  },
+  {
+    "id": "lt_006",
+    "name": "Leisure & Urban Wandering",
+    "gravity": 52,
+    "description": "A reluctance to walk uphill and a craving for noodle soup trace the contours of a life that finds meaning in unhurried, aimless afternoons.",
+    "icon": "🌆",
+    "color": "blue"
+  },
+  {
+    "id": "lt_007",
+    "name": "Travel & Mobility",
+    "gravity": 45,
+    "description": "GPS voices guide the car through interchanges while the passenger drifts, half-asleep, trusting the road to carry them somewhere worth arriving.",
+    "icon": "🚗",
+    "color": "emerald"
+  },
+  {
+    "id": "lt_008",
+    "name": "Health & Wellness",
+    "gravity": 38,
+    "description": "Herbal pills debated over kitchen tables and vaccine conversations overheard from spouses quietly reveal an ongoing negotiation with the body's uncertainties.",
+    "icon": "💊",
+    "color": "purple"
+  }
+]

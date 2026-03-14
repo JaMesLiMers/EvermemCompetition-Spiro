@@ -1,0 +1,7 @@
+{
+  "name": "Spiro Diary - Galaxy Diary",
+  "description": "An AI-powered diary that transforms memories into a cinematic experience with generated visuals and relationship analysis.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

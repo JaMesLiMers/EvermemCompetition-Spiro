@@ -1,291 +1,263 @@
 [
   {
-    "id": "user_main",
-    "name": "user_main",
-    "relationship": "核心用户/产品团队成员/家庭成员",
+    "id": "husband",
+    "name": "Husband",
+    "relationship": "Romantic partner / Spouse of main user",
     "diaryIds": [
-      "ec_011",
-      "ec_014",
-      "ec_015",
-      "ec_016",
-      "ec_018",
-      "ec_020",
-      "ec_021",
-      "ec_024",
-      "ec_026",
-      "ec_027",
-      "ec_029",
-      "ec_042",
-      "ec_043"
-    ],
-    "occurrenceCount": 13
-  },
-  {
-    "id": "男伴侣",
-    "name": "男伴侣",
-    "relationship": "伴侣关系中的男方",
-    "diaryIds": [
-      "ec_001",
-      "ec_002",
-      "ec_003",
-      "ec_004"
-    ],
-    "occurrenceCount": 4
-  },
-  {
-    "id": "女伴侣",
-    "name": "女伴侣",
-    "relationship": "伴侣关系中的女方",
-    "diaryIds": [
-      "ec_001",
-      "ec_003",
-      "ec_004"
-    ],
-    "occurrenceCount": 3
-  },
-  {
-    "id": "丈夫",
-    "name": "丈夫",
-    "relationship": "婚姻关系中的丈夫",
-    "diaryIds": [
-      "ec_019",
-      "ec_020",
       "ec_021",
       "ec_022",
       "ec_023",
       "ec_024",
       "ec_025",
-      "ec_030",
-      "ec_031"
+      "ec_026",
+      "ec_027",
+      "ec_032",
+      "ec_033"
     ],
     "occurrenceCount": 9
   },
   {
-    "id": "妻子",
-    "name": "妻子",
-    "relationship": "婚姻关系中的妻子",
+    "id": "close_friend",
+    "name": "Close Friend",
+    "relationship": "Close friend of main user",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "architect",
+    "name": "Architect",
+    "relationship": "Technical lead / Architect colleague",
     "diaryIds": [
-      "ec_019",
-      "ec_022",
-      "ec_023",
-      "ec_025",
-      "ec_030",
-      "ec_031"
+      "ec_011",
+      "ec_012",
+      "ec_013",
+      "ec_015",
+      "ec_018",
+      "ec_019"
     ],
     "occurrenceCount": 6
   },
   {
-    "id": "母亲/设计师",
-    "name": "母亲/设计师",
-    "relationship": "家庭中的母亲，同时是产品设计团队成员",
+    "id": "product_design_lead",
+    "name": "Product Design Lead",
+    "relationship": "Product design colleague",
     "diaryIds": [
-      "ec_037",
-      "ec_038",
-      "ec_039",
-      "ec_040",
-      "ec_041"
+      "ec_011",
+      "ec_012",
+      "ec_013",
+      "ec_014",
+      "ec_015"
     ],
     "occurrenceCount": 5
   },
   {
-    "id": "外婆",
-    "name": "外婆",
-    "relationship": "家庭中的外祖母",
+    "id": "developer",
+    "name": "Developer",
+    "relationship": "Developer colleague",
     "diaryIds": [
-      "ec_043",
-      "ec_044",
-      "ec_045",
-      "ec_046",
-      "ec_047",
-      "ec_048"
+      "ec_010",
+      "ec_011",
+      "ec_012",
+      "ec_014",
+      "ec_015",
+      "ec_017",
+      "ec_019",
+      "ec_020"
     ],
-    "occurrenceCount": 6
+    "occurrenceCount": 8
   },
   {
-    "id": "父亲",
-    "name": "父亲",
-    "relationship": "家庭中的父亲/user_main的父亲",
+    "id": "qa_lead",
+    "name": "QA Lead",
+    "relationship": "Quality assurance colleague",
     "diaryIds": [
-      "ec_042",
-      "ec_043"
+      "ec_010"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "data_analyst",
+    "name": "Data Analyst",
+    "relationship": "Data analysis colleague",
+    "diaryIds": [
+      "ec_010"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "junior_product_manager",
+    "name": "Junior Product Manager",
+    "relationship": "Junior product manager colleague",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "product_manager",
+    "name": "Product Manager",
+    "relationship": "Product manager colleague",
+    "diaryIds": [
+      "ec_016",
+      "ec_020"
     ],
     "occurrenceCount": 2
   },
   {
-    "id": "姑姑",
-    "name": "姑姑",
-    "relationship": "家庭亲属",
+    "id": "senior_engineer",
+    "name": "Senior Engineer",
+    "relationship": "Senior engineering colleague",
     "diaryIds": [
-      "ec_043",
+      "ec_019"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "tech_lead",
+    "name": "Tech Lead",
+    "relationship": "Technical lead colleague",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "software_engineer",
+    "name": "Software Engineer",
+    "relationship": "Software engineering colleague",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "product_owner",
+    "name": "Product Owner",
+    "relationship": "Product owner / senior product leader colleague",
+    "diaryIds": [],
+    "occurrenceCount": 0
+  },
+  {
+    "id": "ui_designer",
+    "name": "UI Designer",
+    "relationship": "UI design colleague",
+    "diaryIds": [
+      "ec_034",
+      "ec_038",
+      "ec_040"
+    ],
+    "occurrenceCount": 3
+  },
+  {
+    "id": "design_director",
+    "name": "Design Director",
+    "relationship": "Design director / supervisor colleague",
+    "diaryIds": [
+      "ec_034",
+      "ec_035",
+      "ec_037",
+      "ec_038",
+      "ec_039",
+      "ec_040",
+      "ec_043"
+    ],
+    "occurrenceCount": 7
+  },
+  {
+    "id": "tech_support",
+    "name": "Tech Support",
+    "relationship": "Technical support colleague",
+    "diaryIds": [
+      "ec_039"
+    ],
+    "occurrenceCount": 1
+  },
+  {
+    "id": "father",
+    "name": "Father",
+    "relationship": "Father of main user",
+    "diaryIds": [
+      "ec_047",
+      "ec_048"
+    ],
+    "occurrenceCount": 2
+  },
+  {
+    "id": "mother",
+    "name": "Mother",
+    "relationship": "Mother of main user / also a designer",
+    "diaryIds": [
+      "ec_049",
+      "ec_050",
+      "ec_051",
+      "ec_052",
+      "ec_055"
+    ],
+    "occurrenceCount": 5
+  },
+  {
+    "id": "grandmother",
+    "name": "Grandmother",
+    "relationship": "Grandmother (maternal) of main user",
+    "diaryIds": [
+      "ec_042",
+      "ec_048",
+      "ec_049",
+      "ec_050",
+      "ec_051",
+      "ec_052",
+      "ec_054",
+      "ec_055"
+    ],
+    "occurrenceCount": 8
+  },
+  {
+    "id": "aunt",
+    "name": "Aunt",
+    "relationship": "Aunt of main user",
+    "diaryIds": [
+      "ec_048",
+      "ec_053",
+      "ec_054"
+    ],
+    "occurrenceCount": 3
+  },
+  {
+    "id": "female_friend",
+    "name": "Female Friend",
+    "relationship": "Friend of mother / family acquaintance",
+    "diaryIds": [
+      "ec_041",
       "ec_046"
     ],
     "occurrenceCount": 2
   },
   {
-    "id": "架构师",
-    "name": "架构师",
-    "relationship": "技术团队架构师",
+    "id": "middle_aged_female_relative",
+    "name": "Middle-Aged Female Relative",
+    "relationship": "Extended family relative",
     "diaryIds": [
-      "ec_010",
-      "ec_011",
-      "ec_012",
-      "ec_014",
-      "ec_016",
-      "ec_017"
-    ],
-    "occurrenceCount": 6
-  },
-  {
-    "id": "产品设计负责人",
-    "name": "产品设计负责人",
-    "relationship": "产品团队设计负责人",
-    "diaryIds": [
-      "ec_010",
-      "ec_011",
-      "ec_012",
-      "ec_013",
-      "ec_014"
-    ],
-    "occurrenceCount": 5
-  },
-  {
-    "id": "产品负责人",
-    "name": "产品负责人",
-    "relationship": "产品团队负责人",
-    "diaryIds": [
-      "ec_032",
-      "ec_033",
-      "ec_034",
-      "ec_035",
-      "ec_036"
-    ],
-    "occurrenceCount": 5
-  },
-  {
-    "id": "开发人员",
-    "name": "开发人员",
-    "relationship": "技术开发人员",
-    "diaryIds": [
-      "ec_009",
-      "ec_010",
-      "ec_011",
-      "ec_013",
-      "ec_014",
-      "ec_015",
-      "ec_017",
-      "ec_018"
-    ],
-    "occurrenceCount": 8
-  },
-  {
-    "id": "质量保证负责人",
-    "name": "质量保证负责人",
-    "relationship": "QA负责人",
-    "diaryIds": [
-      "ec_009"
+      "ec_042"
     ],
     "occurrenceCount": 1
   },
   {
-    "id": "数据分析师",
-    "name": "数据分析师",
-    "relationship": "数据分析团队成员",
+    "id": "young_female_relative",
+    "name": "Young Female Relative",
+    "relationship": "Young female family relative",
     "diaryIds": [
-      "ec_009"
+      "ec_045"
     ],
     "occurrenceCount": 1
   },
   {
-    "id": "资深工程师",
-    "name": "资深工程师",
-    "relationship": "技术团队资深工程师",
-    "diaryIds": [
-      "ec_017"
-    ],
-    "occurrenceCount": 1
-  },
-  {
-    "id": "技术负责人",
-    "name": "技术负责人",
-    "relationship": "技术团队负责人",
+    "id": "vlogger",
+    "name": "Vlogger",
+    "relationship": "Acquaintance / social contact encountered in public",
     "diaryIds": [],
     "occurrenceCount": 0
   },
   {
-    "id": "产品经理",
-    "name": "产品经理",
-    "relationship": "产品管理人员",
+    "id": "young_child",
+    "name": "Young Child",
+    "relationship": "Child present during group outing",
     "diaryIds": [
-      "ec_018"
+      "ec_008"
     ],
     "occurrenceCount": 1
-  },
-  {
-    "id": "初级产品经理",
-    "name": "初级产品经理",
-    "relationship": "初级产品管理人员",
-    "diaryIds": [
-      "ec_013"
-    ],
-    "occurrenceCount": 1
-  },
-  {
-    "id": "设计主管",
-    "name": "设计主管",
-    "relationship": "设计团队主管",
-    "diaryIds": [
-      "ec_032",
-      "ec_033",
-      "ec_034",
-      "ec_035",
-      "ec_036"
-    ],
-    "occurrenceCount": 5
-  },
-  {
-    "id": "ui设计师",
-    "name": "UI设计师",
-    "relationship": "UI设计团队成员",
-    "diaryIds": [
-      "ec_032",
-      "ec_035"
-    ],
-    "occurrenceCount": 2
-  },
-  {
-    "id": "好友",
-    "name": "好友",
-    "relationship": "user_main的朋友",
-    "diaryIds": [
-      "ec_026",
-      "ec_027",
-      "ec_028",
-      "ec_029"
-    ],
-    "occurrenceCount": 4
-  },
-  {
-    "id": "视频博主",
-    "name": "视频博主",
-    "relationship": "记录日常生活的博主",
-    "diaryIds": [
-      "ec_023",
-      "ec_024"
-    ],
-    "occurrenceCount": 2
-  },
-  {
-    "id": "朋友（停车）",
-    "name": "朋友（停车）",
-    "relationship": "男伴侣的朋友",
-    "diaryIds": [],
-    "occurrenceCount": 0
-  },
-  {
-    "id": "软件工程师",
-    "name": "软件工程师",
-    "relationship": "技术团队软件工程师",
-    "diaryIds": [],
-    "occurrenceCount": 0
   }
 ]

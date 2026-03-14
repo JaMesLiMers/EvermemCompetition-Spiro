@@ -1,1 +1,304 @@
-{}
+{
+  "male_partner": [
+    {
+      "id": "ins_001",
+      "text": "Takes a supportive and attentive role during shared activities — handles navigation, makes phone calls on her behalf, and checks logistics like ticket availability",
+      "type": "personality"
+    },
+    {
+      "id": "ins_002",
+      "text": "Mentioned feeling tired during an intimate evening interaction, suggesting he may be under some fatigue or stress",
+      "type": "need"
+    },
+    {
+      "id": "ins_003",
+      "text": "Has friends who recently traveled through Quzhou and Shandong; was aware of their itinerary and has group photos with them",
+      "type": "event"
+    }
+  ],
+  "female_partner": [
+    {
+      "id": "ins_004",
+      "text": "Tends to be curious and socially engaged — spotted friends' travel activity on her phone and expressed a strong desire to go see them",
+      "type": "personality"
+    },
+    {
+      "id": "ins_005",
+      "text": "A friend was expected to come pick up medicine, arriving either in the morning or afternoon — worth checking if this was resolved",
+      "type": "event"
+    },
+    {
+      "id": "ins_006",
+      "text": "Shows a playful, dependent side in intimate moments — enjoys being cared for and uses humor and coyness in close interactions",
+      "type": "personality"
+    }
+  ],
+  "partner_(solo_group)": [
+    {
+      "id": "ins_007",
+      "text": "Forgot to bring a jacket on an outing — tends to overlook personal items when heading out",
+      "type": "personality"
+    },
+    {
+      "id": "ins_008",
+      "text": "Was researching toothpaste options at the supermarket — carefully compared price, texture, and ingredients before deciding",
+      "type": "personality"
+    },
+    {
+      "id": "ins_009",
+      "text": "Mentioned getting vaccine information from their spouse, suggesting they rely on their partner for health-related updates",
+      "type": "need"
+    }
+  ],
+  "friend": [
+    {
+      "id": "ins_010",
+      "text": "Called late at night asking for help with a parking issue — his car was stuck on basement level B1 and he needed assistance",
+      "type": "event"
+    },
+    {
+      "id": "ins_011",
+      "text": "Was at a Xinjiang dance event and complained about there being no food — tends to express frustration openly when basic needs aren't met",
+      "type": "personality"
+    },
+    {
+      "id": "ins_012",
+      "text": "Seemed physically fatigued and emotionally unsettled during a street encounter — was breathing heavily and expressing frustration about being blocked",
+      "type": "need"
+    }
+  ],
+  "husband": [
+    {
+      "id": "ins_013",
+      "text": "Proactively plans outings and dining options for the couple, often checking his phone for information and suggesting nearby spots",
+      "type": "personality"
+    },
+    {
+      "id": "ins_014",
+      "text": "Called a foot massage shop during what appeared to be a Spring Festival period to confirm hours and coupon availability — thoughtful about planning leisure activities",
+      "type": "event"
+    },
+    {
+      "id": "ins_015",
+      "text": "Tends to compromise during disagreements about activities — gave in when wife didn't want to walk uphill in the park",
+      "type": "personality"
+    }
+  ],
+  "wife": [
+    {
+      "id": "ins_016",
+      "text": "Expressed low motivation for walking during outings — asked if there are parks where you don't need to walk, showing a preference for relaxed, low-effort activities",
+      "type": "need"
+    },
+    {
+      "id": "ins_017",
+      "text": "Placed a picnic mat in her mother-in-law's car, suggesting an upcoming family outdoor activity was being planned",
+      "type": "event"
+    },
+    {
+      "id": "ins_018",
+      "text": "Has a humorous, lighthearted communication style — jokes about wanting to go to Singapore and imagines fantastical solutions to everyday inconveniences",
+      "type": "personality"
+    }
+  ],
+  "data_analyst": [
+    {
+      "id": "ins_019",
+      "text": "Discussed a high-score card that scored 75 points — noted it is primarily an event card with limited detail, and mentioned needing to review further after returning",
+      "type": "event"
+    },
+    {
+      "id": "ins_020",
+      "text": "Comfortable with data accuracy discussions but acknowledged limitations in answering certain questions about the card's specifics",
+      "type": "personality"
+    }
+  ],
+  "developer": [
+    {
+      "id": "ins_021",
+      "text": "Promised to submit a video with bug documentation by the next day — follow up to confirm this was delivered",
+      "type": "promise"
+    },
+    {
+      "id": "ins_022",
+      "text": "Proposed integrating audio waveform animations into event cards when rotated — enthusiastic about enhancing immersive user experience",
+      "type": "personality"
+    },
+    {
+      "id": "ins_023",
+      "text": "Suggested the user conduct a competitive product analysis on-site while waiting — proactive about keeping work moving",
+      "type": "personality"
+    }
+  ],
+  "qa_lead": [
+    {
+      "id": "ins_024",
+      "text": "Urgently reminded the team to record a bug immediately before it was forgotten — highly attentive to quality control timelines",
+      "type": "personality"
+    }
+  ],
+  "architect": [
+    {
+      "id": "ins_025",
+      "text": "Emphasized that every product and event must have a unique ID as a foundational engineering principle — uses this as a teaching moment frequently",
+      "type": "personality"
+    },
+    {
+      "id": "ins_026",
+      "text": "Reflected that some team members focus too heavily on execution over thinking, possibly suppressed by product-driven company culture",
+      "type": "need"
+    },
+    {
+      "id": "ins_027",
+      "text": "Mentioned difficulty knowing what specific guidance to give junior member Xiao Liu during onboarding",
+      "type": "need"
+    }
+  ],
+  "product_design_lead": [
+    {
+      "id": "ins_028",
+      "text": "Expressed concern that the current event card only supports copying, not flexible configuration — sees this as a systemic thinking problem in the team",
+      "type": "need"
+    },
+    {
+      "id": "ins_029",
+      "text": "Worried about significant rework due to incomplete upfront thinking in product design — stressed about project workload",
+      "type": "need"
+    }
+  ],
+  "senior_engineer": [
+    {
+      "id": "ins_030",
+      "text": "Teaches by directive — instructs developers to simply state their requirements and let execution follow, grounding everything in if-else engineering logic",
+      "type": "personality"
+    }
+  ],
+  "product_manager": [
+    {
+      "id": "ins_031",
+      "text": "Discussed bringing in an outsourcing team to assist with testing since Xiao Liao has limited availability — needs confirmation on whether this was arranged",
+      "type": "event"
+    },
+    {
+      "id": "ins_032",
+      "text": "Encouraged the team to show initiative and described themselves as able to listen in the background while others work",
+      "type": "personality"
+    }
+  ],
+  "father": [
+    {
+      "id": "ins_033",
+      "text": "Suggested selling or discarding unused Wu Ji Bai Feng Wan pills, noting they may still have trace element value — practical and pragmatic about household items",
+      "type": "personality"
+    },
+    {
+      "id": "ins_034",
+      "text": "Was observed gently soothing the baby after feeding, showing a tender caregiving side",
+      "type": "personality"
+    }
+  ],
+  "grandmother_(maternal)": [
+    {
+      "id": "ins_035",
+      "text": "Shared detailed observations about the baby's feeding patterns — noted nighttime intake consistently reaches 120ml while daytime often falls short",
+      "type": "need"
+    },
+    {
+      "id": "ins_036",
+      "text": "Recounted a negative experience with a postpartum nurse (yuèsǎo) who force-fed the newborn until vomiting on the first day — this caused lasting concern about caregiving approaches",
+      "type": "event"
+    },
+    {
+      "id": "ins_037",
+      "text": "Has a habit of waking up at night to check on family members — has done this since her children were young and continues now with the baby",
+      "type": "personality"
+    },
+    {
+      "id": "ins_038",
+      "text": "Proud of a signature sweet dish she makes with white sugar — received praise from a teacher and enjoys sharing it with family",
+      "type": "personality"
+    }
+  ],
+  "mother_(maternal)": [
+    {
+      "id": "ins_039",
+      "text": "Actively tracking baby's health — noticed possible eczema and redness on the baby's face, and discussing nail trimming difficulties with grandmother",
+      "type": "need"
+    },
+    {
+      "id": "ins_040",
+      "text": "Questioned the reliability of nighttime feeding reports, suggesting the caregiver may not be fully transparent",
+      "type": "personality"
+    }
+  ],
+  "aunt": [
+    {
+      "id": "ins_041",
+      "text": "Expressed a clear and unified family goal: everyone is working together solely for the baby's well-being",
+      "type": "personality"
+    },
+    {
+      "id": "ins_042",
+      "text": "Recalled a time when she cared for the baby alone in a room and found the baby to be very well-behaved",
+      "type": "event"
+    }
+  ],
+  "mother/designer": [
+    {
+      "id": "ins_043",
+      "text": "Reacted with strong excitement to an improved design iteration — exclaimed it looked much better and immediately asked for more enhancements",
+      "type": "personality"
+    },
+    {
+      "id": "ins_044",
+      "text": "Has a baby named Bibi and engages in warm, playful interactions with family members using affectionate nicknames",
+      "type": "personality"
+    },
+    {
+      "id": "ins_045",
+      "text": "Recently returned from a Chinese New Year trip and was getting back into work mode — mentioned her weight being around 106 jin",
+      "type": "event"
+    }
+  ],
+  "design_director": [
+    {
+      "id": "ins_046",
+      "text": "Concerned that backend colleagues don't fully grasp the design concepts after decomposition — requested help communicating the ideas more clearly",
+      "type": "need"
+    },
+    {
+      "id": "ins_047",
+      "text": "Advocated for establishing design concepts before finalizing specs to avoid large-scale revisions after completion",
+      "type": "personality"
+    },
+    {
+      "id": "ins_048",
+      "text": "Suggested that a wristband product should show real-time emotional feedback cards to encourage users during high-stakes moments like business negotiations",
+      "type": "event"
+    }
+  ],
+  "ui_designer": [
+    {
+      "id": "ins_049",
+      "text": "Argued that design inspiration should come from websites and print design, not just apps — wants to broaden the team's creative references",
+      "type": "personality"
+    },
+    {
+      "id": "ins_050",
+      "text": "Emphasized the role of illustration and humanistic elements in conveying a sense of technology in the app's visual design",
+      "type": "personality"
+    }
+  ],
+  "female_friend": [
+    {
+      "id": "ins_051",
+      "text": "Just returned from a trip taken during the Chinese New Year holiday — was back for about two days at time of conversation",
+      "type": "event"
+    },
+    {
+      "id": "ins_052",
+      "text": "Engaged warmly with the mother about weight and daily life — shows close, casual friendship with easy mutual teasing",
+      "type": "personality"
+    }
+  ]
+}

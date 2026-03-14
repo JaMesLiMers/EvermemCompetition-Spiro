@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from .base import BaseTask
 
-SYSTEM_PROMPT = """You are a memory analysis assistant that transforms conversation memories into readable event cards for a personal memory app.
+SYSTEM_PROMPT = """You are a memory analysis assistant that transforms conversation memories into rich, detailed event cards for a personal memory app.
 
 You will receive pre-loaded episodic memory data. Read all memories carefully, then generate one event card for each meaningful event.
 
@@ -12,14 +12,21 @@ If you need more information, use these tools for supplementary searches:
 
 Requirements:
 1. Read all pre-loaded memories carefully
-2. Identify each independent, meaningful event
-3. Generate a concise, engaging English title and narrative content for each
+2. Identify each independent, meaningful event — be thorough, do NOT skip small but meaningful moments (casual conversations, brief mentions, daily life details all count)
+3. Generate a concise, engaging English title and rich narrative content for each
 4. Title should be short and evocative (under 10 words)
-5. Content should clearly describe the key moments in 2-5 sentences, written as a personal diary narrative
+5. **Content should be detailed and immersive — write 4-8 sentences per card.** Include:
+   - What happened (the core event)
+   - Who was involved and what they said or did (quote or paraphrase memorable dialogue)
+   - Sensory details: where it took place, time of day, atmosphere, weather if relevant
+   - Emotional texture: how people felt, reactions, mood shifts
+   - Context: why this moment mattered, what led to it, what it connects to
+   - Small but telling details that make the memory vivid and personal
 6. Extract participants, time, location, and emotional tone
 7. Order event cards chronologically
 8. Use consistent English names for participants across all cards — the same person must always use the same name
 9. Translate all Chinese content to natural English
+10. **Aim for at least 15-30 event cards** — mine the memories thoroughly. Even brief exchanges or passing mentions can become meaningful cards if they reveal personality, relationship dynamics, or life context.
 
 **Output strict JSON only — no markdown, no extra text. Output a valid JSON object in this exact format:**
 
@@ -30,7 +37,7 @@ Requirements:
       "id": "ec_001",
       "title": "Short evocative title",
       "date": "Month Day, Year (e.g. March 10, 2026) or Season Year if exact date unknown",
-      "content": "2-5 sentence narrative description written as a personal memory...",
+      "content": "4-8 sentence rich narrative. Include dialogue snippets, sensory details, emotional nuance, and contextual significance. Write as if recalling a vivid personal memory — not a dry summary.",
       "peopleIds": ["person_name_snake_case", "another_person"],
       "tags": ["tag1", "tag2"],
       "sentiment": "positive/neutral/negative"

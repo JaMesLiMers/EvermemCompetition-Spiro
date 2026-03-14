@@ -1,814 +1,1029 @@
 [
   {
     "id": "ec_001",
-    "title": "朋友衢州聚会，计划见面",
-    "date": "1970-01-01",
-    "content": "女伴侣翻看手机时，惊讶发现朋友们昨天在衢州聚会，今日前往山东。两人讨论是否去见朋友，并安排有朋友上午或下午来取药。男伴侣提到与朋友有合影，对话在轻松氛围中结束。",
+    "title": "Friends Spotted in Quzhou",
+    "date": "1970, Era Unknown",
+    "content": "It was a quiet evening when the girlfriend picked up her phone and froze — her friends were having a gathering in Quzhou, and no one had told her. She looked up at her boyfriend with a mix of surprise and mild hurt, asking him what she'd missed. He explained in a low, even tone that the group had driven down from the south the day before and were now heading to Shandong — it seemed like a pre-arranged trip, evidenced by the photos their friend had posted. She scrolled through the pictures, noting that the friends weren't using chopsticks, a small detail that made the distant gathering feel oddly vivid and real. She said she wanted to go see them, her voice carrying a gentle wistfulness. The boyfriend mentioned there was a group photo with 'this side,' which seemed to reassure her slightly. Plans shifted to the immediate: a friend would be coming by to pick up some medicine, arriving sometime in the morning or afternoon, so they needed to get settled first. The boyfriend ended the exchange with a quiet 'thank you' in English — a small warmth that closed out the bittersweet moment.",
     "peopleIds": [
-      "男伴侣",
-      "女伴侣"
+      "boyfriend",
+      "girlfriend"
     ],
     "tags": [
-      "朋友聚会",
-      "出行计划",
-      "见面安排"
+      "friends",
+      "travel",
+      "gathering",
+      "Quzhou",
+      "Shandong",
+      "surprise"
     ],
-    "sentiment": "positive"
+    "sentiment": "neutral"
   },
   {
     "id": "ec_002",
-    "title": "朋友停车求助",
-    "date": "1970-01-01",
-    "content": "深夜一通话中，朋友向男伴侣求助，表示车停在负一楼遇到困扰，音质略显失真。男伴侣回应称自己已停在车位上，双方就停车问题进行了沟通，体现了朋友间的互助精神。",
+    "title": "Late-Night Parking Plea",
+    "date": "1970, Era Unknown",
+    "content": "Late at night, a friend called with urgency in his voice — slightly distorted over the line, as though he was speaking from the basement level of a parking structure. He told Liu Cong that his car was stuck on B1, the underground floor, and he needed help. The boyfriend answered calmly, explaining that his own car was already parked in its designated spot, seemingly unaware of what specific problem his friend was facing. The audio quality of the call gave the conversation a slightly tense, unresolved quality — the friend's voice strained with the minor desperation of someone who just needed someone to sort out a logistical snag. The boyfriend's steady reply — 'I'm parked in my spot' — was practical but perhaps not quite what the friend was hoping to hear. It was the kind of small crisis that only matters in the moment: a parking problem in the dead of night, two friends trying to communicate around it.",
     "peopleIds": [
-      "朋友",
-      "男伴侣"
+      "boyfriend",
+      "friend_liu_cong"
     ],
     "tags": [
-      "停车问题",
-      "朋友求助",
-      "深夜通话"
+      "parking",
+      "late night",
+      "phone call",
+      "help",
+      "logistics"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_003",
-    "title": "夜间驾车，GPS导航配合默契",
-    "date": "1970-01-01",
-    "content": "夜间驾驶途中，GPS导航提示前方150米进入匝道，男伴侣认真关注导航信息并确认转弯。女伴侣慵懒地轻声回应，指引方向。两人默契配合，驾驶过程顺畅愉快。",
+    "title": "Night Drive with GPS",
+    "date": "1970, Era Unknown",
+    "content": "Somewhere on a quiet nighttime road, the couple was driving together. The electronic voice of the GPS navigation system cut through the hum of the engine: 'In 150 meters, prepare to enter the ramp.' The boyfriend tracked the instruction attentively, confirming the upcoming turn aloud. The girlfriend responded in a soft, drowsy voice — she was relaxed, perhaps half-asleep, gently guiding him in the right direction without exerting much effort. There was something intimate and comfortable about the scene: the dark road ahead, the blue glow of the dashboard, his focused attention on the road and her lazy but present co-piloting. Their coordination was quiet and instinctive, the kind that comes from being together long enough that even driving becomes a small act of partnership.",
     "peopleIds": [
-      "男伴侣",
-      "女伴侣"
+      "boyfriend",
+      "girlfriend"
     ],
     "tags": [
-      "驾车出行",
-      "夜间驾驶",
-      "默契配合"
+      "driving",
+      "night",
+      "navigation",
+      "road trip",
+      "intimacy"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_004",
-    "title": "伴侣温馨亲密互动",
-    "date": "1970-01-01",
-    "content": "夜晚中，男伴侣轻声询问女伴侣是否需要帮助，并将东西放在她嘴边。女伴侣慵懒撒娇，询问是否有人帮她装起来。男伴侣虽感疲惫但轻笑回应，最后温柔道别，整段互动温馨甜蜜。",
+    "title": "A Sleepy Bedtime Moment",
+    "date": "1970, Era Unknown",
+    "content": "It was a peaceful evening and the couple was winding down. The boyfriend leaned over and gently placed something near the girlfriend's mouth — perhaps a snack or a drink — asking softly if she needed help. She responded in a lazy, playful tone, repeating 'put it on my mouth, put it on my mouth' with the mock-helplessness of someone who wanted to be completely taken care of. She followed this with a coy request: 'Is anyone going to pack this up for me?' The boyfriend let out a tired laugh — a sound that said 'I'm exhausted but I love you' — and sighed that he was worn out. Despite his fatigue, the atmosphere between them was warm and unhurried. He said a soft 'bye-bye' as the exchange ended, leaving behind that particular kind of quiet tenderness that only exists between people who are completely at ease with each other.",
     "peopleIds": [
-      "男伴侣",
-      "女伴侣"
+      "boyfriend",
+      "girlfriend"
     ],
     "tags": [
-      "亲密互动",
-      "温馨时刻",
-      "撒娇"
+      "bedtime",
+      "intimacy",
+      "playful",
+      "tired",
+      "cozy"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_005",
-    "title": "出门忘带外套",
-    "date": "1970-01-01",
-    "content": "伴侣出门后突然意识到自己忘记带外套，起初带着惊讶语气自问，随后确认确实没有携带。虽是一个小插曲，提醒了出门时需更注意随身物品。",
+    "title": "The Forgotten Jacket",
+    "date": "1970, Era Unknown",
+    "content": "It was a calm, unremarkable moment — the kind that only registers as a memory because of its small absurdity. A partner suddenly paused, a flicker of surprise crossing their face, and asked aloud: 'Wait — did I really not bring my jacket?' The question hung in the air for a beat before the answer came: no, they genuinely hadn't brought it. There was no drama, no cold weather crisis unfolding, just the mild self-directed disbelief of someone who had walked out the door without something obvious. It's the kind of thing that gets laughed about later — 'remember when you forgot your jacket?' — and in that way, even the most minor lapses become woven into the fabric of shared memory.",
     "peopleIds": [
-      "伴侣"
+      "partner"
     ],
     "tags": [
-      "日常小事",
-      "出行",
-      "疏忽"
+      "forgetfulness",
+      "jacket",
+      "daily life",
+      "outing"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_006",
-    "title": "超市选购牙膏",
-    "date": "1970-01-01",
-    "content": "伴侣在超市寻找牙膏，逐一比较货架商品。发现一款三筒装觉得偏贵，又找到一款20元看起来水润的牙膏，仔细查看配料表、试捏包装、靠近闻气味。两人还讨论了各自牙膏的剩余量，最终继续挑选。",
+    "title": "Vaccine Talk and Fading Pandemic",
+    "date": "1970, Era Unknown",
+    "content": "In a relaxed, everyday conversation, a partner brought up the topic of vaccines — mentioning that they had originally thought they needed to get vaccinated, an idea that had come from their spouse. The conversation then shifted naturally to the broader state of the pandemic: nearly everyone around them had already been vaccinated, and the effects of the epidemic were gradually fading into the background of daily life. There was no alarm in the tone, just a kind of matter-of-fact acceptance. The pandemic, which had once loomed so large, was becoming something people spoke about in the past tense — a shared experience that was slowly receding.",
     "peopleIds": [
-      "伴侣"
+      "partner"
     ],
     "tags": [
-      "日常购物",
-      "超市",
-      "牙膏选购"
+      "vaccine",
+      "pandemic",
+      "health",
+      "daily life"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_007",
-    "title": "同行朋友轻松交流，幼童情绪外露",
-    "date": "1970-01-01",
-    "content": "一个平静夜晚，同行朋友们进行轻松闲聊，讨论尚未到达目的地的期待感，话题中提到鸡蛋卷等新鲜食物。幼童在现场发出哭腔喊叫，情绪反应突出，朋友们也提到不需要再购买某些东西。",
+    "title": "Supermarket Toothpaste Dilemma",
+    "date": "1970, Era Unknown",
+    "content": "Inside a bustling supermarket, the couple navigated the dental care aisle in search of the right toothpaste. One partner softly asked where the toothpaste was, then began working through the shelf systematically. They picked up a three-pack — 'I've never bought this kind before,' they noted, squeezing the packaging experimentally and finding it hard to press. They leaned in and smelled it. Another tube caught their eye: priced at 20 yuan, it looked 'hydrated' and appealing. They flipped it over to read the ingredient list, checking the formula carefully. 'It looks like this one's better,' they murmured, weighing the options. Along the way, they asked their partner how many tubes were needed, noting that the other one at home still had quite a bit left. Somewhere in the middle of all this practical deliberation, one partner asked the other if they'd remembered their jacket — a small, affectionate aside in the middle of an ordinary errand.",
     "peopleIds": [
-      "幼童",
-      "同行朋友"
+      "partner"
     ],
     "tags": [
-      "朋友出行",
-      "幼童",
-      "日常闲聊"
+      "supermarket",
+      "toothpaste",
+      "shopping",
+      "daily life",
+      "errand"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_008",
-    "title": "南昌东站特殊通道探索",
-    "date": "1970-01-01",
-    "content": "公交到达南昌东站，司机用方言口音提醒乘客下车。一名乘客下车后发现车站周围没有其他人，困惑中逐渐意识到这是特殊通道，多次确认后走近查看，询问是否可按按钮转动相关装置。",
+    "title": "Young Child on an Outing",
+    "date": "1970, Era Unknown",
+    "content": "On what seemed like a nighttime outing or group walk, a young child's voice cut through the background sounds — a whimper, then a louder cry, words unclear but emotion unmistakable. Around the child, a group of friends spoke in low, relaxed tones: someone mentioned they hadn't arrived yet at their destination. Someone else brought up egg rolls — fresh ones — and there was a small, warm consensus that they didn't need to buy anything else. The child's emotional outburst was momentary, absorbed into the general hum of the group's easy companionship. Heavy breathing, the rustle of clothing, and soft footsteps filled the gaps between words, painting the picture of people moving through the night together, a child in tow, destination still ahead.",
     "peopleIds": [
-      "车站乘客",
-      "下车乘客",
-      "公交司机"
+      "young_child",
+      "traveling_companions"
     ],
     "tags": [
-      "乘车",
-      "车站",
-      "特殊通道",
-      "探索"
+      "outing",
+      "child",
+      "group travel",
+      "night",
+      "egg rolls"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_009",
-    "title": "高分卡评分与Bug记录讨论",
-    "date": "1970-01-01",
-    "content": "团队会议中，数据分析师介绍了一张高分卡，最终得分75分，讨论评分准确性及事件与洞察的重要性。质量保证负责人急切插话，强调需尽快录下Bug以免遗忘。开发人员承诺次日提交相关视频资料。",
+    "title": "Nanchang East Station Turnstile Puzzle",
+    "date": "1970, Era Unknown",
+    "content": "The bus pulled into Nanchang East Station and the driver called out the stop in a thick dialect accent, his voice carrying over the seats. A passenger stood and politely squeezed through — 'excuse me, let me through' — making their way to the door. Meanwhile, another traveler stepped off and stood on the platform, looking around and noticing, strangely, that there was barely anyone else there. He muttered to himself: 'shouldn't take long.' As he took in the surroundings, something caught his attention — a special lane or turnstile, different from the usual exits. He repeated the discovery to himself several times as if confirming it: 'It's a special channel... it's a special channel.' Curious, he approached it and wondered aloud whether pressing something would make it rotate. The small mystery of an unfamiliar transit mechanism, the near-empty station, the dialect announcement — it all created a brief, oddly memorable transit moment.",
     "peopleIds": [
-      "数据分析师",
-      "开发人员",
-      "质量保证负责人"
+      "station_passenger",
+      "alighting_passenger",
+      "bus_driver"
     ],
     "tags": [
-      "产品评审",
-      "高分卡",
-      "Bug记录",
-      "团队会议"
+      "Nanchang",
+      "transit",
+      "bus station",
+      "travel",
+      "observation"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_010",
-    "title": "信件ID设计方案确认",
-    "date": "1970-01-01",
-    "content": "团队讨论中，开发人员询问\"信件\"功能是否会有专门ID，产品设计负责人确认会有，架构师详细解释了ID在工程系统中的基础作用——每个产品和功能都必须有唯一ID以便管理和设备通信。",
+    "title": "The 75-Point Event Card Debate",
+    "date": "1970, Era Unknown",
+    "content": "A product team huddled around a high-score card that had landed at 75 points. The data analyst introduced it, confirming the score was incremental and the rating system was reasonably accurate. The developer leaned in with questions: what did 75 actually mean? Was it the event itself that mattered, or the insight derived from it? As they debated scoring methodology, the QA lead cut through with a practical urgency: 'We need to record this bug right now — if we don't capture it immediately, we'll forget.' The developer nodded and promised to submit the video by the end of the evening, or at the latest the following day. The data analyst added that the high-score card was primarily an event card — no additional information attached — which left certain questions unanswered. The meeting ended with competing priorities: the intellectual puzzle of the scoring system, and the very immediate task of bug documentation.",
     "peopleIds": [
-      "架构师",
-      "产品设计负责人",
-      "开发人员"
+      "data_analyst",
+      "developer",
+      "qa_lead"
     ],
     "tags": [
-      "系统设计",
-      "ID管理",
-      "信件功能",
-      "技术讨论"
+      "product",
+      "bug",
+      "scoring",
+      "event card",
+      "team meeting"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_011",
-    "title": "音频与事件卡融合设计提案",
-    "date": "1970-01-01",
-    "content": "开发人员提出将音频元素融入事件卡的创意——用户转动卡片时，通过动效展示音频波动，形成视觉与听觉结合。产品设计负责人讨论了主卡与小卡的声波动态效果设计。架构师肯定此想法抓住了产品核心，并强调交互设计师与视觉设计师的协作流程。",
+    "title": "Every Thing Needs an ID",
+    "date": "1970, Era Unknown",
+    "content": "During a team discussion about the 'letter' feature of a product, a junior developer asked a seemingly simple question: would letters have their own dedicated IDs? The product design lead smiled and confirmed yes, of course. The architect took over, leaning into the explanation with the enthusiasm of someone who considers this foundational knowledge: 'In the engineering world, every single thing must have an ID. Every product, every event, every piece of data — it all goes through IDs.' He described how IDs connect to database tables, how every field in the system maps back to a unique identifier, how communication between devices depends entirely on this structure. The junior developer nodded along, then asked the natural follow-up: how does one actually get a letter's ID in practice? The conversation had moved from abstract principle to concrete implementation — exactly the kind of teaching moment that shapes how engineers think.",
     "peopleIds": [
-      "架构师",
-      "user_main",
-      "产品设计负责人",
-      "开发人员"
+      "architect",
+      "product_design_lead",
+      "developer"
     ],
     "tags": [
-      "产品设计",
-      "音频设计",
-      "事件卡",
-      "交互设计"
+      "engineering",
+      "product design",
+      "ID system",
+      "database",
+      "mentorship"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_012",
-    "title": "产品决策治理流程探讨",
-    "date": "1970-01-01",
-    "content": "架构师与产品设计负责人就项目工作量和决策机制深入交流。产品设计负责人担忧大量返工问题，架构师指出治理过程本质是在产生决策而非被动接受，并提到某些决策结果不理想导致团队努力被浪费。",
+    "title": "Sound Waves on a Spinning Card",
+    "date": "1970, Era Unknown",
+    "content": "The idea arrived mid-conversation, tentative at first. The developer expressed satisfaction with the existing event card design, then floated a thought: what if, as users rotated the card, audio waveforms rippled across the surface — a fusion of sound and visual movement? 'It would be different from just background music,' they said. 'The audio would become part of the card itself.' The product design lead's eyes lit up. They sketched out the concept verbally: a main card, larger, displaying prominent sound waves; smaller sub-cards with subtler audio animation. The user in the conversation pushed further, excited by the idea of audio and visuals merging into something new, though they wondered aloud if it might look chaotic. The architect validated the instinct: 'You've identified the core of the product.' He reminded everyone that interaction designers build the skeleton first; visual designers fill in the details later. The discussion ended with everyone energized, the idea still unfinished but alive.",
     "peopleIds": [
-      "架构师",
-      "产品设计负责人"
+      "architect",
+      "user_main",
+      "product_design_lead",
+      "developer"
     ],
     "tags": [
-      "产品治理",
-      "决策流程",
-      "团队管理",
-      "返工问题"
+      "product design",
+      "audio",
+      "event card",
+      "animation",
+      "UX",
+      "creative"
     ],
-    "sentiment": "negative"
+    "sentiment": "positive"
   },
   {
     "id": "ec_013",
-    "title": "交互设计逻辑质疑与讨论",
-    "date": "1970-01-01",
-    "content": "初级产品经理对某交互需求设计逻辑感到困惑，自言自语表示\"好奇怪\"。产品设计负责人确认左右滑动逻辑顺畅，但开发人员认为用户一进入就看到事件卡会缺少必要的沉浸感，团队达成共识需增加引导过程。",
+    "title": "Governance Is Making Decisions",
+    "date": "1970, Era Unknown",
+    "content": "In a quieter, more reflective product discussion, the architect and the product design lead talked about the cost of indecision. The product design lead voiced concern: 'This approach means a huge amount of rework. The thinking has to be comprehensive.' The architect pushed back gently but clearly: 'Governance isn't about accepting decisions made by others — it's about producing decisions yourself.' He acknowledged that while this standard is a good one in theory, it doesn't always translate well in practice — particularly in development environments where most team members default to execution over initiative. The result, he said, was wasted effort and decisions that circle back. The conversation had the quiet weight of two experienced people recognizing a structural problem they couldn't easily fix.",
     "peopleIds": [
-      "初级产品经理",
-      "产品设计负责人",
-      "开发人员"
+      "architect",
+      "product_design_lead"
     ],
     "tags": [
-      "交互设计",
-      "用户体验",
-      "产品讨论",
-      "沉浸感"
-    ],
-    "sentiment": "neutral"
-  },
-  {
-    "id": "ec_014",
-    "title": "事件卡配置功能缺失问题",
-    "date": "1970-01-01",
-    "content": "用户希望在Task Monitor中实现不限内容的全局搜索功能，以直接查找特定人员的所有事件卡。讨论中发现事件卡目前只能复制而无法灵活配置，产品设计负责人和架构师均指出这是团队工作思路的问题，基础功能应主动实现。",
-    "peopleIds": [
-      "架构师",
-      "user_main",
-      "产品设计负责人",
-      "开发人员"
-    ],
-    "tags": [
-      "事件卡",
-      "功能缺失",
-      "产品优化",
-      "搜索功能"
+      "product",
+      "governance",
+      "decision-making",
+      "team culture",
+      "rework"
     ],
     "sentiment": "negative"
   },
   {
-    "id": "ec_015",
-    "title": "评分核心与后续问题确认",
-    "date": "1970-01-01",
-    "content": "用户与开发人员就评分展开讨论，用户明确指出重点不在于评分本身，而在于后续暴露的问题。开发人员认同并重申这一方向，双方确认将围绕后续问题展开深入分析，用户承诺发送相关信息。",
+    "id": "ec_014",
+    "title": "The Junior PM's Interaction Confusion",
+    "date": "1970, Era Unknown",
+    "content": "During a product design review, the junior product manager sat with a furrowed brow, muttering quietly: 'That's so strange... why does that interaction work like that?' He was looking at a flow he didn't fully understand and trying to decide whether to flag it. The product design lead confirmed that Teacher Zhou's left-right swipe logic was smooth and made sense. But the developer had a different concern: if users landed directly on an event card the moment they entered the app, something would be lost — the experience would feel rushed, lacking the necessary immersion. They wanted users to be drawn in gradually, not dropped into the deep end. The junior PM listened, connecting the dots. His initial confusion wasn't unfounded — the interaction needed more context before it could feel right.",
     "peopleIds": [
-      "user_main",
-      "开发人员"
+      "junior_pm",
+      "product_design_lead",
+      "developer"
     ],
     "tags": [
-      "产品评估",
-      "问题分析",
-      "评分讨论"
+      "UX",
+      "interaction design",
+      "product review",
+      "onboarding",
+      "immersion"
     ],
     "sentiment": "neutral"
   },
   {
-    "id": "ec_016",
-    "title": "周老师角色与设计流程梳理",
-    "date": "1970-01-01",
-    "content": "用户与架构师讨论了周老师在项目中的角色，由于其未能完成角色设计导致讨论偏移。双方明确了设计顺序：先交互设计再视觉设计，架构师指出声纹识别等动态元素可通过动效实现，并反思团队偏技术实用主义导致设计缺乏浪漫感。",
+    "id": "ec_015",
+    "title": "Event Card Search in Task Monitor",
+    "date": "1970, Era Unknown",
+    "content": "The user came to the developer with a request: in the Task Monitor, they wanted a search function that wasn't limited by content type — one that could pull up all event cards associated with a specific person, regardless of category. The developer agreed immediately, recognizing it would reduce unnecessary search friction. Then things got murkier. The user asked what they were supposed to do next, and the developer had to remind them: 'Send me good examples and bad examples — we'll go over them together in person.' The user expressed frustration: the current event cards could only be duplicated, not configured. They felt the team was failing to think proactively about basic functionality. The architect weighed in, sharing a broader observation — developing junior team member Liu, he often found himself uncertain what specific steps to teach, noting that many product-focused environments suppress independent thinking. The product design lead agreed, saying the team struggled to approach problems from a user perspective.",
     "peopleIds": [
-      "架构师",
-      "user_main"
+      "architect",
+      "user_main",
+      "product_design_lead",
+      "developer"
     ],
     "tags": [
-      "设计流程",
-      "角色分工",
-      "交互设计",
-      "IoT"
+      "event card",
+      "Task Monitor",
+      "search",
+      "product feedback",
+      "team culture"
+    ],
+    "sentiment": "negative"
+  },
+  {
+    "id": "ec_016",
+    "title": "Interaction Rating: 'Mediocre'",
+    "date": "1970, Era Unknown",
+    "content": "The junior product manager was testing an interaction flow, tapping through it and narrating to himself as he went. 'Is this good or bad?' he said, half to himself. His verdict: mediocre — though at least better than the old time card design. As he continued tapping, something else caught his eye: a score appeared that he felt shouldn't be a 60. He paused the interaction, urgency rising in his voice: 'This needs to be fixed right now.' He pivoted to a different issue — a design decision by another team member that he believed was flat-out wrong. The product manager beside him mostly listened, observing rather than leading the conversation. It was a characteristic moment: the junior PM, still finding his voice, moving quickly between observations — some sharp, some still forming.",
+    "peopleIds": [
+      "junior_pm",
+      "product_manager"
+    ],
+    "tags": [
+      "UX",
+      "product testing",
+      "interaction",
+      "feedback",
+      "design review"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_017",
-    "title": "脑机接口数据管理流程梳理",
-    "date": "1970-01-01",
-    "content": "架构师强调ID在脑机接口研发中的核心地位，每个ID对应数据库中的一张表，包含信件内容和所需物料信息。开发人员询问如何从信件ID提取原始内容，资深工程师指导称只需告知需求即可执行，并强调工程世界以if-else逻辑为主导。",
+    "title": "Scoring Is Not the Point",
+    "date": "1970, Era Unknown",
+    "content": "In a focused exchange between the user and the developer, the user made a clear declaration: 'The score isn't the issue — what matters is what comes after.' The developer heard this and confirmed it back, repeating the point clearly to signal alignment. The user acknowledged they had already scored something and would send the relevant information. It was a brief conversation, but it carried a kind of clarity that longer meetings often lack — two people quickly agreeing on where the real work begins. The scoring system was a starting point, a mechanism; the meaningful questions were downstream, in the problems the scores surfaced.",
     "peopleIds": [
-      "架构师",
-      "资深工程师",
-      "开发人员"
+      "user_main",
+      "developer"
     ],
     "tags": [
-      "脑机接口",
-      "数据管理",
-      "ID系统",
-      "工程逻辑"
+      "scoring",
+      "product",
+      "alignment",
+      "communication"
     ],
-    "sentiment": "neutral"
+    "sentiment": "positive"
   },
   {
     "id": "ec_018",
-    "title": "Bug测试与外包团队讨论",
-    "date": "1970-01-01",
-    "content": "用户提出检查工作台Bug的需求，开发人员表示将配对码发给小廖处理。因小廖时间有限，用户考虑引入外包团队协助测试。产品经理确认外包团队可用，并安排用户现场进行竞品分析，待准备好后再深入讨论。",
+    "title": "Teacher Zhou's Missing Role",
+    "date": "1970, Era Unknown",
+    "content": "The conversation turned to Teacher Zhou — she had been expected to handle the interaction design role for a particular feature, but hadn't completed it. This left a gap in the workflow. The user worked through the logic aloud: interaction design comes first, then visual design builds on top of it. The architect confirmed this, noting that certain dynamic elements — like voiceprint recognition animations — can be conveyed through motion design without requiring visual design to lead. He added a telling observation about another team member: she came from an IoT background, which explained why her designs leaned toward the technical and utilitarian rather than the romantic or emotive. Her approach wasn't wrong — it was shaped by where she'd come from. The conversation was as much about understanding people as it was about design process.",
     "peopleIds": [
-      "user_main",
-      "产品经理",
-      "开发人员"
+      "architect",
+      "user_main"
     ],
     "tags": [
-      "Bug测试",
-      "外包团队",
-      "竞品分析",
-      "项目进展"
+      "design process",
+      "interaction design",
+      "visual design",
+      "team",
+      "IoT"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_019",
-    "title": "夫妻寒冬出行计划",
-    "date": "1970-01-01",
-    "content": "寒冷早晨，丈夫询问楼下商店是否开门，得知还未开。丈夫提到有人骑双人车经过，建议去附近露营园。经讨论，两人决定先去楼下商店，逛完后再去吃饭，对话展现了夫妻间温馨的共同决策过程。",
+    "title": "If-Else Is the World",
+    "date": "1970, Era Unknown",
+    "content": "The developer was puzzled about a concrete workflow: once you have a letter ID, how do you actually extract the letter's full content? The architect laid out the relationship between IDs and database tables — each ID corresponds to a table row, and that row contains every field: the letter content, the required materials, the associated people. The senior engineer stepped in with characteristic directness, slightly cutting off the developer's next question: 'You just tell the relevant person what you need. They execute. What you're getting is the ID and the original payload — that's it.' He switched into a mix of Chinese and English to drive the point home: 'In the engineering world, it's all logic. Logic is if-else. If this, then that.' The developer absorbed it quietly. It was the kind of explanation that sounds almost too simple until you realize it answers everything.",
     "peopleIds": [
-      "丈夫",
-      "妻子"
+      "architect",
+      "senior_engineer",
+      "developer"
     ],
     "tags": [
-      "夫妻出行",
-      "周末活动",
-      "日常生活"
+      "engineering",
+      "database",
+      "ID",
+      "logic",
+      "mentorship",
+      "brain-computer interface"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_020",
-    "title": "晨间出发，相互哼唱",
-    "date": "1970-01-01",
-    "content": "清晨起风，用户和丈夫一起准备出门。用户起身轻声哼唱，丈夫随之唱出\"向你表白\"，两人在轻松音乐氛围中共同出发，展现了伴侣间的亲密默契与温馨日常。",
+    "title": "Bug Capture and the Outsourcing Question",
+    "date": "1970, Era Unknown",
+    "content": "At a team meeting, the user flagged a bug on the workbench. The developer jumped in with a quick solution — sending a pairing code to Xiao Liao for follow-up. The user, however, was thinking bigger: could automated testing be set up? The problem was Xiao Liao's schedule was already packed. This led to the question of whether an outsourced testing team might be brought in to fill the gap. The product manager confirmed it was an option and noted that the current version's scope was relatively straightforward — the outsourced team had the bandwidth. The developer pivoted, suggesting the user might want to do some competitive product analysis in the meantime. The user agreed, saying they'd take a look first and then reconvene. It was a meeting full of small decisions — each one deferring to another — but moving forward nonetheless.",
     "peopleIds": [
       "user_main",
-      "丈夫"
+      "product_manager",
+      "developer"
     ],
     "tags": [
-      "晨间出行",
-      "温馨互动",
-      "哼唱"
+      "bug",
+      "testing",
+      "automation",
+      "outsourcing",
+      "team planning"
     ],
-    "sentiment": "positive"
+    "sentiment": "neutral"
   },
   {
     "id": "ec_021",
-    "title": "春节洗脚店营业查询",
-    "date": "1970-01-01",
-    "content": "用户突然想到春节期间洗脚的价格可能上涨，提议打电话确认。丈夫随即拨打，确认该洗脚店春节期间正常营业，并询问是否可使用优惠券。用户对结果表示满意。",
+    "title": "Morning Walk with No Destination",
+    "date": "1970, Era Unknown",
+    "content": "It was a cold morning. The husband peered toward the shops downstairs and asked if any were open yet. His wife replied that it didn't look like it. He mentioned he'd seen someone on a tandem bicycle just a minute earlier — a small detail that animated the quiet street. He floated a suggestion: the nearby camping park. She responded with the easy flexibility of someone who had no strong preference, willing to go wherever. They settled on heading downstairs first, looking around, then finding somewhere for breakfast. He glanced at his phone while they talked. The whole exchange was low-key and unhurried — a married couple with a free morning and no particular plan, which is sometimes exactly the right kind of day.",
     "peopleIds": [
-      "user_main",
-      "丈夫"
+      "husband",
+      "wife"
     ],
     "tags": [
-      "春节出行",
-      "日常安排",
-      "电话查询"
+      "morning",
+      "outing",
+      "weekend",
+      "neighborhood",
+      "spontaneous"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_022",
-    "title": "野餐准备，丈夫突感不适",
-    "date": "1970-01-01",
-    "content": "妻子将野餐垫放入婆婆车上，为家庭野餐做准备，丈夫表示认可。然而随即丈夫发出\"会很…好痛…\"的感叹，似乎因调整姿势或被虫咬而不适，为出行前准备增添了小插曲。",
-    "peopleIds": [
-      "丈夫",
-      "妻子"
-    ],
-    "tags": [
-      "野餐准备",
-      "家庭活动",
-      "小插曲"
-    ],
-    "sentiment": "neutral"
-  },
-  {
-    "id": "ec_023",
-    "title": "公园散步，夫妻斗嘴小憩",
-    "date": "1970-01-01",
-    "content": "公园散步中，妻子表示不想继续逛，不愿走上坡路。丈夫提议去看远处表演，但也不想再上坡，两人小小争执后妥协，找地方坐下休息。公园传来歌舞声，妻子抱怨正好是跳舞时间，丈夫叹气。",
-    "peopleIds": [
-      "丈夫",
-      "妻子",
-      "视频博主"
-    ],
-    "tags": [
-      "公园散步",
-      "夫妻日常",
-      "轻松互动"
-    ],
-    "sentiment": "neutral"
-  },
-  {
-    "id": "ec_024",
-    "title": "公园讨论晚餐去处",
-    "date": "1970-01-01",
-    "content": "公园环境中，用户轻声表达想吃汤粉类食物，丈夫温和询问晚餐计划。用户提出了景田、莲花山、莲花路等几个就餐选项。视频博主也分享了对蝴蝶元素的热爱，讨论氛围轻松温馨。",
+    "title": "Wind Rising, Time to Go",
+    "date": "1970, Era Unknown",
+    "content": "In the early morning, the user got to her feet and announced it was time to leave. Her husband agreed — 'let's go.' The wind outside had picked up, noticeable now through the windows or the open door. She mentioned it as they prepared to head out. Then, almost without prompting, she began to hum. Her husband joined in, adding lyrics — 'I want to confess to you' — and for a moment they were just two people singing softly as they got ready to start their day. There was no occasion, no performance, just the kind of easy, unrehearsed intimacy that fills the spaces between bigger moments. They left together, the wind carrying the last notes of their song.",
     "peopleIds": [
       "user_main",
-      "视频博主",
-      "丈夫"
+      "husband"
     ],
     "tags": [
-      "晚餐计划",
-      "夫妻互动",
-      "日常生活"
+      "morning",
+      "music",
+      "intimacy",
+      "departure",
+      "wind",
+      "spontaneous"
     ],
     "sentiment": "positive"
   },
   {
-    "id": "ec_025",
-    "title": "妻子想去\"不用走路\"的公园",
-    "date": "1970-01-01",
-    "content": "一个慵懒早晨，妻子询问今日行程，开玩笑说想去新加坡，随后表现出明显抗拒，叹气询问是否有不需要走路的公园，自言自语幻想\"不走的功能\"。背景中塑料袋摩擦声响起，妻子处理物品时显得焦躁。",
+    "id": "ec_023",
+    "title": "Calling Ahead for the Foot Spa",
+    "date": "1970, Era Unknown",
+    "content": "Out of nowhere, the user had a sudden impulse: what's the current price for a foot massage? She wondered aloud whether prices had gone up because of the Chinese New Year holiday. She suggested they call to confirm the place was open and whether a surcharge applied. Her husband picked up the phone and dialed. On the call, he confirmed: yes, the foot spa was operating normally over the New Year period. He also thought to ask about coupons. Hanging up, he reported back — all clear, normal service, they could go. She was pleased. It was a small, practical moment, but it captured something characteristic: the impulse for comfort, the habit of checking rather than assuming, and the quiet teamwork of partners who divide small tasks without needing to discuss it.",
     "peopleIds": [
-      "丈夫",
-      "妻子"
+      "user_main",
+      "husband"
     ],
     "tags": [
-      "夫妻日常",
-      "慵懒",
-      "幽默",
-      "出行讨论"
+      "Chinese New Year",
+      "foot spa",
+      "leisure",
+      "planning",
+      "couples"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_024",
+    "title": "Picnic Mat and a Sudden Sting",
+    "date": "1970, Era Unknown",
+    "content": "The wife had just placed the picnic mat into her mother-in-law's car — a small act of preparation for a family outing ahead. She mentioned it casually to her husband, and he gave a simple 'okay.' Then, out of nowhere: 'Ow... that really hurts.' Something had gotten him — a sharp pain, possibly an insect bite or the awkward result of shifting position. The contrast was almost funny: the ease of the picnic preparations, the pastoral domesticity of it all, interrupted by a sudden jolt of pain. He didn't make a big deal of it, but it lodged in the memory of the moment — the kind of thing that becomes part of the story of that outing.",
+    "peopleIds": [
+      "husband",
+      "wife"
+    ],
+    "tags": [
+      "family",
+      "picnic",
+      "outing",
+      "pain",
+      "mother-in-law",
+      "preparation"
+    ],
+    "sentiment": "neutral"
+  },
+  {
+    "id": "ec_025",
+    "title": "Park Complaints and Compromise",
+    "date": "1970, Era Unknown",
+    "content": "The wife had reached her limit with the market. 'I don't want to walk around anymore,' she announced flatly. Her husband tried to redirect her attention to some kind of performance happening in the distance and suggested they go check it out. She flatly refused to walk uphill. He said he didn't want to go uphill either. After a brief standoff of competing reluctances, he caved: 'Fine, let's just go sit somewhere.' They found a bench or resting spot nearby. Not long after, the park's broadcast system crackled to life with singing and dancing — it was, apparently, the time for exactly that kind of activity. The wife made a face and complained. The husband sighed. A video blogger nearby was documenting the ordinary scene, capturing the sound of two people navigating a park afternoon on their own terms.",
+    "peopleIds": [
+      "husband",
+      "wife",
+      "video_blogger"
+    ],
+    "tags": [
+      "park",
+      "outing",
+      "boredom",
+      "compromise",
+      "performance",
+      "daily life"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_026",
-    "title": "好友骑炫酷车出行",
-    "date": "1970-01-01",
-    "content": "夜晚风声渐起，用户与好友聊起骑行话题。用户称赞好友的车很吸引人，好友得意表示这辆车很牛逼，用户表示认同。两人轻松笑闹，用户提到未来得及拍照记录，但友谊和骑行热情溢于言表。",
+    "title": "Where to Eat? Noodle Soup It Is",
+    "date": "1970, Era Unknown",
+    "content": "Sitting somewhere in a quiet part of the park, the group began debating dinner. The user said softly that she was in the mood for soup noodles — something warm and brothy. She floated a few options: Jingtian area, Lianhua Mountain, Lianhua Road. Meanwhile, a video blogger nearby was mid-monologue about her love for butterfly motifs — butterflies as symbols of beauty and romance, the creative flower shapes she'd designed herself. The juxtaposition was pleasant: practical dinner logistics discussed against a background of someone else's aesthetic enthusiasms. The user and her husband leaned toward the noodle soup plan, the butterfly conversation floating by like ambient music.",
     "peopleIds": [
-      "好友",
-      "user_main"
+      "user_main",
+      "video_blogger",
+      "husband"
     ],
     "tags": [
-      "骑行",
-      "好友互动",
-      "轻松愉快"
+      "dinner",
+      "food",
+      "park",
+      "noodles",
+      "planning",
+      "butterflies"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_027",
-    "title": "黄昏追夕阳拍照",
-    "date": "1970-01-01",
-    "content": "黄昏归途中，好友开玩笑说踩着夕阳回老家并调侃勿遇鬼。用户被夕阳美景吸引想拍照，但一辆车挡住视线，用户催促车快离开。车终于移动后，用户兴奋抓住拍照时机，记录下美丽瞬间。",
+    "title": "A Park Outing with No Walking",
+    "date": "1970, Era Unknown",
+    "content": "In the car on the way to the park, the wife was in one of her playfully contrary moods. She joked about wanting to go to Singapore — just the two of them — her voice light and amused. She was clearly in the mood for something, just not anything that involved effort. After getting out of the car, she felt a lift in spirits — getting out was fine, actually. But then: 'Is there a park where you don't have to walk?' She asked this with total seriousness, as though she genuinely hoped the answer was yes, then laughed a little at herself for wanting it. She then got tangled up in something — a plastic bag or some packaging — and the resulting struggle brought out a cascade of impatient exhales and muttered complaints. The mundane inconvenience of stubborn plastic punctured her whimsy entirely, if only for a moment.",
     "peopleIds": [
-      "好友",
-      "user_main"
+      "husband",
+      "wife"
     ],
     "tags": [
-      "夕阳拍照",
-      "归途",
-      "好友同行",
-      "风景记录"
+      "park",
+      "car ride",
+      "humor",
+      "laziness",
+      "outing",
+      "daily life"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_028",
-    "title": "新疆舞活动没饭吃",
-    "date": "1970-01-01",
-    "content": "新疆舞活动现场，好友们围坐一起，气氛轻松但略显紧张。有人回忆了大门口和宿舍的场景后，话题转向没有饭吃，好友们不满情绪渐显，反复抱怨\"怎么没有饭\"，最终感叹\"饿死了\"，决定回去寻找解决办法。",
+    "title": "The Cool Bike Ride",
+    "date": "1970, Era Unknown",
+    "content": "On a breezy evening, the user and a close friend were out together when the friend pulled up on a particularly impressive bike. The user immediately said it was cool — one of those rare, eye-catching machines. 'This bike is seriously badass,' the friend said, clearly proud. The user agreed without hesitation: it was badass, a little more than the alternatives. The friend laughed, pleased. Wind noise filled the background, and the friend's good mood was palpable. The user mentioned, almost as an afterthought, that they hadn't taken any photos — a small regret, or maybe just an observation. The moment existed in the pure, unrecorded present.",
     "peopleIds": [
-      "好友"
-    ],
-    "tags": [
-      "活动现场",
-      "饥饿",
-      "抱怨",
-      "朋友聚集"
-    ],
-    "sentiment": "negative"
-  },
-  {
-    "id": "ec_029",
-    "title": "街道上好友情绪疲惫",
-    "date": "1970-01-01",
-    "content": "嘈杂街道上，好友自言自语思考去向，提到是否要\"小蝴蝶\"，语气犹豫。脚步急促、风声渐大，好友喘气声明显，对某人表达不满称其\"不行\"。用户在背景中提及同事繁忙，并关心地请好友靠近一点。",
-    "peopleIds": [
-      "好友",
+      "friend",
       "user_main"
     ],
     "tags": [
-      "好友状态",
-      "疲惫",
-      "情绪低落",
-      "街道"
-    ],
-    "sentiment": "negative"
-  },
-  {
-    "id": "ec_030",
-    "title": "妻子洗澡前物品整理",
-    "date": "1970-01-01",
-    "content": "夜晚，妻子轻快告知丈夫要先去洗澡，丈夫表示支持。随后妻子恍然大悟，意识到需要处理某个粘不牢的物品，背景传来撕胶带和塑料纸的声音，两人就此进行了轻松自然的对话。",
-    "peopleIds": [
-      "丈夫",
-      "妻子"
-    ],
-    "tags": [
-      "日常生活",
-      "家庭互动",
-      "洗澡前"
-    ],
-    "sentiment": "neutral"
-  },
-  {
-    "id": "ec_031",
-    "title": "元旦收红包，安排洗澡",
-    "date": "1970-01-01",
-    "content": "元旦凌晨，妻子温柔提醒丈夫把红包收好，体现对家庭事务的细心关注。丈夫慵懒回应，询问妻子在看什么电影，并建议她先去洗澡。对话简短温馨，展现了夫妻间平常而亲密的日常互动。",
-    "peopleIds": [
-      "丈夫",
-      "妻子"
-    ],
-    "tags": [
-      "元旦",
-      "红包",
-      "夫妻日常",
-      "温馨互动"
+      "cycling",
+      "friends",
+      "outdoor",
+      "breezy",
+      "cool",
+      "laughter"
     ],
     "sentiment": "positive"
   },
   {
-    "id": "ec_032",
-    "title": "设计团队沟通困难讨论",
-    "date": "1970-01-01",
-    "content": "设计主管担忧拆解后的设计概念难以让后端同事理解，请求协助传达。产品负责人表示需要时间整理思路。UI设计师提出设计不应局限于App，应借鉴网站和平面设计拓宽创意，以粉色圆点按钮等元素举例说明。",
+    "id": "ec_029",
+    "title": "Chasing the Sunset Photo",
+    "date": "1970, Era Unknown",
+    "content": "The afternoon light was turning golden as the friend joked that they were 'riding home on the last rays of sunset.' He warned the user not to run into any ghosts on the way back to the old hometown, getting a laugh. The user, however, was fixated on the view: the sunset was gorgeous and they wanted to photograph it, but a parked car was blocking the ideal angle. They waited, willing the car to move. The friend observed, with the calm certainty of experience, that the car had absolutely no intention of moving. The user suggested inching forward to get past the obstruction. Then, as if on cue, the car finally pulled away. The user lit up: 'Now! Shoot it now!' They snapped the photo, the friend confirming the car had cleared. It was a small victory — the perfect sunset shot, earned through patience and a little luck.",
     "peopleIds": [
-      "产品负责人",
-      "ui设计师",
-      "设计主管"
+      "friend",
+      "user_main"
     ],
     "tags": [
-      "设计协作",
-      "概念传达",
-      "团队沟通",
-      "UI设计"
+      "sunset",
+      "photography",
+      "humor",
+      "friends",
+      "golden hour",
+      "hometown"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_030",
+    "title": "Hungry at the Xinjiang Dance Event",
+    "date": "1970, Era Unknown",
+    "content": "The friend had been at some kind of Xinjiang dance performance event — at a gate or near dormitories, based on what they recalled. But the thing that stood out most wasn't the dancing: there was nothing to eat. The friend paced or walked, heavy-footed and slightly breathless, muttering: 'Why is there no food? How is there no food?' The complaint built gradually, becoming more emphatic: 'I'm starving to death.' The atmosphere, which had probably started festive enough, had been overtaken by hunger and fatigue. Someone tried to lighten the mood. But the friend's stomach had become the main protagonist of the evening, and no amount of folk dancing was going to resolve that.",
+    "peopleIds": [
+      "friend"
+    ],
+    "tags": [
+      "event",
+      "Xinjiang dance",
+      "hunger",
+      "frustration",
+      "performance"
     ],
     "sentiment": "negative"
   },
   {
-    "id": "ec_033",
-    "title": "事件洞察与图文呈现讨论",
-    "date": "1970-01-01",
-    "content": "产品负责人探讨是否需要以图文形式呈现内容，强调视频与图文结合的重要性。设计主管认同需进一步讨论，并指出从当前事件中可提炼出许多有价值的洞察观点，需要将其转化为具体逻辑和功能。",
+    "id": "ec_031",
+    "title": "Street Weariness and the Butterfly Question",
+    "date": "1970, Era Unknown",
+    "content": "On a noisy street, the friend was visibly flagging — breathing harder than normal, footsteps heavy against the pavement, wind buffeting the audio. They muttered to themselves, wrestling with some internal question: 'Do I need the little butterfly?' It was unclear exactly what this referred to — an item, a person, a decision — but the uncertainty showed. The user was nearby and mentioned that a colleague was very busy. The friend responded with a grateful acknowledgment, then quickly pivoted to frustration: someone was in the way, described bluntly as 'that fat person — not okay.' The user asked the friend to move closer, cutting through the noise. There was care in it — not dramatic, just the instinct to close the distance when someone you know is struggling.",
     "peopleIds": [
-      "产品负责人",
-      "设计主管"
+      "friend",
+      "user_main"
     ],
     "tags": [
-      "事件洞察",
-      "图文设计",
-      "产品功能",
-      "内容呈现"
+      "street",
+      "fatigue",
+      "friendship",
+      "noise",
+      "frustration"
+    ],
+    "sentiment": "negative"
+  },
+  {
+    "id": "ec_032",
+    "title": "Showering First, Then the Tape Problem",
+    "date": "1970, Era Unknown",
+    "content": "Before bed, the wife announced she was going to shower first. The husband acknowledged it, repeating her words back simply: 'You go shower first.' But then he got caught up with something he was handling, and a look of puzzlement crossed his face. The wife stopped, thought about it, and started reasoning aloud: 'Oh wait — you need to get that thing off first, right?' The background filled with the sound of tape being torn and plastic wrap rustling — someone was trying to remove an adhesive that wouldn't come free. 'It won't stick,' the wife said, then realized she meant the opposite: 'It won't come off.' She repeated her observation a couple of times, as if repetition might solve it. The small domestic puzzle remained unresolved as she headed toward the bathroom.",
+    "peopleIds": [
+      "husband",
+      "wife"
+    ],
+    "tags": [
+      "home",
+      "bedtime",
+      "domestic",
+      "problem-solving",
+      "tape",
+      "daily life"
     ],
     "sentiment": "neutral"
+  },
+  {
+    "id": "ec_033",
+    "title": "Red Envelopes and a Movie Night",
+    "date": "1970, Era Unknown",
+    "content": "It was New Year's Eve — the early hours, calm in the apartment. The wife reminded her father to put away the red envelopes, her voice clear and attentive. The husband responded in a low, drowsy mumble, clearly in that comfortable half-awake state. He asked her what movie she was watching, and then, without much urgency, suggested she go shower first. There was something charming about the scene: the domestic order of the holiday — red envelopes, movies, the suggestion of a shower — all wrapped in the soft tiredness of late night. The husband wasn't in a rush to do anything. The wife had a clearer sense of what needed doing.",
+    "peopleIds": [
+      "husband",
+      "wife"
+    ],
+    "tags": [
+      "New Year",
+      "red envelopes",
+      "movie",
+      "holiday",
+      "domestic",
+      "nighttime"
+    ],
+    "sentiment": "positive"
   },
   {
     "id": "ec_034",
-    "title": "产品功能缺失：手链情绪卡片",
-    "date": "1970-01-01",
-    "content": "产品讨论中，产品负责人表达疲惫，强调当前交互流程的重要性，指出若滑动环节只抽一张卡可能导致产品失败。设计主管提出缺少手链转动时出现卡片的功能，并建议结合用户实时情绪提供鼓励，如在商业谈判前提醒保持冷静。",
+    "title": "Design Team's Communication Gap",
+    "date": "1970, Era Unknown",
+    "content": "The design lead opened the meeting with urgency: after breaking down the design concepts into components, the backend team still didn't have a clear grasp of the intended outcome. The design wasn't landing. He turned to the product lead, asking for help translating the concept — someone needed to bridge the gap. The product lead, clearly fatigued, said he'd think about how to handle it. The UI designer took a different angle: the team was too focused on app design, when in fact websites and print design had a lot to offer — broader references could unlock the creative space. They discussed one particular pink circular button as a candidate for the membership sub-page. The conversation wasn't resolved but it was honest: people were struggling to see the same thing, and they all knew it.",
     "peopleIds": [
-      "产品负责人",
-      "设计主管"
+      "product_lead",
+      "ui_designer",
+      "design_director"
     ],
     "tags": [
-      "产品功能",
-      "手链交互",
-      "情绪反馈",
-      "用户体验"
+      "design",
+      "team communication",
+      "product",
+      "UX",
+      "creative"
     ],
-    "sentiment": "neutral"
+    "sentiment": "negative"
   },
   {
     "id": "ec_035",
-    "title": "产品App视觉设计方向确定",
-    "date": "1970-01-01",
-    "content": "产品设计会议中，产品负责人要求避免时间浪费，强调视觉情绪需即时调整。UI设计师建议当前方案作为情绪板而非直接对标其他App，并关注插画和人文元素的科技感传达。设计主管强调需先确立设计概念，避免成品后大幅修改。",
+    "title": "Event Insights and Swipeable Cards",
+    "date": "1970, Era Unknown",
+    "content": "The product lead raised the question of format: beyond pure text, should content be presented as a combination of images and text — or video? The design director agreed that this needed further discussion. The conversation moved to event 'insights' — the idea that any given event could generate a constellation of related perspectives and observations. The product lead acknowledged he hadn't fully figured out what form these insights should take in the app, which was making his thinking feel muddy. He mentioned a left-right swipe interaction as a possible way to navigate them. The design director clarified: these would be derivative viewpoints branching from a central event — insightful, useful, but still tethered to the original. The discussion was exploratory and unfinished, the kind of productive blur that precedes clarity.",
     "peopleIds": [
-      "产品负责人",
-      "ui设计师",
-      "设计主管"
+      "product_lead",
+      "design_director"
     ],
     "tags": [
-      "视觉设计",
-      "情绪板",
-      "设计规范",
-      "产品方向"
+      "product design",
+      "event insight",
+      "content",
+      "interaction",
+      "swipe"
     ],
     "sentiment": "neutral"
   },
   {
     "id": "ec_036",
-    "title": "拾镜卡质感设计方案",
-    "date": "1970-01-01",
-    "content": "会议中团队讨论拾镜卡设计方向，设计主管强调需先明确目标用户特征。产品负责人介绍拾镜卡的设计理念：结合用户心境和任务，利用数据自动生成关联内容。团队最终决定采用具有质感的模拟纸质效果，而非写实风格。",
+    "title": "The Rhythm Is Right Here",
+    "date": "1970, Era Unknown",
+    "content": "The product lead was attempting to teach something about product cadence — the rhythm of a user's journey through the app. He said he'd already broken the entire rhythm down, step by step. And yet, he noted with a mix of resignation and mild exasperation, the team still wasn't satisfied with the result. He repeated it: 'The rhythm is right here, in what we're doing right now.' He seemed to be pointing at the present moment of the discussion itself as an example — as though the meta-experience of working through something together was itself the lesson. Whether the team caught the point wasn't recorded.",
     "peopleIds": [
-      "产品负责人",
-      "技术支持",
-      "设计主管"
+      "product_lead"
     ],
     "tags": [
-      "拾镜卡",
-      "设计方案",
-      "用户体验",
-      "产品设计"
+      "product design",
+      "cadence",
+      "teaching",
+      "team",
+      "UX"
     ],
-    "sentiment": "positive"
+    "sentiment": "neutral"
   },
   {
     "id": "ec_037",
-    "title": "母亲对新设计惊喜赞叹",
-    "date": "1970-01-01",
-    "content": "平静夜晚中，母亲兼设计师欣赏自己的设计作品，情绪高涨地连连称赞\"帅好多！帅好多了！\"。随后她热情地反复说\"咱们再来点\"，展现出对作品进一步提升的渴望和对工作的极大热情。",
+    "title": "The Bracelet That Reads Your Mood",
+    "date": "1970, Era Unknown",
+    "content": "In a product meeting, the product lead spoke plainly about what it would take for the product to succeed: certain key interactions couldn't be missing, or the whole thing would fall flat. The design director had questions — were there features that hadn't been fully thought through? She brought up one specific concept: when a user's bracelet is rotated, a card appears. But she wanted more: what if that card reflected the user's real-time emotional state? What if, before an important business meeting, the bracelet could surface a card reminding the user of their past anxiety and encouraging them to stay calm? The product lead confirmed the basic mechanism and then elaborated: when the bracelet was paired with firmware, the interaction could become richer and more contextual. The design director was pushing for something more personal — technology that didn't just track, but responded.",
     "peopleIds": [
-      "母亲/设计师"
+      "product_lead",
+      "design_director"
     ],
     "tags": [
-      "设计成果",
-      "惊喜",
-      "热情",
-      "自我欣赏"
+      "wearable",
+      "bracelet",
+      "emotion",
+      "product vision",
+      "UX",
+      "biometrics"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_038",
-    "title": "新年返乡后聚会闲聊",
-    "date": "1970-01-01",
-    "content": "过年后，母亲与女性朋友轻松聚会。朋友刚从旅游回来两天，两人聊起复工安排、城市堵车情况，互相打量体重变化，母亲感慨自己似乎又胖了，气氛轻松愉快。",
+    "title": "Mood Board vs. Final Product",
+    "date": "1970, Era Unknown",
+    "content": "The design discussion got granular: the UI designer presented her visual concept, emphasizing that the current materials were a mood board — a directional reference, not a final design spec. She was thinking about illustration and humanistic elements as a way to convey a sense of technology that felt warm rather than cold. The design director worried: if the design direction wasn't clearly locked in now, the team would end up doing major overhauls after completion. She talked about the layers of design standards — UI, icons, logos, copy, illustration — and the concept layer that needed to sit above all of them. The product lead asked everyone to document feedback in real time, building consensus around each decision. He acknowledged that previous discussions had centered on 'time particles' as a key element. It was a meeting that was trying hard to avoid future regret.",
     "peopleIds": [
-      "女性朋友",
-      "母亲/设计师"
+      "product_lead",
+      "ui_designer",
+      "design_director"
     ],
     "tags": [
-      "新年返乡",
-      "朋友聚会",
-      "轻松闲聊"
+      "design",
+      "mood board",
+      "visual design",
+      "illustration",
+      "team alignment"
     ],
-    "sentiment": "positive"
+    "sentiment": "neutral"
   },
   {
     "id": "ec_039",
-    "title": "家庭聚会温情相认",
-    "date": "1970-01-01",
-    "content": "家庭聚会上，祖母用方言幽默插话，母亲轻声逗弄大家相互认识。中年女性亲属起初疑惑是否真的认识，随后回忆起小时候就夸母亲越长大越好看。大家期待坐下来深入交流，增进彼此感情。",
+    "title": "Designing the Shi Jing Card",
+    "date": "1970, Era Unknown",
+    "content": "The design lead called for clarity on the target user before any style decisions were made. The product lead obliged, walking through the concept of the 'Shi Jing Card' (拾镜卡) — a card that would reflect the user's inner state and associated tasks. The card wouldn't be generic; it would be generated from data, tied to the user's personal context. Visually, the product lead specified: textured, like quality paper, but not hyper-realistic. It should feel tactile. The interaction mattered too — the card would unfold as the user moved through it, with the rhythm of their fingers guiding the pace. The concept was rich and clearly thought-through. The technical support person on the call was struggling with audio issues — a persistent mechanical looping sound — but the design lead made sure the key points got captured regardless.",
     "peopleIds": [
-      "祖母",
-      "中年女性亲属",
-      "母亲/设计师"
+      "product_lead",
+      "tech_support",
+      "design_director"
     ],
     "tags": [
-      "家庭聚会",
-      "亲情",
-      "温馨时刻",
-      "相认"
+      "Shi Jing card",
+      "product design",
+      "texture",
+      "paper",
+      "user state",
+      "interaction"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_040",
-    "title": "哄比比睡觉，亲属互动",
-    "date": "1970-01-01",
-    "content": "温暖夜晚，母亲温柔模仿童声唱\"飞呀~飞起来~\"哄孩子比比，称其为\"小公仔\"。年轻女性亲属也加入，模仿婴儿声呼唤\"安哥哥\"并笑语调侃，并期待\"爸爸回来\"，整个场景充满家庭温情。",
+    "title": "The Illustration That Feels Like Tech",
+    "date": "1970, Era Unknown",
+    "content": "The UI designer opened with a bold position: the visual identity of the app needed to lead with atmosphere. What feeling does a tech app give you? She argued the illustrations were the best tool for carrying that feeling — and that the secondary pages needed to be consistent with the primary visual layer, even if they were less prominent. The design director asked her to finish her thought before jumping in with suggestions. When the UI designer was done, the design director offered a practical shortcut: 'You don't have to design everything from scratch — use reference images from the web to nail down the concept before committing to custom work.' The product lead kept trying to break in, wanting to talk about the user journey. The design director held him off: 'Let her finish.' It was a small but telling moment of group dynamics.",
     "peopleIds": [
-      "年轻女性亲属",
-      "母亲/设计师"
+      "product_lead",
+      "ui_designer",
+      "design_director"
     ],
     "tags": [
-      "哄孩子",
-      "家庭温情",
-      "亲属互动",
-      "儿童"
+      "UI design",
+      "illustration",
+      "tech",
+      "atmosphere",
+      "team dynamics",
+      "product"
     ],
-    "sentiment": "positive"
+    "sentiment": "neutral"
   },
   {
     "id": "ec_041",
-    "title": "宝宝专用空间与用品展示",
-    "date": "1970-01-01",
-    "content": "女性朋友提出这个空间如果是宝宝专用，就只适合母亲和宝宝两人使用。母亲随即提醒他人不要靠近，并展示了一款专为宝宝设计的杯子，尽管现场有杂音，信息传达依然清晰，体现了对宝宝的细心呵护。",
+    "title": "Post-Holiday Catch-Up",
+    "date": "1970, Era Unknown",
+    "content": "After the Chinese New Year break, two women reconnected with the easy warmth of old friends. The mother-designer asked when her friend had come back; the friend said she'd returned just a couple of days earlier — straight from a holiday trip. Work was about to start again, the friend confirmed, just a few days away. She was curious about the hometown: was it busy? The mother laughed and said there was no traffic where she was, practically none at all. Her friend had experienced some congestion on her journey back, though. Then they turned to each other with the particular scrutiny of women who haven't seen each other in a few weeks: 'Have you gained weight?' the mother asked herself out loud, then decided maybe she had. The friend was tactful. The conversation settled back into warmth.",
     "peopleIds": [
-      "女性朋友",
-      "母亲/设计师"
+      "female_friend",
+      "mother_designer"
     ],
     "tags": [
-      "宝宝用品",
-      "专属空间",
-      "育儿",
-      "母婴"
+      "Chinese New Year",
+      "holiday",
+      "friends",
+      "return",
+      "work",
+      "weight"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_042",
-    "title": "乌鸡白凤丸处理分歧",
-    "date": "1970-01-01",
-    "content": "用户认为家中几颗乌鸡白凤丸没什么用，提出可以丢弃。父亲用方言建议卖掉，认为其中含微量元素尚有价值。用户叹气后将决定权交给父亲，同时查看手机发现没有早一点的票，两代人在物品价值认知上存在差异。",
+    "title": "Family Reunion Recognition",
+    "date": "1970, Era Unknown",
+    "content": "At a family gathering, the mother-designer gently tried to prompt recognition between family members: 'Do you know who this is?' she asked, voice playful and soft. The middle-aged female relative looked uncertain: 'Do I really know her?' The grandmother, comfortable in her dialect, made a wry comment about setting something aside and created a light ripple of laughter. The mother confirmed there should be some memory there. Then the relative recalled something she'd apparently said years ago — that this particular girl had gotten prettier and prettier as she grew up. The comment was offered now with the same fond certainty it had been made then. Someone noted that once everyone sat down and spent a day together, all the recognition would come back on its own.",
     "peopleIds": [
-      "user_main",
-      "父亲"
+      "grandmother",
+      "middle_aged_female_relative",
+      "mother_designer"
     ],
     "tags": [
-      "家庭对话",
-      "乌鸡白凤丸",
-      "两代分歧",
-      "日常家务"
-    ],
-    "sentiment": "neutral"
-  },
-  {
-    "id": "ec_043",
-    "title": "宝宝适应新环境的历程",
-    "date": "1970-01-01",
-    "content": "外婆回忆宝宝刚回家时对噪音不适应，夜间需要及时喂奶才能保持安静，带起来很不容易。随着时间推移，宝宝逐渐适应了环境，现在夜间能安静入睡，白天也表现乖巧甚至能与朋友玩耍，家人都很欣慰。",
-    "peopleIds": [
-      "user_main",
-      "姑姑",
-      "外婆",
-      "父亲"
-    ],
-    "tags": [
-      "宝宝成长",
-      "适应环境",
-      "育儿经验",
-      "家庭关爱"
+      "family",
+      "reunion",
+      "recognition",
+      "warmth",
+      "dialect",
+      "memory"
     ],
     "sentiment": "positive"
   },
   {
-    "id": "ec_044",
-    "title": "月嫂过度喂养宝宝",
-    "date": "1970-01-01",
-    "content": "外婆回忆月嫂照顾宝宝的经历：第一天月嫂强行给宝宝喂食，宝宝已经吃不下却被不断塞东西，结果直接喂吐了。外婆感到无奈又好笑，因宝宝年纪太小无法反抗，最终决定不再使用该月嫂。",
+    "id": "ec_043",
+    "title": "UI Float Frame Deep Dive",
+    "date": "1970, Era Unknown",
+    "content": "The design director pulled up a PPT and walked the team through the UI. She pointed to the float frame — the visual overlay that appeared over the event cards — and began interrogating its design logic: what was the exact visual style? How should it move? Was it particle-based, or something else entirely? She emphasized that understanding the overall visual language was critical before the team could proceed. The mother-designer jumped in to raise a point about character attributes: they needed to define the user persona clearly, she said, or the style choices downstream would feel arbitrary. The design director agreed completely. Defining the user came first; everything else followed from that.",
     "peopleIds": [
-      "外婆",
-      "母亲"
+      "mother_designer",
+      "design_director"
     ],
     "tags": [
-      "月嫂",
-      "过度喂养",
-      "育儿问题",
-      "外婆回忆"
-    ],
-    "sentiment": "negative"
-  },
-  {
-    "id": "ec_045",
-    "title": "婴儿喂奶量与吐奶讨论",
-    "date": "1970-01-01",
-    "content": "母亲询问宝宝每天喝一百二的奶量应分几次。外婆认为量有些多，指出宝宝在洗完澡后更容易吐奶。外婆建议每次减少到60毫升，两小时后再补充。双方达成共识：洗澡后不宜立即喂奶。",
-    "peopleIds": [
-      "外婆",
-      "母亲"
-    ],
-    "tags": [
-      "婴儿喂养",
-      "吐奶",
-      "育儿经验",
-      "奶量安排"
+      "UI design",
+      "float frame",
+      "particles",
+      "user persona",
+      "design review"
     ],
     "sentiment": "neutral"
   },
   {
-    "id": "ec_046",
-    "title": "家庭聚餐，外婆分享夜起习惯",
-    "date": "1970-01-01",
-    "content": "温馨家庭聚餐中，外婆与姑姑边吃边聊。外婆强调刚做出的食物最好吃，并分享了自己多年的习惯：无论在孩子小时候还是现在，都习惯夜里起床查看家里情况，展现出对家庭深深的责任感与爱护。",
+    "id": "ec_044",
+    "title": "'More Handsome! Much More Handsome!'",
+    "date": "1970, Era Unknown",
+    "content": "Alone with her design work — or perhaps reviewing a new iteration on screen — the mother-designer reacted with pure, unguarded delight. 'So much more handsome! So much more handsome!' she exclaimed, the words tumbling out with the enthusiasm of someone who had been waiting for something to look like this. The design had clearly leveled up in a way that felt real and satisfying. Not content to stop there, she immediately called for more: 'Keep going, give us more, give us more, more!' The repetition wasn't impatience — it was excitement, the creative momentum of someone who has just seen what's possible and wants to keep going.",
     "peopleIds": [
-      "姑姑",
-      "外婆"
+      "mother_designer"
     ],
     "tags": [
-      "家庭聚餐",
-      "外婆习惯",
-      "家庭关爱",
-      "传统"
+      "design",
+      "excitement",
+      "creative",
+      "breakthrough",
+      "alone",
+      "reaction"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_045",
+    "title": "Flying High with Baby Bibi",
+    "date": "1970, Era Unknown",
+    "content": "In a tender, silly moment, the mother-designer sang to her baby in a soft, childlike voice: 'Flying~ flying~ flying up~' She called the baby her 'little doll' — 小公仔 — and told it gently that it was time to sleep. Nearby, a young female relative got into the playful spirit, calling out 'An Ge Ge' in a mock-baby voice and asking if An Ge Ge was present. She said he felt 'very impressive,' laughing at her own joke. The two women kept calling the name, building a warm, silly call-and-response. The young relative added: 'Waiting for daddy to come home, okay?' — and the question, sweet and simple, landed in the room like a small prayer.",
+    "peopleIds": [
+      "young_female_relative",
+      "mother_designer"
+    ],
+    "tags": [
+      "baby",
+      "family",
+      "singing",
+      "playful",
+      "domestic",
+      "tenderness"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_046",
+    "title": "Baby's Special Cup",
+    "date": "1970, Era Unknown",
+    "content": "Someone declared the space a baby-only zone — if this was the baby's personal area, then it should be just for the two of them: the mother and the baby. The mother-designer, from across the room, called out to others to stay back, thanking everyone for their participation before redirecting them away from the spot. Then she held up a small cup, announcing: 'This is baby's special cup.' Her voice was clear and proud. The female friend nearby kept repeating the spatial instruction, her voice growing softer as she moved away, as though the instruction echoed through the room. It was a small assertion of baby-space within a larger family environment — practical, loving, slightly territorial.",
+    "peopleIds": [
+      "female_friend",
+      "mother_designer"
+    ],
+    "tags": [
+      "baby",
+      "parenting",
+      "protective",
+      "family",
+      "cup",
+      "domestic"
     ],
     "sentiment": "positive"
   },
   {
     "id": "ec_047",
-    "title": "外婆分享拿手甜品",
-    "date": "1970-01-01",
-    "content": "家庭聚会中，外婆自豪介绍她与父亲做的拿手甜品，称老师也曾称赞过。母亲好奇询问是否用白糖熬制，外婆解释需要先煮熟。平时不爱吃甜食的母亲品尝后惊喜地说好吃，外婆也表示对这道甜品从不畏惧。",
+    "title": "Wuji Bai Feng Wan: Keep or Toss?",
+    "date": "1970, Era Unknown",
+    "content": "Somewhere in the process of sorting through things, the user held up a cluster of Wuji Baifengwan pills — a traditional Chinese medicine — and declared them probably useless. Her father, speaking in dialect, suggested they could be sold or thrown away, noting that they contained trace elements and might still have some value. The user wasn't interested in debating it: 'You decide,' she said, sighing and handing off the decision entirely. She went back to looking at her phone, where she noticed there were no earlier train tickets available — she was already thinking about the next trip. It was a small generational moment: the daughter unbothered, the father practical, the pills an object of mild disagreement between two different relationships to waste.",
     "peopleIds": [
-      "外婆",
-      "母亲"
+      "user_main",
+      "father"
     ],
     "tags": [
-      "家庭美食",
-      "拿手菜",
-      "甜品",
-      "家庭聚会"
+      "traditional medicine",
+      "family",
+      "decluttering",
+      "dialect",
+      "generational"
+    ],
+    "sentiment": "neutral"
+  },
+  {
+    "id": "ec_048",
+    "title": "Bibi Adjusts to the New Home",
+    "date": "1970, Era Unknown",
+    "content": "The grandmother recalled, in thoughtful detail, the early days when the baby first came home. It hadn't been easy. The house was noisier than where they'd been before, and at night, the baby simply wasn't used to it — not crying, exactly, but restless, requiring attention and feeding just to stay calm. 'It wasn't an easy time,' the grandmother admitted, her tone matter-of-fact rather than complaining. But then, gradually, things shifted. Now the baby slept independently at night, and during the day was cheerful and sociable — willing to play with friends, good-natured and adaptable. The aunt chimed in, recalling that even when she'd been alone with the baby as a small child, the baby had seemed very well-behaved. The whole conversation was one of quiet pride and accumulated tenderness.",
+    "peopleIds": [
+      "user_main",
+      "aunt",
+      "grandmother",
+      "father"
+    ],
+    "tags": [
+      "baby",
+      "adaptation",
+      "family",
+      "nighttime",
+      "grandmother",
+      "home"
     ],
     "sentiment": "positive"
   },
   {
-    "id": "ec_048",
-    "title": "宝宝脸部湿疹与指甲护理",
-    "date": "1970-01-01",
-    "content": "温馨早餐时光中，母亲和外婆讨论宝宝的健康问题。母亲注意到宝宝脸上有点红，外婆指出宝宝有抓脸动作，推测可能是湿疹，属于体内热气的表现。外婆还提到给宝宝剪指甲困难，因为宝宝总爱动。",
+    "id": "ec_049",
+    "title": "Night Feedings: What's Really Happening?",
+    "date": "1970, Era Unknown",
+    "content": "The grandmother raised an eyebrow and said it clearly: 'Let's tell the truth here.' She'd noticed that at night, the baby consistently drank 120ml — every single time, without fail. But during the day, that amount was impossible to achieve. She asked whether the baby ever spit up; she was told no. 'That I don't believe,' the grandmother said dryly. The mother brought up the monitoring camera — the footage would tell the real story. The grandmother acknowledged the point: if there was a camera, then the nighttime account was probably also suspect. The conversation revealed the layered reality of infant care, where what caregivers report and what actually happens are sometimes two different things — and everyone in the room knew it.",
     "peopleIds": [
-      "外婆",
-      "母亲"
+      "grandmother",
+      "mother"
     ],
     "tags": [
-      "宝宝健康",
-      "湿疹",
-      "指甲护理",
-      "育儿关注"
+      "baby",
+      "feeding",
+      "truth",
+      "monitoring",
+      "grandmother",
+      "family"
+    ],
+    "sentiment": "neutral"
+  },
+  {
+    "id": "ec_050",
+    "title": "Grandmother's Signature Dessert",
+    "date": "1970, Era Unknown",
+    "content": "At a family gathering, the grandmother proudly revealed that the dessert on the table was a specialty — something she and her husband had perfected together, the kind of dish that had earned teacher's praise. The mother was curious: was that white sugar on the outside? Yes, the grandmother explained — it was cooked in a sugar glaze first, that initial boiling was essential to getting it fully done. The mother took a bite and was genuinely surprised: 'Even though I don't normally like sweets — this is really good.' The grandmother laughed and said she didn't usually eat sweets either, but this one she could handle. There was something touching in it: two people who don't have sweet tooths, happily eating something sweet together.",
+    "peopleIds": [
+      "grandmother",
+      "mother"
+    ],
+    "tags": [
+      "food",
+      "dessert",
+      "family",
+      "cooking",
+      "tradition",
+      "sugar",
+      "pride"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_051",
+    "title": "The Overeager Night Nurse",
+    "date": "1970, Era Unknown",
+    "content": "The grandmother told the story with a mixture of exasperation and dark humor. The night nurse they had hired — a yuèsǎo — had, on her very first day, made the newborn vomit. How? By force-feeding. The baby had clearly had enough, and the nurse had kept pushing food in anyway. The baby was far too young to resist or communicate, which made the whole thing feel all the more absurd and helpless. 'She was just stuffing it in,' the grandmother said. The mother listened, nodding — she suggested that in such cases, rubbing the baby's tummy helps. Eventually, the grandmother made the decision to let the nurse go. The story was recounted without much bitterness, more as a cautionary tale — a reminder that not all professional care is good care.",
+    "peopleIds": [
+      "grandmother",
+      "mother"
+    ],
+    "tags": [
+      "baby",
+      "night nurse",
+      "overfeeding",
+      "vomit",
+      "parenting",
+      "humor"
+    ],
+    "sentiment": "negative"
+  },
+  {
+    "id": "ec_052",
+    "title": "120ml: Too Much, Too Fast?",
+    "date": "1970, Era Unknown",
+    "content": "The mother and grandmother sat down to work through the feeding math. A hundred and twenty milliliters per feed — was that too much? The grandmother thought so: that's a lot for a small baby, and she'd seen the consequences. Babies often spit up after that amount, especially after a bath when their stomachs are more active. Her recommendation: cut it in half — sixty milliliters — and then top up two hours later if needed. The mother agreed that bathing and immediate feeding were a bad combination. They arrived at a shared protocol, born from observation and experience: smaller amounts, more patiently spaced. The grandmother's concern was never abstract; it was always grounded in what she'd watched with her own eyes.",
+    "peopleIds": [
+      "grandmother",
+      "mother"
+    ],
+    "tags": [
+      "baby",
+      "feeding",
+      "advice",
+      "grandmother",
+      "practical",
+      "family"
+    ],
+    "sentiment": "neutral"
+  },
+  {
+    "id": "ec_053",
+    "title": "The Collective Goal: Raise This Baby Well",
+    "date": "1970, Era Unknown",
+    "content": "The aunt said it directly and without flourish: 'We're all working together toward one goal — to take good care of this baby. That's all there is to it.' There was no drama in the statement, no complicated emotion — just a plain, sincere declaration of purpose. In the middle of all the small logistics of infant care — the feeding schedules, the night routines, the decisions about nurses and amounts and timing — this single sentence cut through to the thing that united everyone in the room. They were all doing this together, and they all knew why.",
+    "peopleIds": [
+      "aunt"
+    ],
+    "tags": [
+      "baby",
+      "family",
+      "unity",
+      "purpose",
+      "caregiving"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_054",
+    "title": "Late Night Habit: Checking on the Family",
+    "date": "1970, Era Unknown",
+    "content": "At a warm family dinner, the grandmother set down her chopsticks and mentioned, almost in passing, that she had a habit of getting up at night to check on the household — she'd done it since her children were small, and she still did it now. The aunt was a little bemused: 'Why do you still worry so much?' The grandmother's answer was calm: it's just who she was. She also declared, with complete conviction, that freshly made food was always the best — and urged the aunt to eat up before it got cold. The aunt tried what was on the table, asked about the ingredients, and found the taste surprisingly good. The grandmother explained: there was meat in it, and dried tangerine peel for flavor. It was the kind of meal that tasted like a person — specific, cared for, remembered.",
+    "peopleIds": [
+      "aunt",
+      "grandmother"
+    ],
+    "tags": [
+      "family",
+      "dinner",
+      "habit",
+      "night watch",
+      "food",
+      "warmth"
+    ],
+    "sentiment": "positive"
+  },
+  {
+    "id": "ec_055",
+    "title": "Pineapple Porridge and Eczema Worry",
+    "date": "1970, Era Unknown",
+    "content": "A gentle morning. The father had made breakfast — a slow-cooked pineapple porridge, fragrant and warm. The mother spooned it appreciatively and asked the grandmother what it was; the grandmother confirmed it and told her to take her time. The mood shifted slightly when the mother noticed the baby's face looked a little red. The grandmother demonstrated: the baby had been scratching its face, small persistent movements. They agreed it was probably eczema — common in young babies, likely a sign of internal heat. The mother asked whether the baby's fingernails had been clipped; the grandmother admitted it was hard — the baby wouldn't stay still. The mother said not to stress about it too much. It was a morning of small concerns, all held lightly, over a bowl of something homemade.",
+    "peopleIds": [
+      "grandmother",
+      "mother"
+    ],
+    "tags": [
+      "baby",
+      "eczema",
+      "breakfast",
+      "porridge",
+      "morning",
+      "family",
+      "health"
     ],
     "sentiment": "neutral"
   }
