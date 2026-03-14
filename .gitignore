@@ -206,9 +206,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Dataset JSON files
-data/*
-!data/README.md
+# Dataset JSON files (tracked for reproducibility)
 
 # Codex local binaries and config
 .codex-bin/
@@ -221,10 +219,6 @@ logs/
 
 # Analysis output
 output/
-
-# Backup data (large binary dumps)
-backup/mongodb_dump/
-backup/memories_backup.json
 
 # GCF conversion output
 data/gcf/
