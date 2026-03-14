@@ -222,5 +222,9 @@ logs/
 # Analysis output
 output/
 
+# Backup data (large binary dumps)
+backup/mongodb_dump/
+backup/memories_backup.json
+
 # GCF conversion output
 data/gcf/

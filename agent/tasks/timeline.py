@@ -58,7 +58,7 @@ class TimelineTask(BaseTask):
         self.end_date = end_date
         self.keywords = keywords
 
-        parts = ["请整理群组对话中与「{user_id}」相关的事件时间线。"]
+        parts = ["请基于预加载的群组对话记忆，整理「{user_id}」相关的所有事件时间线。请直接分析下方提供的记忆数据，提取每个事件的时间、参与者和关键内容。"]
         if start_date or end_date:
             time_range = f"时间范围：{start_date or '不限'} 至 {end_date or '不限'}。"
             parts.append(time_range)

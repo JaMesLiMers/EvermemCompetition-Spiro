@@ -1,0 +1,5 @@
+{
+    "timestamp": "2026-03-14T14:14:50Z",
+    "mongo_collections": ,
+    "notes": "Restore with: ./scripts/backup_restore.sh restore"
+}

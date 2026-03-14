@@ -207,6 +207,12 @@ run-task: ## 运行分析任务 (TASK=relationships|profiling|timeline|suggestio
 		$(if $(END_DATE),--end-date $(END_DATE)) \
 		$(if $(KEYWORDS),--keywords $(KEYWORDS))
 
+backup: ## 备份 EverMemOS 数据 (MongoDB dump)
+	./scripts/backup_restore.sh backup
+
+restore: ## 从备份恢复 EverMemOS 数据
+	./scripts/backup_restore.sh restore
+
 lint: ## 运行代码检查
 	ruff check .
 	ruff format --check .
