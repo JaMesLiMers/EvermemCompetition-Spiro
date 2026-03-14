@@ -1,0 +1,230 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="800" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- ======== SWIMLANE: Hardware Section (Orange) ======== -->
+    <mxCell id="hw_lane" value="Hardware Capture" style="shape=swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
+      <mxGeometry x="20" y="80" width="460" height="280" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="hw_band" value="Spiro Band&#xa;(Wearable)" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="hw_lane">
+      <mxGeometry x="30" y="60" width="120" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="hw_mic" value="Microphone&#xa;(Always-On)" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="hw_lane">
+      <mxGeometry x="30" y="160" width="120" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="hw_stream" value="Audio Stream&#xa;(Chunked)" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="hw_lane">
+      <mxGeometry x="250" y="110" width="140" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- Hardware internal edges -->
+    <mxCell id="e_band_mic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d6b656;" edge="1" source="hw_band" target="hw_mic" parent="hw_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_mic_stream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d6b656;" edge="1" source="hw_mic" target="hw_stream" parent="hw_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ======== SWIMLANE: Processing Section (Blue) ======== -->
+    <mxCell id="proc_lane" value="AI Processing" style="shape=swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
+      <mxGeometry x="540" y="80" width="660" height="280" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="proc_gemini" value="Gemini 2.0 Flash&#xa;Audio Processing" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="proc_lane">
+      <mxGeometry x="30" y="110" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="proc_parser" value="Event Parser&#xa;(Structured Output)" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="proc_lane">
+      <mxGeometry x="250" y="110" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="proc_speaker" value="Speaker Mapping&#xa;(GPT-4o-mini)" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="proc_lane">
+      <mxGeometry x="470" y="50" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="proc_gcf" value="GCF Conversion&#xa;(Standardized Format)" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="proc_lane">
+      <mxGeometry x="470" y="170" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- Processing internal edges -->
+    <mxCell id="e_gemini_parser" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;" edge="1" source="proc_gemini" target="proc_parser" parent="proc_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_parser_speaker" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;" edge="1" source="proc_parser" target="proc_speaker" parent="proc_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_speaker_gcf" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;" edge="1" source="proc_speaker" target="proc_gcf" parent="proc_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ======== SWIMLANE: Memory Section (Green) ======== -->
+    <mxCell id="mem_lane" value="Memory Storage" style="shape=swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
+      <mxGeometry x="1260" y="80" width="470" height="280" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="mem_evermemos" value="EverMemOS&#xa;Ingestion API" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="mem_lane">
+      <mxGeometry x="30" y="110" width="120" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="mem_groups" value="Memory Groups&#xa;(Contextual Clusters)" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="mem_lane">
+      <mxGeometry x="220" y="50" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="mem_episodic" value="Episodic Memory&#xa;Extraction" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="mem_lane">
+      <mxGeometry x="220" y="170" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- Memory internal edges -->
+    <mxCell id="e_ever_groups" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;" edge="1" source="mem_evermemos" target="mem_groups" parent="mem_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_ever_episodic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;" edge="1" source="mem_evermemos" target="mem_episodic" parent="mem_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ======== SWIMLANE: Agent Section (Purple) ======== -->
+    <mxCell id="agent_lane" value="Agent Analysis" style="shape=swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
+      <mxGeometry x="1790" y="30" width="500" height="380" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="agent_prefetch" value="Agent Prefetch&#xa;(Context Assembly)" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="agent_lane">
+      <mxGeometry x="30" y="130" width="150" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="agent_claude" value="Claude Sonnet&#xa;Task Analysis" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="agent_lane">
+      <mxGeometry x="250" y="50" width="150" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="task_timeline" value="Timeline" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="agent_lane">
+      <mxGeometry x="250" y="120" width="100" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="task_events" value="Event Cards" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="agent_lane">
+      <mxGeometry x="370" y="120" width="100" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="task_daily" value="Daily Brief" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="agent_lane">
+      <mxGeometry x="250" y="180" width="100" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="task_people" value="People Insights" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="agent_lane">
+      <mxGeometry x="370" y="180" width="100" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="task_relationship" value="Relationship&#xa;Graph" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="agent_lane">
+      <mxGeometry x="310" y="240" width="100" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="agent_json" value="JSON Output&#xa;(Structured)" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="agent_lane">
+      <mxGeometry x="310" y="310" width="130" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- Agent internal edges -->
+    <mxCell id="e_prefetch_claude" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_prefetch" target="agent_claude" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_claude_timeline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_claude" target="task_timeline" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_claude_events" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_claude" target="task_events" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_claude_daily" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_claude" target="task_daily" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_claude_people" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_claude" target="task_people" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_claude_relationship" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="agent_claude" target="task_relationship" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tasks_json1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="task_timeline" target="agent_json" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tasks_json2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="task_events" target="agent_json" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tasks_json3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="task_daily" target="agent_json" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tasks_json4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="task_people" target="agent_json" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tasks_json5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;" edge="1" source="task_relationship" target="agent_json" parent="agent_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ======== SWIMLANE: Output Section (Pink) ======== -->
+    <mxCell id="out_lane" value="App Display" style="shape=swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=14;horizontal=1;" vertex="1" parent="1">
+      <mxGeometry x="2350" y="80" width="460" height="280" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="out_react" value="React Native&#xa;App UI" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="out_lane">
+      <mxGeometry x="30" y="110" width="120" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="out_cards" value="Event Cards&#xa;View" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="out_lane">
+      <mxGeometry x="220" y="50" width="120" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="out_timeline" value="Timeline&#xa;View" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="out_lane">
+      <mxGeometry x="220" y="120" width="120" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="out_graph" value="Relationship&#xa;Graph View" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="out_lane">
+      <mxGeometry x="220" y="190" width="120" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- Output internal edges -->
+    <mxCell id="e_react_cards" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#b85450;" edge="1" source="out_react" target="out_cards" parent="out_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_react_timeline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#b85450;" edge="1" source="out_react" target="out_timeline" parent="out_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_react_graph" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#b85450;" edge="1" source="out_react" target="out_graph" parent="out_lane">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ======== CROSS-LANE EDGES ======== -->
+    <mxCell id="e_stream_gemini" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;" edge="1" source="hw_stream" target="proc_gemini" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_gcf_evermemos" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;" edge="1" source="proc_gcf" target="mem_evermemos" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_groups_prefetch" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;" edge="1" source="mem_groups" target="agent_prefetch" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_episodic_prefetch" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;" edge="1" source="mem_episodic" target="agent_prefetch" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_json_react" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;" edge="1" source="agent_json" target="out_react" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
