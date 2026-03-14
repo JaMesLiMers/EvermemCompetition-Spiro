@@ -127,7 +127,7 @@ Changes from current prompt:
 
 ### 2.5 `timeline` → No changes
 
-Keep existing format. Used by merge script as date-ordering reference only. No direct demo view mapping.
+Keep existing format. No direct demo view mapping. The merge script does NOT read timeline output — it is retained for standalone analysis use only.
 
 ---
 
@@ -142,11 +142,12 @@ Reads `output/*.json`, writes `app_demo/data/*.json`.
 1. **ID unification**: Use relationships person `id` as canonical. Map event_cards `peopleIds` (names) to real IDs via normalized lowercase matching.
 2. **Reverse association**: Traverse all diaries' `peopleIds`, populate each person's `diaryIds` array and compute `occurrenceCount`.
 3. **Field completion**:
-   - `DiaryEntry.audioSnippets` → `[]`
-   - `DiaryEntry.imageUrl` → omit (optional field)
-   - `Person.avatar` → omit (optional field, demo renders letter avatars)
+   - `DiaryEntry.audioSnippets` → omit entirely (field made optional in types.ts)
+   - `DiaryEntry.imageUrl` → omit entirely (already optional)
+   - `Person.avatar` → omit entirely (field made optional in types.ts, demo renders letter avatars)
 4. **Insights remapping**: Convert `{"person_name": [...]}` → `{"person_id": [...]}` using the same name→ID mapping.
-5. **Fuzzy name matching**: Normalize names (lowercase, strip "the", trim) before matching to handle minor LLM inconsistencies.
+5. **Fuzzy name matching**: Normalize names (lowercase, strip "the", trim) before matching to handle minor LLM inconsistencies. Matching order: exact match → normalized match → log warning for unresolved names.
+6. **Color validation**: If profiling task outputs an invalid color (not in `blue`/`purple`/`emerald`/`amber`), default to `blue`.
 
 ### What it does NOT do
 
@@ -192,7 +193,7 @@ python scripts/export_demo_data.py
 
 ### 4.4 Avatar → Letter Avatars
 
-`types.ts`: Change `avatar: string` → `avatar?: string`
+`types.ts`: Change `avatar: string` → `avatar?: string`, change `audioSnippets: AudioSnippet[]` → `audioSnippets?: AudioSnippet[]`
 
 `RelationshipGraph.tsx`: Replace `node.append('image')` (lines 190-196) with SVG circle + text rendering:
 - Circle with deterministic color based on person name hash
@@ -241,10 +242,11 @@ For initial demo, manually convert existing `output/` data into `app_demo/data/*
 
 | Issue | Impact | Mitigation |
 |---|---|---|
-| Cross-task ID referencing | Data integrity | Merge script handles name→ID mapping |
+| Cross-task ID referencing | Data integrity | Merge script handles name→ID mapping with fuzzy match |
 | `avatar` required field | Compile error | Make optional in types.ts, render letter avatars |
-| `audioSnippets` required | Compile error | Merge script fills `[]` |
+| `audioSnippets` required | Compile error | Make optional in types.ts, omit from data files |
 | Gemini runtime dependency | Crash on load | Remove calls, use static data |
 | Person deduplication | Data redundancy | Prompt instructs unique names + merge script fuzzy match |
 | Hardcoded Chinese UI | Display inconsistency | English string replacements |
 | Per-person insights | Missing functionality | Pre-generate in insights.json keyed by person ID |
+| Invalid LifeTopic color | Rendering issue | Merge script defaults to `blue` for invalid values |
