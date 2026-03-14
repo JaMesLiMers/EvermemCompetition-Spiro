@@ -194,11 +194,11 @@ ingest-gcf: ## 批量灌入 GCF 数据 ([INPUT=data/gcf_all.json] [API_URL=...] 
 		--api-url $${API_URL:-$(EVERMEMOS_URL)/api/v1/memories} \
 		--concurrency $${CONCURRENCY:-5}
 
-run-task: ## 运行分析任务 (TASK=relationships|profiling|timeline|suggestions USER_ID=xxx)
+run-task: ## Run analysis task (TASK=relationships|profiling|timeline|suggestions|event_cards USER_ID=xxx)
 	@if [ -z "$(TASK)" ] || [ -z "$(USER_ID)" ]; then \
-		echo "用法: make run-task TASK=relationships USER_ID=user123"; \
-		echo "任务类型: relationships | profiling | timeline | suggestions"; \
-		echo "可选: FOCUS_PERSON=xxx  START_DATE=xxx  END_DATE=xxx  KEYWORDS=\"k1 k2\""; \
+		echo "Usage: make run-task TASK=relationships|profiling|timeline|suggestions|event_cards USER_ID=user123"; \
+		echo "Task types: relationships | profiling | timeline | suggestions | event_cards"; \
+		echo "Optional: FOCUS_PERSON=xxx  START_DATE=xxx  END_DATE=xxx  KEYWORDS=\"k1 k2\""; \
 		exit 1; \
 	fi
 	python -m agent.cli $(TASK) --user-id $(USER_ID) \
