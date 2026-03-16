@@ -347,4 +347,12 @@ make clean                 # Clean cache and temporary files
 - React + D3.js — Visualization
 - Docker — Infrastructure orchestration
 
+## Demo Video
+
+[![Spiro x EverMem](https://img.shields.io/badge/Watch-Demo%20Video-red)](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
+
+👉 [Watch the demo video](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
+
+---
+
 Built for the [EverMemOS Competition](https://github.com/anthropics/evermemos)
