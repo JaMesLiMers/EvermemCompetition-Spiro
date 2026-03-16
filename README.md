@@ -16,7 +16,7 @@
 
 [![Spiro x EverMem](https://img.shields.io/badge/Watch-Demo%20Video-red)](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
 
-👉 [Watch the demo video](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
+👉 [Watch the demo video](https://www.youtube.com/watch?v=2d9pvLmuOAM)
 
 
 ## Project Brief
