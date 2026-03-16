@@ -12,6 +12,16 @@
 
 ---
 
+## Demo Video
+
+[![Spiro x EverMem](https://img.shields.io/badge/Watch-Demo%20Video-red)](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
+
+👉 [Watch the demo video](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
+
+
+## Project Brief
+👉 [Spiro Project Brief](https://uxrfslynzy.feishu.cn/wiki/LJznwoJYNiFXHekuZzbcvHJhn0e?from=from_copylink)
+
 <p align="center">
   <img src="figure/core_tension.png" alt="The Core Tension" width="100%">
 </p>
@@ -346,13 +356,5 @@ make clean                 # Clean cache and temporary files
 - GPT-4o-mini — Speaker role inference
 - React + D3.js — Visualization
 - Docker — Infrastructure orchestration
-
-## Demo Video
-
-[![Spiro x EverMem](https://img.shields.io/badge/Watch-Demo%20Video-red)](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
-
-👉 [Watch the demo video](https://anonmp4.help/v/3aWHvYT1bGOQ7pl)
-
----
 
 Built for the [EverMemOS Competition](https://github.com/anthropics/evermemos)
